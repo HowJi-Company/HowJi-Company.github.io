@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>合併 PNG 圖像</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <canvas id="myCanvas" style="display: none;"></canvas>
+    <button id="jh">吉好</button>
+    <button id="hj">好吉</button>
+    <button id="c_o">公司橘</button>
+    <button id="c_g">公司綠</button>
+    <button id="bg1">bg1</button>
+    <button id="bg2">bg2</button>
+    <button id="bg3">bg3</button>
+
+    <div class="img"></div>
+    <script>
+        $("#jh").click(show_jh)
+        $("#hj").click(show_hj)
+        $("#c_o").click(() => show_something(`公司`, 2))
+        $("#c_g").click(() => show_something(`公司_green`, 2))
+        $("#bg1").click(() => show_something(`bg1`, 3))
+        $("#bg2").click(() => show_something(`bg2`, 3))
+        $("#bg3").click(() => show_something(`bg3`, 3))
+        function show_hj() {
+            show_something("好吉", 1)
+        }
+        function show_jh() {
+            show_something("吉好", 1)
+        }
+    </script>
+    <script>
+        const img_para = {
+            img1_src: `./img/吉好.png`,
+            img2_src: './img/公司.png',
+            img3_src: './img/bg1.jpeg'
+        }
+
+        function show_something(img_name, index) {
+            // 創建一個新的 Canvas 元素
+            console.log(img_name)
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+            context.clearRect(-canvas.width, -canvas.height, canvas.width * 2, canvas.height * 2);
+            if (index == 1) {
+                img_para.img1_src = `./img/${img_name}.png`
+            }
+            if (index == 2) {
+                img_para.img2_src = `./img/${img_name}.png`
+            }
+            if (index == 3) {
+                img_para.img3_src = `./img/${img_name}.jpeg`
+            }
+            // 加載要合併的 PNG 圖像
+            var image1 = new Image();
+            image1.src = img_para.img1_src;
+            var image2 = new Image();
+            image2.src = img_para.img2_src;
+            var image3 = new Image();
+            image3.src = img_para.img3_src;
+
+            // 檢查圖像是否已經加載完成
+            if (image1.complete && image2.complete && image3.complete) {
+
+                context.drawImage(image3, 0, 0);
+                var targetWidth = 400; // 目標寬度
+                var targetHeight = 150; // 目標高度
+
+                // 計算縮放比例
+                var scaleX = targetWidth / image1.width;
+                var scaleY = targetHeight / image1.height;
+
+                // 繪製圖像，並進行縮小
+                context.drawImage(image1, -100, 0, targetWidth, targetHeight);
+                var targetWidth = 400; // 目標寬度
+                var targetHeight = 150; // 目標高度
+
+                // 計算縮放比例
+                var scaleX = targetWidth / image2.width;
+                var scaleY = targetHeight / image2.height;
+
+                // 繪製圖像，並進行縮小
+                context.drawImage(image2, 0, 0, targetWidth, targetHeight);
+                // 將 Canvas 元素轉換為 Data URL
+                var combinedImageURL = canvas.toDataURL();
+
+                // 創建一個新的圖像元素，顯示合併後的圖像
+                var combinedImage = new Image();
+                combinedImage.src = combinedImageURL;
+
+                // 將圖像元素添加到頁面上
+                // document.body.appendChild(combinedImage);
+                $(".img").empty()
+                $(".img").append(combinedImage)
+            } else {
+                // 監聽圖像的加載事件
+                image1.onload = image2.onload = image3.onload = function () {
+                    context.drawImage(image3, 0, 0);
+
+                    var targetWidth = 400; // 目標寬度
+                    var targetHeight = 150; // 目標高度
+
+                    // 計算縮放比例
+                    var scaleX = targetWidth / image1.width;
+                    var scaleY = targetHeight / image1.height;
+
+                    // 繪製圖像，並進行縮小
+                    context.drawImage(image1, -100, 0, targetWidth, targetHeight);
+                    var targetWidth = 400; // 目標寬度
+                    var targetHeight = 150; // 目標高度
+
+                    // 計算縮放比例
+                    var scaleX = targetWidth / image2.width;
+                    var scaleY = targetHeight / image2.height;
+
+                    // 繪製圖像，並進行縮小
+                    context.drawImage(image2, 0, 0, targetWidth, targetHeight);
+                    // 將 Canvas 元素轉換為 Data URL
+                    var combinedImageURL = canvas.toDataURL();
+
+                    // 創建一個新的圖像元素，顯示合併後的圖像
+                    var combinedImage = new Image();
+                    combinedImage.src = combinedImageURL;
+
+                    // 將圖像元素添加到頁面上
+                    // document.body.appendChild(combinedImage);
+                    $(".img").empty()
+                    $(".img").append(combinedImage)
+                };
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
