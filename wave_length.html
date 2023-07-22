@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心靈共感</title>
+    <script src="
+https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js
+"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add the Firebase Analytics SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <!-- Add the Firebase Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引入 jQuery 和 Bootstrap 的 JS 檔案 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- 引入 Toastify 的 CSS & JS文件  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css"
+        integrity="sha512-UiKdzM5DL+I+2YFxK+7TDedVyVm7HMp/bN85NeWMJNYortoll+Nd6PU9ZDrZiaOsdarOyk9egQm6LOJZi36L2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"
+        integrity="sha512-79j1YQOJuI8mLseq9icSQKT6bLlLtWknKwj1OpJZMdPt2pFBry3vQTt+NZuJw7NSd1pHhZlu0s12Ngqfa371EA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- data table -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css"
+        integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+        integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        #text1,
+        #text2 {
+            font-size: 60px;
+        }
+
+        .host_div {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <span id="text1"></span>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4">
+                <span id="text2"></span>
+            </div>
+        </div>
+        <div id="main" style="width: 600px;height:400px;"></div>
+        <button id="button-a">切換字詞</button>
+        <button id="button-b">隨機目標(不改圖)</button>
+        <button id="button-c">設定使用者</button>
+        <button id="button-d">猜數字</button>
+        <button id="button-e">隱藏數字</button>
+        <button id="button-f">顯示數字</button>
+        <button id="button-g">算分數</button>
+        <button id="button-h">指定加分</button>
+        <button id="button-i">指定關主</button>
+        <button id="button-j">猜數歸零</button>
+        <button id="button-k">發送數字給關主</button>
+        <input type="text" name="" id="input-str">
+        <input type="number" name="" id="input-num">
+        <select name="" id="user_select">
+            <option value=""></option>
+        </select>
+        <div class="host_div">目前關主： <span id="host_name"></span></div>
+        <div class="dataTable1" id="dataTable1">
+            <table id="example" class="table-bordered table" style="width:100%"></table>
+        </div>
+    </div>
+
+
+</body>
+<script type="text/javascript">
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCLXKg7Ru5p5dtgyRs28-qg8LQaG69yME",
+        // authDomain: "friendly-sensor-137111.firebaseapp.com",
+        databaseURL: "https://friendly-sensor-137111-default-rtdb.firebaseio.com",
+        projectId: "friendly-sensor-137111",
+        storageBucket: "friendly-sensor-137111.appspot.com",
+        // messagingSenderId: "824581584416",
+        appId: "1:824581584416:web:fdd5462dd85230d8caae45",
+        measurementId: "G-2HYJ96RDLV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // 獲取資料庫的引用
+    const database = firebase.database();
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    const gaugeData = [
+        // {
+        //     value: 20,
+        //     name: 'Good',
+        //     title: {
+        //         offsetCenter: ['-40%', '80%']
+        //     },
+        //     detail: {
+        //         offsetCenter: ['-40%', '95%']
+        //     }
+        // },
+        // {
+        //     value: 40,
+        //     name: 'Better',
+        //     title: {
+        //         offsetCenter: ['0%', '80%']
+        //     },
+        //     detail: {
+        //         offsetCenter: ['0%', '95%']
+        //     }
+        // },
+        // {
+        //     value: 60,
+        //     name: 'Perfect',
+        //     title: {
+        //         offsetCenter: ['40%', '80%']
+        //     },
+        //     detail: {
+        //         offsetCenter: ['40%', '95%']
+        //     }
+        // }
+    ];
+    option = {
+        series: [
+            {
+                type: 'gauge',
+                anchor: {
+                    show: true,
+                    showAbove: true,
+                    size: 18,
+                    itemStyle: {
+                        color: '#FAC858'
+                    }
+                },
+                pointer: {
+                    icon: 'path://M2.9,0.7L2.9,0.7c1.4,0,2.6,1.2,2.6,2.6v115c0,1.4-1.2,2.6-2.6,2.6l0,0c-1.4,0-2.6-1.2-2.6-2.6V3.3C0.3,1.9,1.4,0.7,2.9,0.7z',
+                    width: 8,
+                    length: '80%',
+                    offsetCenter: [0, '8%']
+                },
+                progress: {
+                    show: true,
+                    overlap: true,
+                    roundCap: true
+                },
+                axisLine: {
+                    roundCap: true
+                },
+                data: gaugeData,
+                title: {
+                    fontSize: 14
+                },
+                detail: {
+                    width: 40,
+                    height: 14,
+                    fontSize: 14,
+                    color: '#fff',
+                    backgroundColor: 'inherit',
+                    borderRadius: 3,
+                    formatter: '{value}%'
+                }
+            }
+        ]
+    };
+    // setInterval(function () {
+    //     gaugeData[0].value = +(Math.random() * 100).toFixed(2);
+    //     gaugeData[1].value = +(Math.random() * 100).toFixed(2);
+    //     gaugeData[2].value = +(Math.random() * 100).toFixed(2);
+    //     myChart.setOption({
+    //         series: [
+    //             {
+    //                 data: gaugeData
+    //             }
+    //         ]
+    //     });
+    // }, 2000);
+
+    option && myChart.setOption(option);
+
+    // 一個陣列 裡面裝著 N個 長度為2的array 裡面放很多詞彙
+    const data_string_2d_arr = [["巨大", "渺小"], ["富有", "窮酸"], ["炎熱", "冰冷"], ["積極", "被動"], ["餓", "飽"], ["高大", "矮小"], ['正義', '邪惡'],
+    ['高', '矮'],
+    ['胖', '瘦'],
+    ['神所喜悅', '神所厭惡'],
+    ['帥/美', '其貌不揚'],
+    ['家喻戶曉', '默默無聞'],
+    ['聰明', '愚拙'],
+    ['長壽', '短命'],
+    ['兇猛', '溫馴'],
+    ['信仰堅定', '沒有信心'],
+    ['準時', '遲到'],
+    ['有愛心', '沒愛心'],
+    ['富有', '貧窮'],
+    ['豪華', '平淡'],
+    ['普通', '非凡'],
+    ['冷', '熱'],
+    ['小', '大'],
+    ['快速', '緩慢'],
+    ['強大', '弱小'],
+    ['行神眼中看為正的事', '行神眼中看為惡的事'],
+    ['忙碌', '悠閒'],
+    ['虛空', '有意義'],
+    ['心裡剛硬', '心裡柔和'],
+    ['明亮', '黑暗'],
+    ['環保', '污染'],
+    ['黑', '白'],
+    ['義人', '惡人'],
+    ['進天國', '下地獄'],
+    ['豐年', '饑荒'],
+    ['正直', '詭詐'],
+    ['公義', '慈愛'],
+    ['福氣', '禍患'],
+    ['健康', '生病'],
+    ['對自己有益', '對所有人有益'],
+    ['有趣', '無聊'],
+    ['濕潤', '乾燥'],
+    ['靠近', '遠離'],
+    ['長久', '短暫'],
+    ['驕傲', '驕傲'],
+    ['屬靈', '屬世界'],
+    ['信徒', '外邦人'],
+    ['愛', '恨'],
+    ['年長', '年幼'],
+    ['藍', '綠'],
+    ['天上', '地上'],
+    ['先進', '落後'],
+    ['理所當然', '不可思議'],
+    ['困難', '簡單'],
+    ['和平', '血流成河'],
+    ['表裡如一', '人面獸心'],
+    ['救恩', '滅亡'],
+    ['朋友', '陌生人'],
+    ['按部就班', '一步登天'],
+    ['生命', '死亡'],
+    ['耐心', '衝動'],
+    ['多', '少'],
+    ['早', '晚'],
+    ['主動', '被動'],
+    ['學習', '教導'],
+    ['高音', '低音'],
+    ['軟弱', '剛強'],
+    ['堅固', '脆弱'],
+    ['美味', '難吃'],
+    ['未來', '過去'],
+    ['晴朗', '暴雨'],
+    ['心甘情願', '不情不願'],
+    ['真實', '虛擬'],
+    ['堅若磐石', '以卵擊石'],
+    ['至關重要', '無關緊要'],
+    ['快樂', '憂愁'],
+    ['昂貴', '便宜'],
+    ['肯定', '疑惑'],
+    ['表面', '內在'],
+    ['欺騙', '誠實'],
+    ['頻繁', '偶爾'],
+    ['清醒', '昏睡'],
+    ['合法', '非法'],
+    ['獎勵', '處罰'],
+    ['知足常樂', '貪得無厭'],
+    ['安靜', '吵鬧'],
+    ['濃', '稀'],
+    ['常見', '稀有'],
+    ['口才好', '拙口笨舌'],
+    ['甜', '苦'],
+    ['污穢', '乾淨'],
+    ['尊敬', '藐視'],
+    ['方', '園'],
+    ['危險', '安全'],
+    ['幸運', '不幸']]
+    const data_string_obj_arr = data_string_2d_arr.map((e, index) => {
+        return ({ id: index, data: e, isRepeat: false })
+    })
+    // 使用者列表物件
+    const user_arr = []
+    // name: name,
+    //         score: 0,
+    //         type: "",
+    //         char: "", host||guesser
+    //         guess_num: 0
+    // id: ""
+    // 當前參數
+    const para_now = {
+        target_num: -1,
+        current_data: ["", ""]
+    }
+
+    /**
+         * 顯示訊息
+         * @param {string} message - 要顯示的訊息
+         * @param {string} [state="success"] - 訊息的狀態，可以是 "success"、"error"、"warning" 或 
+                    "client_ok"、  "client_error" 中的任意一個（默認是 "success"）
+         * @returns {void}
+         * success 操作成功
+         * error 出現大錯了！ 正常操作 無論如何都不該出現！ 有出現就要去debug
+         * warning 正常操作下的違規操作   提醒此操作無效即可
+         */
+    function show_message(message, state = "success") {
+        const state_dict_map_backgroundColor = {
+            //綠色系版本：表成功
+            success: "linear-gradient(to right, #00b09b, #96c93d)",
+            //紅色系版本：表危險 錯誤
+            error: "linear-gradient(to right, #ff416c, #ff4b2b)",
+            //黃色系版本：表警告
+            warning: "linear-gradient(to right, #fbb034, #ffdd00)",
+            //藍色系版本：來自client端的操作成功
+            client_ok: "linear-gradient(to right, #00bfff, #0072ff)",
+            //紫色系版本：來自client端的操作失敗
+            client_error: "linear-gradient(to right, #9b50ff, #a849ff)",
+        }
+        if (state_dict_map_backgroundColor[state] == undefined) {
+            return show_message("show_message收到不符合的 state", "error")
+        }
+        if (typeof message !== "string") {
+            return show_message("show_message收到不符合的 message", "error")
+        }
+        Toastify({
+            text: message,
+            duration: 3000, // 設定顯示時間（毫秒）
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // 設定顯示位置
+            position: "right",
+            backgroundColor: state_dict_map_backgroundColor[state],
+            stopOnFocus: true // 在焦點處於提示訊息上時停止顯示
+        }).showToast();
+    }
+
+    function user_generator(name) {
+        const user_obj = {
+            name: name,
+            score: 0,
+            type: "",
+            state: "",
+            guess_num: 0,
+            char: "guesser"
+            // id: ""
+        }
+        return user_obj
+    }
+
+    // 新增使用者 (自動填入id)
+    function create_a_user_to_user_arr(user_obj) {
+        const new_id = user_arr.length
+        user_obj.id = new_id
+        user_arr.push(user_obj)
+    }
+
+    // 批量加入使用者 
+    function create_users_to_user_arr(user_obj_arr) {
+        for (let user_obj in user_obj_arr) {
+            create_a_user_to_user_arr(user_obj)
+        }
+    }
+
+    // random a number
+    function random_a_number(num) {
+        const random_number = Math.floor(Math.random() * num)
+        return random_number
+    }
+
+    // 輸入目標與猜測 回傳分數 
+    function count_score(guess_number, target_number) {
+        const scalar_arr = [5, 10, 15, 20, 25]
+        const score_get_arr = [5, 4, 3, 2, 1]
+        for (let i = 0; i < 5; i++) {
+            if (Math.abs(guess_number - target_number) < scalar_arr[i]) {
+                return score_get_arr[i]
+            }
+        }
+        return 0
+    }
+
+    // 輸入 猜測 放到echarts上 
+    function show_guess_number_to_echarts(guess_number, name) {
+        const index = gaugeData.filter(e => e.name != "目標").length
+        if (gaugeData.filter(e => e.name == name).length == 1) {
+            gaugeData.filter(e => e.name == name)[0].value = guess_number
+            option && myChart.setOption(option);
+            return
+        }
+        gaugeData.push(
+            {
+                value: guess_number,
+                name: name,
+                title: {
+                    offsetCenter: [`${-60 + index * 40}%`, '80%']
+                },
+                detail: {
+                    offsetCenter: [`${-60 + index * 40}%`, '95%']
+                }
+            }
+        )
+        option && myChart.setOption(option);
+    }
+    function show_target_number_to_echarts(target_number) {
+        if (gaugeData.filter(e => e.name == "目標").length == 1) {
+            gaugeData.filter(e => e.name == "目標")[0].value = target_number
+            option && myChart.setOption(option);
+            return
+        }
+        gaugeData.push(
+            {
+                value: target_number,
+                name: "目標",
+            }
+        )
+        option && myChart.setOption(option);
+    }
+    function hide_target_number_to_echarts() {
+        if (gaugeData.filter(e => e.name == "目標").length == 1) {
+            gaugeData.filter(e => e.name == "目標")[0].value = 0
+            option && myChart.setOption(option);
+            return
+        }
+        gaugeData.push(
+            {
+                value: target_number,
+                name: "目標",
+            }
+        )
+        option && myChart.setOption(option);
+        show_message("隱藏數字成功")
+
+    }
+
+    show_target_number_to_echarts(50)
+
+    function generate_target_num() {
+        return random_a_number(100)
+    }
+
+    function send_target_num_to_host() {
+        //TODO: 把目標數字發送到使用者 主持人手機上
+        const target_num = generate_target_num()
+    }
+    // 不重複 如果輪過一遍 就重新來
+    function set_current_data_string() {
+        let no_repeat_data_arr = data_string_obj_arr.filter(e => e.isRepeat == false)
+        if (no_repeat_data_arr.length == 0) {
+            data_string_obj_arr.forEach(e => e.isRepeat = false)
+            console.log("重置")
+        }
+        no_repeat_data_arr = data_string_obj_arr.filter(e => e.isRepeat == false)
+        const random_number = random_a_number(no_repeat_data_arr.length)
+        para_now.current_data = no_repeat_data_arr[random_number].data
+        no_repeat_data_arr[random_number].isRepeat = true
+        show_text()
+        console.log(para_now.current_data)
+        show_message("重設字詞成功")
+
+    }
+    function set_para_now_target_num_randomly() {
+        para_now.target_num = random_a_number(100) + 1
+        console.log(para_now.target_num)
+        show_message("重設成功", "success")
+        // show_target_number_to_echarts(para_now.target_num)
+    }
+    function show_text() {
+        $("#text1").html(para_now.current_data[0])
+        $("#text2").html(para_now.current_data[1])
+    }
+    function show_all_user_guess() {
+        user_arr.forEach(e => { show_guess_number_to_echarts(e.guess_num, e.name) })
+    }
+    function add_user_with_name(name) {
+
+        //檢查是否存在 若不存在才能新增
+        if (user_arr.filter(e => e.name == name).length == 1) {
+            show_message(`已經有該用戶名了 不可新增 重複的名字為： ${name}`, "warning")
+            return
+        }
+        user_arr.push(user_generator(name))
+        show_user_table()
+        user_select_set()
+
+    }
+    function from_button_add_user() {
+        const name = $("#input-str").val()
+        if (name == "") {
+            show_message("使用者不得為空 操作失敗")
+            return
+        }
+        add_user_with_name(name)
+    }
+
+    function from_button_set_user_guess() {
+
+        const name = $("#input-str").val()
+        const guess_num = $("#input-num").val()
+        set_user_guess(name, guess_num)
+
+    }
+
+    function set_user_guess(name, guess_num) {
+        console.log("set_user_guess")
+        const a_user = user_arr.filter((e => e.name == name))
+        if (a_user.length != 1) {
+            show_message(`不存在的名字: ${name}`, "error")
+            return
+        }
+        a_user[0].guess_num = guess_num
+        show_all_user_guess()
+    }
+
+    function count_all_score() {
+        const player_arr = user_arr.filter(e => e.guess_num != 0)
+        player_arr.forEach(e => {
+            const get_point = count_score(e.guess_num, para_now.target_num)
+            e.score = e.score + get_point
+            show_message(`${e.name} 得到了 ${get_point} 分`)
+        })
+        show_user_table()
+        show_message("結算分數成功")
+
+    }
+    function start_wave_length_server() {
+        const clientRef = database.ref('wave_length/client_do')
+        clientRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log(data)
+            if (data.action == 'change_guess_num') {
+                //資料格式：
+                //{ name:"XXX" , action:"change_guess_num" , guess_num:60 }
+                a_user = user_arr.filter(e => e.name == data.name)
+                if (a_user.length != 1) {
+                    show_message(`收到未知的用戶名的操作：${data.name}`, "error")
+                    return
+                }
+                a_user[0].guess_num = data.guess_num
+                show_all_user_guess()
+            }
+            if (data.action == 'login') {
+                //資料格式：
+                //{ name:"XXX" , action:"login"  }
+                a_user = user_arr.filter(e => e.name == data.name)
+                if (a_user.length != 0) {
+                    show_message(`已經有該用戶：${data.name}`, "error")
+                    return
+                }
+                add_user_with_name(data.name);
+                show_message(`用戶： ${data.name} 已經成功登入`)
+            }
+            if (data.action == 'change_data_string') {
+                //資料格式：
+                //{ name:"XXX" , action:"change_data_string"  }
+                a_user = user_arr.filter(e => e.name == data.name)
+                if (a_user.length != 1) {
+                    show_message(`收到未知的用戶名的操作：${data.name}`, "error")
+                    return
+                }
+                if (data.name != 1) {
+                    show_message(`收到未知的用戶名的操作：${data.name}`, "error")
+                    return
+                }
+                set_current_data_string()
+            }
+            if (data.action == 'change_words') {
+                //資料格式：
+                //{ name:"XXX" , action:"change_words"  }
+                a_user = user_arr.filter(e => e.name == data.name)
+                if (a_user.length != 1) {
+                    show_message(`收到未知的用戶名的操作：${data.name}`, "error")
+                    return
+                }
+                if (a_user[0].char != "host") {
+                    show_message(`收到用戶名的操作：${data.name} 但你不是主持人 操作失敗`, "error")
+                    return
+                }
+                set_current_data_string()
+                show_message(`來自用戶： ${data.name} 的換詞操作成功`)
+            }
+
+        }
+        )
+    }
+    function send_target_num_to_host_client() {
+        a_user = user_arr.filter(e => e.char == "host")
+        if (a_user.length != 1) {
+            show_message(`主持者不存在`, "error")
+            return
+        }
+        const serverRef = database.ref('wave_length/server_do')
+        serverRef.set({
+            name: a_user[0].name,
+            target_num: para_now.target_num,
+            action: "send_message_to_host",
+            isAll: false,
+            random: Math.random()
+        })
+        show_message("發送數字成功")
+
+    }
+    function send_score_get_to_host_client() {
+        const serverRef = database.ref('wave_length/server_do')
+        serverRef.set({
+            action: "send_message_to_all",
+            isAll: true,
+            random: Math.random()
+        })
+    }
+    function set_add_point() {
+        const name = $("#input-str").val()
+        const score = $("#input-num").val()
+        a_user = user_arr.filter(e => e.name == name)
+        if (a_user.length != 1) {
+            show_message("沒有該使用者存在或是有複數個人")
+            return
+        }
+        a_user[0].score = a_user[0].score + parseInt(score)
+        show_user_table()
+        show_message("設定加分成功")
+
+    }
+
+    function set_host() {
+        const name = $("#input-str").val()
+        a_user = user_arr.filter(e => e.name == name)
+        if (a_user.length != 1) {
+            show_message("沒有該使用者存在或是有複數個人", "warning")
+            return
+        }
+        user_arr.forEach(e => e.char = "guesser")
+        a_user[0].char = "host"
+        $("#host_name").html(name)
+        show_message("設定關主成功")
+    }
+
+    function set_all_guess_number_to_zero() {
+        user_arr.forEach(e => e.guess_num = 0)
+        show_all_user_guess()
+        show_message("設定猜數歸零成功")
+
+    }
+
+
+    function change_select() {
+        const change_value = $("#user_select").val()
+        $("#input-str").val(change_value)
+    }
+
+    function user_select_set() {
+        $("#user_select").empty()
+        $("#user_select").append(`<option value="undefined">undefined</option>`)
+        user_arr.forEach(e => {
+            $("#user_select").append(`<option value="${e.name}">${e.name}</option>`)
+        })
+    }
+
+
+    start_wave_length_server()
+    $("#button-a").click(set_current_data_string)
+    $("#button-b").click(set_para_now_target_num_randomly)
+    $("#button-c").click(from_button_add_user)
+    $("#button-d").click(from_button_set_user_guess)
+    $("#button-e").click(hide_target_number_to_echarts)
+    $("#button-f").click(() => show_target_number_to_echarts(para_now.target_num))
+    $("#button-g").click(count_all_score)
+    $("#button-h").click(set_add_point)
+    $("#button-i").click(set_host)
+    $("#button-j").click(set_all_guess_number_to_zero)
+    $("#button-k").click(send_target_num_to_host_client)
+    $("#user_select").change(change_select)
+
+
+
+
+    function show_user_table() {
+        if (user_arr.length != 0) {
+            $('#example').DataTable({
+                destroy: true,
+                data: user_arr,
+                columns: [
+                    { title: "name", data: "name" },
+                    { title: "score", data: "score" },
+                ]
+            });
+        }
+    }
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>

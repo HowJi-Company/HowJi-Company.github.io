@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心靈共感</title>
+    <script src="
+https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js
+"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add the Firebase Analytics SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <!-- Add the Firebase Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 引入 jQuery 和 Bootstrap 的 JS 檔案 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- 引入 Toastify 的 CSS & JS文件  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css"
+        integrity="sha512-UiKdzM5DL+I+2YFxK+7TDedVyVm7HMp/bN85NeWMJNYortoll+Nd6PU9ZDrZiaOsdarOyk9egQm6LOJZi36L2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"
+        integrity="sha512-79j1YQOJuI8mLseq9icSQKT6bLlLtWknKwj1OpJZMdPt2pFBry3vQTt+NZuJw7NSd1pHhZlu0s12Ngqfa371EA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- data table -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css"
+        integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+        integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .target_num_div {
+            font-size: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="">登入名字：<input type="text" name="" id="login_name">
+            <button id="login"> 登入</button>
+        </div>
+        <div class="">
+            猜數字：<input type="number" name="" id="input_num">
+            <button id="send_num"> 發送數字</button>
+        </div>
+
+        <div class="target_num_div">
+            目標數字： <span class="target_num_span" id="target_num_span"></span>
+        </div>
+        <button id="change_words"> 換詞</button>
+    </div>
+
+</body>
+
+</html>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCLXKg7Ru5p5dtgyRs28-qg8LQaG69yME",
+        // authDomain: "friendly-sensor-137111.firebaseapp.com",
+        databaseURL: "https://friendly-sensor-137111-default-rtdb.firebaseio.com",
+        projectId: "friendly-sensor-137111",
+        storageBucket: "friendly-sensor-137111.appspot.com",
+        // messagingSenderId: "824581584416",
+        appId: "1:824581584416:web:fdd5462dd85230d8caae45",
+        measurementId: "G-2HYJ96RDLV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // 獲取資料庫的引用
+    const database = firebase.database();
+
+    /**
+         * 顯示訊息
+         * @param {string} message - 要顯示的訊息
+         * @param {string} [state="success"] - 訊息的狀態，可以是 "success"、"error"、"warning" 或 
+                    "client_ok"、  "client_error" 中的任意一個（默認是 "success"）
+         * @returns {void}
+         * success 操作成功
+         * error 出現大錯了！ 正常操作 無論如何都不該出現！ 有出現就要去debug
+         * warning 正常操作下的違規操作   提醒此操作無效即可
+         */
+    function show_message(message, state = "success") {
+        const state_dict_map_backgroundColor = {
+            //綠色系版本：表成功
+            success: "linear-gradient(to right, #00b09b, #96c93d)",
+            //紅色系版本：表危險 錯誤
+            error: "linear-gradient(to right, #ff416c, #ff4b2b)",
+            //黃色系版本：表警告
+            warning: "linear-gradient(to right, #fbb034, #ffdd00)",
+            //藍色系版本：來自client端的操作成功
+            client_ok: "linear-gradient(to right, #00bfff, #0072ff)",
+            //紫色系版本：來自client端的操作失敗
+            client_error: "linear-gradient(to right, #9b50ff, #a849ff)",
+        }
+        if (state_dict_map_backgroundColor[state] == undefined) {
+            return show_message("show_message收到不符合的 state", "error")
+        }
+        if (typeof message !== "string") {
+            return show_message("show_message收到不符合的 message", "error")
+        }
+        Toastify({
+            text: message,
+            duration: 3000, // 設定顯示時間（毫秒）
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // 設定顯示位置
+            position: "right",
+            backgroundColor: state_dict_map_backgroundColor[state],
+            stopOnFocus: true // 在焦點處於提示訊息上時停止顯示
+        }).showToast();
+    }
+
+    let user_name = undefined
+
+    function login() {
+        if ($("#login_name").val() == "") {
+            show_message("請輸入使用者名字")
+            return
+        }
+        user_name = $("#login_name").val()
+        const clientRef = database.ref('wave_length/client_do').set({
+            action: "login",
+            name: user_name,
+            random: Math.random()
+        })
+        console.log("登入溜")
+    }
+    function change_guess_num() {
+        //{ name:"XXX" , action:"change_guess_num" , guess_num:60 }
+    }
+    function send_num() {
+        const guess_num = $("#input_num").val()
+        if (user_name == undefined) {
+            show_message("請先登入")
+        }
+        const clientRef = database.ref('wave_length/client_do').set({
+            name: user_name,
+            action: "change_guess_num",
+            guess_num: guess_num,
+            random: Math.random()
+        })
+        console.log("登入溜")
+    }
+    function change_words() {
+        if (user_name == undefined) {
+            show_message("請先登入", "error")
+            return
+        }
+        const clientRef = database.ref('wave_length/client_do').set({
+            name: user_name,
+            action: "change_words",
+            random: Math.random()
+        })
+        show_message("成功向伺服器請求換字詞")
+    }
+    function get_target_number(num) {
+        $("#target_num_span").html(num)
+    }
+
+
+    function client_reciever_start() {
+        const serverRef = database.ref('wave_length/server_do').on(
+            "value", (snapshot) => {
+                const data = snapshot.val();
+                console.log(data)
+                show_message("收到資料")
+                if (data.isAll == false) {
+                    if (data.name != user_name) {
+                        return
+                    } else {
+                        if (data.action == "send_message_to_host") {
+                            get_target_number(data.target_num)
+                        }
+                    }
+                } else {
+
+                }
+            }
+        )
+    }
+    $("#login").click(login)
+    $("#send_num").click(send_num)
+    $("#change_words").click(change_words)
+
+    client_reciever_start()
+
+
+
+</script>
