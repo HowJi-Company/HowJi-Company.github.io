@@ -16,6 +16,83 @@
         integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
         crossorigin="anonymous"></script>
     <style>
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #00ff00;
+            }
+
+            50% {
+                box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+
+            100% {
+                box-shadow: 0 0 10px #00ff00;
+            }
+        }
+
+        .container_show {
+            border: 1px solid red;
+            border-radius: 30px;
+            box-shadow: 3px 3px 3px 3px red;
+            height: 300px;
+            overflow: auto;
+        }
+
+        .container_p {
+            position: relative;
+            height: 500px;
+            width: 500px;
+            /* background-color: #f0f0f0; */
+        }
+
+        .dot {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            animation: glow 2s ease-in-out infinite;
+
+        }
+
+        #dot1 {
+            top: 50px;
+            left: 50px;
+        }
+
+        #dot2 {
+            top: 100px;
+            left: 300px;
+        }
+
+        #dot3 {
+            top: 300px;
+            left: 200px;
+        }
+
+        .show_pic {
+            background-image: url("./img/img1.jpeg");
+            height: 500px;
+        }
+
+        #text_a_div {
+            font-size: 40px;
+            color: rgb(66, 185, 66);
+        }
+
+        .hide {
+            opacity: 0;
+            transform: translateX(-100px);
+            /* transition: opacity 2s ease-in-out, transform 2s ease-in-out; */
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
+
         .main {
             background-color: aliceblue;
         }
@@ -370,10 +447,46 @@
                 <div class="row">
                     <div class="col-6 ">
                         <h3> HowJi產品應用</h1>
+
+
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div id="text_a_div">
+                                        <div class="d-none hide" id="myText_a">
+                                            <p class="p_1">這是文字 a 資訊 </p>
+                                            <div class="container container_show">
+                                                <p class="p_2">Jimmy Coding Ghost </p>
+                                                <p class="p_3">Jimmy aka 拷貝忍者 齊木吉吉米</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
                     </div>
                     <div class="col-6">
                         <div class="show_pic">
-                            <img src="./img/img1.jpeg" width="70%" alt="">
+
+                            <div class="container_p">
+                                <div class="dot show_a" id="dot1"></div>
+                                <div class="dot show_b" id="dot2"></div>
+                                <div class="dot show_c" id="dot3"></div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-12">
+                                    <button id="show_a">按鈕一 顯示A資訊(漸層)</button>
+                                </div>
+                                <div class="col-12">
+                                    <button id="show_b">按鈕二 顯示B資訊(漸層)</button>
+                                </div>
+                                <div class="col-12">
+                                    <button id="show_c">按鈕三 顯示C資訊(漸層)</button>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -468,5 +581,50 @@
 
 
 </body>
+
+<script>
+    function showText_a() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information A")
+        $(".p_2").html("A Jimmy means win!")
+        $(".p_3").html("A Jimmy let you win the wolrd!")
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+
+    }
+    function showText_b() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information B")
+        $(".p_2").html("believe Jimmy!")
+        $(".p_3").html(`
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!`)
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+    }
+    function showText_c() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information C")
+        $(".p_2").html("Carry man is Jimmy!")
+        $(".p_3").html("Creative man is Jimmy!")
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+    }
+    $(".show_a").click(showText_a)
+    $(".show_b").click(showText_b)
+    $(".show_c").click(showText_c)
+</script>
 
 </html>
