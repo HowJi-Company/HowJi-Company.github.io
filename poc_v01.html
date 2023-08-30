@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入 jQuery 和 Bootstrap 的 JS 檔案 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+    <style>
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #00ff00;
+            }
+
+            50% {
+                box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+
+            100% {
+                box-shadow: 0 0 10px #00ff00;
+            }
+        }
+
+        .carousel-caption {
+            left: 5%;
+            right: auto;
+            bottom: 40%;
+            transform: translateY(50%);
+        }
+
+        .carousel-caption h1 {
+            font-size: 3rem;
+        }
+
+        .carousel-caption h3 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* General styles for the section with id="section2" */
+        #section2 {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Image styles within id="section2" */
+        #section2 img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Caption styles within id="section2" */
+        #section2 .section-caption {
+            position: absolute;
+            left: 5%;
+            bottom: 40%;
+            transform: translateY(50%);
+            color: white;
+            /* Change text color to white */
+        }
+
+        /* Big text styles within id="section2" */
+        #section2 .section-caption h1 {
+            font-size: 3rem;
+        }
+
+        /* Small text styles within id="section2" */
+        #section2 .section-caption h3 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+
+
+
+        /* Section 3 specific styles */
+        #section3 h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        #section3 .col-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        #section3 .card {
+            position: relative;
+        }
+
+        #section3 .card img {
+            width: 100%;
+            height: auto;
+        }
+
+        #section3 .card-body {
+            text-align: left;
+        }
+
+        #section3 .card-body small {
+            font-size: 0.8rem;
+        }
+
+        #section3 .card-body h5 {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        #section3 .card-body p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Section 4 Specific Styles */
+        #section4 .hover-card {
+            position: relative;
+        }
+
+        #section4 .card-img-wrapper {
+            position: relative;
+        }
+
+        #section4 .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #section4 .img-overlay p {
+            color: white;
+            margin: 0;
+            text-align: center;
+        }
+
+        #section4 .hover-card:hover .img-overlay {
+            opacity: 1;
+        }
+
+        #section4 .hover-card-body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #section4 .hover-card:hover .hover-card-body {
+            background-color: teal;
+            color: white;
+        }
+
+        #section4 .hover-card:hover .hover-card-body .card-title {
+            color: white;
+        }
+
+        #section5 .full-item-row,
+        #section5 .full-item-span,
+        #section5 .half-items-row {
+            margin-bottom: 20px;
+        }
+
+        #section5 .col-8 {
+            position: relative;
+        }
+
+        #section5 .show-more-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 24px;
+        }
+
+        #section5 .full-item-span .img-fluid {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        #section5 .half-item-col {
+            padding: 0 10px;
+        }
+
+
+
+
+
+
+
+
+
+        .container_show {
+            border: 1px solid red;
+            border-radius: 30px;
+            box-shadow: 3px 3px 3px 3px red;
+            height: 300px;
+            overflow: auto;
+        }
+
+        .container_p {
+            position: relative;
+            height: 500px;
+            width: 500px;
+            /* background-color: #f0f0f0; */
+        }
+
+        .dot {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            background-color: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            animation: glow 2s ease-in-out infinite;
+
+        }
+
+        #dot1 {
+            top: 50px;
+            left: 50px;
+        }
+
+        #dot2 {
+            top: 100px;
+            left: 300px;
+        }
+
+        #dot3 {
+            top: 300px;
+            left: 200px;
+        }
+
+        .show_pic {
+            background-image: url("./img/img1.jpeg");
+            height: 500px;
+        }
+
+        #text_a_div {
+            font-size: 40px;
+            color: rgb(66, 185, 66);
+        }
+
+        .hide {
+            opacity: 0;
+            transform: translateX(-100px);
+            /* transition: opacity 2s ease-in-out, transform 2s ease-in-out; */
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
+
+        .main {
+            background-color: aliceblue;
+        }
+
+
+
+        /* .header-tag {
+            line-height: 45px;
+        } */
+
+        .area-1-set {
+            padding-top: 200px;
+            padding-bottom: 200px;
+            background-color: rgb(183, 228, 228);
+        }
+
+        .area-1-set h1,
+        .area-3-set h1,
+        .area-4-set h1,
+        .area-6-set h1 {
+            margin-bottom: 30px;
+        }
+
+        .area-2-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+        }
+
+        .card_css_1 {
+            margin: auto;
+        }
+
+        .area-2-set h1 {
+            margin-bottom: 60px;
+            margin-top: 120px;
+        }
+
+        .area-3-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+            background-color: azure;
+        }
+
+        .space-1 {
+            height: 50px;
+        }
+
+        .area-4-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+            background-color: rgb(179, 240, 202);
+        }
+
+        .area-5-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+            background-color: rgb(223, 179, 240);
+        }
+
+        .area-6-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+            background-color: rgb(240, 179, 208);
+        }
+
+        .area-7-set {
+            padding-top: 40px;
+            padding-bottom: 100px;
+            background-color: rgb(238, 203, 150);
+        }
+
+        .card {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Brand images -->
+            <a class="navbar-brand" href="#">
+                <img src="brand1.png" alt="Brand 1" height="30" id="nav-img-1">
+                <img src="brand2.png" alt="Brand 2" height="30" id="nav-img-2">
+            </a>
+
+            <!-- Toggler for smaller screens -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav" id="navbarNavList">
+                    <!-- Items will be dynamically inserted here -->
+                </ul>
+            </div>
+
+
+
+
+        </div>
+    </nav>
+
+    <!-- Carousel Structure -->
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators will be inserted here -->
+        <ol class="carousel-indicators" id="carouselIndicators">
+        </ol>
+
+        <!-- Slides will be inserted here -->
+        <div class="carousel-inner" id="carouselSlides">
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Section 2 Structure -->
+    <div id="section2" class="section">
+        <!-- Content will be inserted here -->
+    </div>
+
+    <!-- Section 3 Structure -->
+    <div id="section3" class="container">
+        <h3 class="text-center mb-5" id="section3-title">Upcoming Events</h3> <!-- Replace with your title -->
+        <div class="row" id="eventItems">
+            <!-- Event items will be inserted here -->
+        </div>
+    </div>
+    <!-- Section 4 Structure -->
+    <div id="section4" class="container">
+        <!-- Title will be inserted here -->
+        <div class="row" id="recommendationItems">
+            <!-- Recommendation items will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Section ５ Structure -->
+    <div id="section5" class="container">
+        <!-- 內容會在這裡動態生成 -->
+    </div>
+
+
+
+    <div class="main">
+
+        </header>
+        <div class="area-1-set">
+            <div class="row">
+                <div class="col">
+                    <div class="container">
+                        <h1> HowJi股份有限公司</h1>
+                        <h3>好機,</h3>
+                        <h3>協助你抓住每一個好機遇</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="area-2-set">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center">最新消息</h1>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="text-center">重要消息</h1>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-3-set">
+            <div class="container">
+                <h1 class="text-center">HowJi 與一般公司的差別</h1>
+                <div class="row">
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="area-4-set">
+            <div class="container">
+                <h1 class="text-center">HowJi 應用</h1>
+                <div class="row">
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-1"></div>
+                <div class="row">
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center justify-content-center">
+                        <div class="card card_css_1" style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="area-5-set">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 ">
+                        <h3> HowJi產品應用</h1>
+
+
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div id="text_a_div">
+                                        <div class="d-none hide" id="myText_a">
+                                            <p class="p_1">這是文字 a 資訊 </p>
+                                            <div class="container container_show">
+                                                <p class="p_2">Jimmy Coding Ghost </p>
+                                                <p class="p_3">Jimmy aka 拷貝忍者 齊木吉吉米</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="show_pic">
+
+                            <div class="container_p">
+                                <div class="dot show_a" id="dot1"></div>
+                                <div class="dot show_b" id="dot2"></div>
+                                <div class="dot show_c" id="dot3"></div>
+                            </div>
+
+                            <!-- <div class="row">
+                                <div class="col-12">
+                                    <button id="show_a">按鈕一 顯示A資訊(漸層)</button>
+                                </div>
+                                <div class="col-12">
+                                    <button id="show_b">按鈕二 顯示B資訊(漸層)</button>
+                                </div>
+                                <div class="col-12">
+                                    <button id="show_c">按鈕三 顯示C資訊(漸層)</button>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="area-6-set">
+            <div class="container">
+                <h1>拷貝忍者 寫輪眼の吉吉米 </h1>
+                <div class="row">
+                    <div class="col-md-3 col-10 text-center justify-content-start">
+                        <div class="card " style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-start">
+                        <div class="card " style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-10 text-center justify-content-start">
+                        <div class="card " style="width: 12rem;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="area-7-set">
+            <div class="container">
+                <h1>聯絡我們</h1>
+                <div class="row">
+                    <div class="col-6 border">
+                        <h2 class="text-center">我是用戶</h2>
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary w-100 mb-2">了解更多產品消息</a>
+                                <a href="#" class="btn btn-primary w-100 mb-2">專人服務諮詢</a>
+                                <a href="#" class="btn btn-primary w-100 mb-2">購買通路</a>
+                                <a href="#" class="btn btn-primary w-100 mb-2">售後服務</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 border">
+                        <h2 class="text-center">我是經銷商</h2>
+                        <div class="card card_css_1" style="width: 100%;">
+                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary w-100 mb-2">專人諮詢</a>
+                                <a href="#" class="btn btn-primary w-100 mb-2">售後服務</a>
+                                <a href="#" class="btn btn-primary w-100 mb-2">服務窗口</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</body>
+
+<script>
+    const global_config = {
+        header_img_url1: "https://www.weblink.com.tw/wp-content/themes/weblink/img/logo.svg",
+        header_img_url2: "https://cdn-cms.azureedge.net/Moxa/media/Global/logo.svg?ext=.svg",
+        section1_text_1: "超越極限",
+        section1_text_2: "穩定可靠、性能出眾的非網管型交換器",
+        section1_img_url1: "https://public.boxcloud.com/api/2.0/internal_files/1147981046707/versions/1249454587507/representations/jpg_paged_2048x2048/content/1.jpg?access_token=1!mnY_CiawO_g5ze5YrYiQjPol8PsAEnDEoNGA1gYkcgiOr4DXF7S1s0g5c7WB68WVsIT76fhzuOx__JeLDjZFQuTwLNZgSGTP3HmHI1iUeqMd1NcaKd54Yw3zRHRqm-JDvlBS-5tPhynZWgMLvshKd43qbfQMbuc0Dvp8jpuh0c_5txEh5TfJaKGfSB4C9OHZIcNwCw5PI-JZvJybnWNLVAOB6vWNBLbuA14mGyMqtVXoWuiXgn92xVGWHA3e-YEWrRqh256NDlSUzMqwUOd97F9M5bnTlk6pABPpQi9xS2PJbbLkfAADuaRnNEDoiXlij-xHE1I-ynv26Ii0vt_4bEJIoR2Oq-d7qaPeyxiW0PwWwFrY_5GlfT8sFCWTOCWbmsmdzkiz_GtBpOXEI7Oyi61-qpYcs2Dh8Vi342gaxivsZoTHjsl0qRy0ThuWysvUA3GJfn7i22hgeB_4mFA5G71dhVroask6QbHBEryC6ONPZNHJJ7gQk1p3RTceIt8pLX7lSoDdgXeo5VlIvit5nCcJHSR8AevUBgw3pupeRVur9XF3E1JWJLqpcHnoAM-SMg..&shared_link=https%3A%2F%2Fapp.box.com%2Fs%2Fnsq2656xtfsfbfywg02sk4lg04f5kaq1&box_client_name=box-content-preview&box_client_version=2.100.0",
+
+
+    }
+    const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"]
+    const section1 = [{
+        text_1: "超越極限",
+        text_2: "穩定可靠、性能出眾的非網管型交換器",
+        img_url1: "",
+    }, {
+        text_1: "可靠耐用先驅",
+        text_2: "35年卓越經驗，提供可信賴且安全的聯網設備",
+        img_url1: "",
+    }, {
+        text_1: "超越極限",
+        text_2: "穩定可靠、性能出眾的非網管型交換器",
+        img_url1: "",
+    }]
+    const section2 = {
+        text_1: "超越極限",
+        text_2: "穩定可靠、性能出眾的非網管型交換器",
+        img_url1: "./img/s1-1.jpeg",
+    }
+    const section3 = {
+        title: "最新活動",
+        items: [{
+            "日期": "2023 年 8 月 29 日（Tue） ∣ 9:00-16:30",
+            "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
+            "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
+            "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+            "圖片檔案": "./img/s3-1.png"
+        }, {
+            "日期": "2023 年 8 月 29 日（Tue） ∣ 9:00-16:30",
+            "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
+            "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
+            "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+            "圖片檔案": "./img/s3-1.png"
+
+        }, {
+            "日期": "2023 年 9 月 19 日（Tue） ∣ 9:00-16:30",
+            "標題": "[🔥熱烈報名中]  工廠最佳翻譯官-邊緣設定連結",
+            "說明文字": "Industrial Technology Exploration Day 由 Moxa 專業講師群提供一系列多元實戰課程，帶您實際學習並操作工業通訊所需的技能與產品，主題課程包含邊緣設備連結、無線工業網路佈建、可視化網路管理以及 OT 資安防護等實用內容，不論是各產業領域的現場工程人員或是管理方，皆可透過 Industrial Technology Exploration Day 了解更多工業場域所需具備的網路通訊技能、提升產業競爭力。",
+            "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+            "圖片檔案": "./img/s3-1.png"
+        }]
+
+    }
+    const section4 = {
+        title: "熱門推薦",
+        items: [
+            {
+                "標題1": "非網管型乙太交換器",
+                "標題2": "EDS-2000/G2000-EL系列",
+                "滑鼠點到浮現文字": `超迷你，最耐用隨插即用功能，以及安裝完畢一切搞定的耐用性，高度耐用於任何嚴苛環境，讓關鍵網路不中斷。此外，它的體積超小，可輕易安裝於空間受限的控制機櫃或機器中。
+                這些非網管型交換器提供 Fast Ethernet 和 Gigabit 的連接選項，可滿足不同的網路需求。`,
+                "圖片檔案": "./img/s4-1.jpg"
+            },
+            {
+                "標題1": "串列設備伺服器",
+                "標題2": "Nport 5000系列",
+                "滑鼠點到浮現文字": `提供多埠RS-232/422/485 ，使串列設備可立即連接網路
+                是將讀卡機和支付終端機等設備連接到 IP 乙太網路 LAN 的理想選擇。`,
+                "圖片檔案": "./img/s4-2.jpeg"
+            },
+            {
+                "標題1": "Modbus TCP 閘道器",
+                "標題2": "Mgate MB3000 系列",
+                "滑鼠點到浮現文字": `這些閘道器可支援多協定間的轉換，更快速輕鬆地進行配置、故障排除和轉換，是您最佳的 Modbus 網路整合選擇。可提供自動裝置路由，簡化配置（專利申請中）`,
+                "圖片檔案": "./img/s4-3.jpeg"
+            },
+        ]
+    }
+
+    const section5 = {
+        title: "一般商用 vs 工業級網通",
+        full_item: {
+            "圖片檔案": "./img/s5-1.png",
+            "標題": "工業用、嚴苛環境",
+            "文案": [
+                "高溫、震動頻繁、電磁波干擾的惡劣環境",
+                "工廠、變電站、軌道、太陽能案場等戶外場域",
+                "滿足設備連線穩定不中斷的需求",
+                "產品使用年限10年以上",
+                "維護年限約5年"
+            ]
+        },
+        half_items: [{
+            "圖片檔案": "./img/s5-2.png",
+            "標題": "家用環境",
+            "文案": [
+                "一般住家、10人以下的小型辦公室",
+                "網頁瀏覽、線上影音串流、遊戲等娛樂需求",
+                "滿足上網需求即可",
+                "產品使用年限約1-2年"
+            ]
+        }, {
+            "圖片檔案": "./img/s5-3.png",
+            "標題": "商用環境",
+            "文案": [
+                "餐廳、飯店、學校、中大型企業等跨樓層建築",
+                "連結多台電腦、IT機房、印表機、POS 、視訊會議需求",
+                "滿足高網速與多人同時連線需求",
+                "產品使用年限約3 - 5年",
+                "維護年限約3年"
+            ]
+        }],
+        full_item_span: {
+            "標題": "嚴苛的應用環境",
+            "內容": [
+                {
+                    "圖片檔案": "./img/s5-1-1.png",
+                    "文案": "高溫、震動頻繁的惡劣環境",
+                },
+                {
+                    "圖片檔案": "./img/s5-1-2.png",
+                    "文案": "密閉機櫃散熱不易",
+                },
+                {
+                    "圖片檔案": "./img/s5-1-3.png",
+                    "文案": "戶外溫差與溼氣，考驗產品壽命與堅固耐用程度",
+                },
+                {
+                    "圖片檔案": "./img/s5-1-4.png",
+                    "文案": "電子設備密集，電磁干繞大",
+                },
+                {
+                    "圖片檔案": "./img/s5-1-5.png",
+                    "文案": "不同通訊協定的溝通與轉換",
+                },
+                {
+                    "圖片檔案": "./img/s5-1-6.png",
+                    "文案": "重要設備連網的安全性"
+                },
+            ]
+        }
+
+
+    }
+
+
+
+    $(document).ready(function () {
+        // 请确保您的 section5 数据对象在这里或者在其他地方已经定义
+        const { title, full_item, half_items, full_item_span } = section5;
+
+        // 添加区块标题
+        $('#section5').append(`<h3 class="text-center mb-5">${title}</h3>`);
+
+        // 添加 full_item
+        let fullItemHtml = `
+    <div class="row full-item-row mb-5">
+      <div class="col-4">
+        <img src="${full_item['圖片檔案']}" class="img-fluid">
+      </div>
+      <div class="col-8">
+        <h4>${full_item['標題']}</h4>
+        <ul>
+          ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
+        </ul>
+        <button id="showMore" class="btn btn-link show-more-btn">↓</button>
+      </div>
+    </div>
+  `;
+        $('#section5').append(fullItemHtml);
+
+        // 添加 full_item_span（最初是隐藏的）
+        let fullItemSpanHtml = `
+    <div id="fullItemSpan" class="row full-item-span mb-5" style="display: none;">
+      <div class="col-6">
+        <h4>${full_item_span['標題']}</h4>
+        <div id="fullItemSpan_div1"> </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          ${full_item_span['內容'].map(item => `
+            <div class="col-4">
+              <img src="${item['圖片檔案']}" class="img-fluid">
+              <p>${item['文案']}</p>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+        // 在 full_item 之后添加 full_item_span
+        $('.full-item-row').after(fullItemSpanHtml);
+
+        const fullItemSpan = section5.full_item_span;
+        const items = fullItemSpan["內容"];
+        const ul = $('<ul></ul>');
+        items.forEach(item => {
+            const li = $('<li></li>').text(item["文案"]);
+            ul.append(li);
+        });
+        $("#fullItemSpan_div1").append(ul);
+
+        // “显示更多”按钮点击事件
+        $('#showMore').click(function () {
+            $('#fullItemSpan').toggle();
+            const arrow = $(this).text() === '↓' ? '↑' : '↓';
+            $(this).text(arrow);
+        });
+
+        // 添加 half_items
+        let halfItemsHtml = '<div class="row justify-content-between half-items-row">';
+        half_items.forEach(item => {
+            halfItemsHtml += `
+      <div class="col-5 half-item-col">
+        <div class="card">
+          <img src="${item['圖片檔案']}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">${item['標題']}</h5>
+            <ul>
+              ${item['文案'].map(text => `<li>${text}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+        });
+        halfItemsHtml += '</div>';
+        $('#section5').append(halfItemsHtml);
+    });
+
+
+    //section4
+    $(document).ready(function () {
+
+        $('#section4').prepend(`<h3 class="text-center mb-5">${section4.title}</h3>`);
+
+        section4.items.forEach((item) => {
+            const recItem = $(`
+      <div class="col-4">
+        <div class="card hover-card">
+          <div class="card-img-wrapper">
+            <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題1']}">
+            <div class="img-overlay">
+              <p>${item['滑鼠點到浮現文字']}</p>
+            </div>
+          </div>
+          <div class="card-body hover-card-body">
+            <h5 class="card-title">${item['標題1']}</h5>
+            <p class="card-subtitle">${item['標題2']}</p>
+          </div>
+        </div>
+      </div>
+    `);
+            $('#recommendationItems').append(recItem);
+        });
+    });
+    //section3
+    $(document).ready(function () {
+        const items = section3.items;
+        $("#section3-title").text(section3.title)
+        items.forEach((item) => {
+            const eventItem = $(`
+        <div class="col-4">
+          <div class="card">
+            <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
+            <div class="card-body">
+              <small class="text-muted">${item['日期']}</small>
+              <h5 class="card-title">${item['標題']}</h5>
+              <p class="card-text">${item['說明文字']}</p>
+              <a href="${item['連結（圖片/標題）']}" class="btn btn-primary">Learn More</a>
+            </div>
+          </div>
+        </div>
+      `);
+            $('#eventItems').append(eventItem);
+        });
+    });
+    // 第二區產生
+    // $(document).ready(function () {
+    //     const section2 = {
+    //         text_1: "超越極限",
+    //         text_2: "穩定可靠、性能出眾的非網管型交換器",
+    //         img_url1: "./img/s1-1.jpeg",
+    //     };
+
+    //     const image = $('<img>', { src: section2.img_url1, class: 'd-block w-100', alt: 'Image for Section 2' });
+    //     const caption = $('<div>', { class: 'section-caption d-none d-md-block text-start' });
+    //     const text1 = $('<h1>', { text: section2.text_1 });
+    //     const text2 = $('<h3>', { text: section2.text_2 });
+
+    //     caption.append(text1, text2);
+    //     $('#section2').append(image, caption);
+    // });
+    // 第一區產生
+    $(document).ready(function () {
+        const section1 = [{
+            text_1: "超越極限",
+            text_2: "穩定可靠、性能出眾的非網管型交換器",
+            img_url1: './img/s1-1.jpeg',
+        }, {
+            text_1: "可靠耐用先驅",
+            text_2: "35年卓越經驗，提供可信賴且安全的聯網設備",
+            img_url1: './img/s1-2.png',
+        }, {
+            text_1: "超越極限",
+            text_2: "穩定可靠、性能出眾的非網管型交換器",
+            img_url1: './img/s1-1.jpeg',
+        }];
+
+        // Randomly select an initial active slide
+        const randomIndex = Math.floor(Math.random() * section1.length);
+
+        section1.forEach((slide, index) => {
+            // Add indicators
+            const indicator = $('<li>', {
+                'data-bs-target': '#myCarousel',
+                'data-bs-slide-to': index,
+                'class': index === randomIndex ? 'active' : ''
+            });
+            $('#carouselIndicators').append(indicator);
+
+            // Add slides
+            const slideItem = $('<div>', { class: `carousel-item ${index === randomIndex ? 'active' : ''}` });
+            const image = $('<img>', { src: slide.img_url1, class: 'd-block w-100', alt: `Image ${index + 1}` });
+            const caption = $('<div>', { class: 'carousel-caption d-none d-md-block text-start' });
+            const text1 = $('<h1>', { text: slide.text_1 });
+            const text2 = $('<h3>', { text: slide.text_2 });
+
+            caption.append(text1, text2);
+            slideItem.append(image, caption);
+            $('#carouselSlides').append(slideItem);
+        });
+    });
+    // header nav產生
+    $(document).ready(function () {
+        const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"];
+        const img_arr = ["https://www.weblink.com.tw/wp-content/themes/weblink/img/logo.svg", "https://cdn-cms.azureedge.net/Moxa/media/Global/logo.svg?ext=.svg"]
+
+        header_list.forEach((item, index) => {
+            const spacingClass = index < header_list.length - 1 ? 'me-3' : '';
+            const navItem = $('<li>', { class: `nav-item ${spacingClass}` });
+            const navLink = $('<a>', { class: 'nav-link', text: item, href: '#' });
+            navItem.append(navLink);
+            $('#navbarNavList').append(navItem);
+        });
+        $("#nav-img-1").attr("src", img_arr[0])
+        $("#nav-img-2").attr("src", img_arr[1])
+    });
+
+
+
+
+    function showText_a() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information A")
+        $(".p_2").html("A Jimmy means win!")
+        $(".p_3").html("A Jimmy let you win the wolrd!")
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+
+    }
+    function showText_b() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information B")
+        $(".p_2").html("believe Jimmy!")
+        $(".p_3").html(`
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!
+        Best man is Jimmy!`)
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+    }
+    function showText_c() {
+        $("#myText_a").removeClass("d-none")
+        $("#myText_a").removeClass("show")
+        $(".p_1").html("this is information C")
+        $(".p_2").html("Carry man is Jimmy!")
+        $(".p_3").html("Creative man is Jimmy!")
+        setTimeout(() => {
+            $("#myText_a").addClass("show")
+        }, 200)
+    }
+    $(".show_a").click(showText_a)
+    $(".show_b").click(showText_b)
+    $(".show_c").click(showText_c)
+</script>
+
+</html>
