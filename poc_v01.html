@@ -31,6 +31,10 @@
             }
         }
 
+        .carousel-item {
+            /* height: 412px; */
+        }
+
         .carousel-caption {
             left: 5%;
             right: auto;
@@ -84,6 +88,12 @@
 
 
         /* Section 3 specific styles */
+        .section3_outer {
+            background-color: rgb(222, 221, 221);
+            padding-top: 2rem;
+            padding-bottom: 1rem;
+        }
+
         #section3 h3 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
@@ -96,11 +106,15 @@
 
         #section3 .card {
             position: relative;
+            border: none;
+            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
         }
 
         #section3 .card img {
             width: 100%;
             height: auto;
+            border-radius: 1rem;
         }
 
         #section3 .card-body {
@@ -121,9 +135,28 @@
             margin-top: 0.5rem;
         }
 
+        #section3 .s3-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: blue;
+            color: white;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 0.3rem;
+            text-decoration: none;
+        }
+
         /* Section 4 Specific Styles */
+        .section4_outer {
+            padding: 2rem 0 1rem 0;
+        }
+
         #section4 .hover-card {
             position: relative;
+            border: none;
+            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
         }
 
         #section4 .card-img-wrapper {
@@ -142,6 +175,8 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
+            border-radius: 1rem 1rem 0 0;
         }
 
         #section4 .img-overlay p {
@@ -161,40 +196,282 @@
         #section4 .hover-card:hover .hover-card-body {
             background-color: teal;
             color: white;
+            border-radius: 0 0 1rem 1rem;
         }
 
         #section4 .hover-card:hover .hover-card-body .card-title {
             color: white;
         }
 
-        #section5 .full-item-row,
-        #section5 .full-item-span,
-        #section5 .half-items-row {
-            margin-bottom: 20px;
+        .section5_outer {
+            background-color: rgb(188, 185, 185);
         }
 
-        #section5 .col-8 {
+        .divider {
+            height: 1px;
+            background-color: rgb(8, 7, 7);
+            margin: 10px 0;
+            width: 70%;
+        }
+
+        #section5 .full-item-row,
+        #section5 .full-item-span {
+            margin-bottom: 20px;
+            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            background-color: #fff;
+
+        }
+
+        #section5 .half-items-row .card {
+            margin-bottom: 20px;
+            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            background-color: #fff;
+        }
+
+        #section5 .half-items-row img {
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        #section5 h3 {
+            padding-top: 48px;
+        }
+
+        #section5 .col-6 {
             position: relative;
+            padding: 0;
+        }
+
+        #section5 .right-div {
+            padding: 2rem;
+            line-height: 2;
+        }
+
+        #section5 .col-6 .full-item-row img {
+            border-radius: 1rem 0 0 1rem;
         }
 
         #section5 .show-more-btn {
             position: absolute;
-            bottom: 0;
-            right: 0;
+            /* bottom: 1rem; */
+            /* right: 0; */
             background: none;
             border: none;
             font-size: 24px;
+            width: 90%;
+            background-color: blue;
+            margin-bottom: 20px;
+            margin-top: 30px;
         }
 
         #section5 .full-item-span .img-fluid {
             width: 100px;
             height: 100px;
             object-fit: cover;
+
         }
 
         #section5 .half-item-col {
             padding: 0 10px;
         }
+
+        #section6 {
+            position: relative;
+            height: 800px;
+            background-image: url('./img/s6-1.jpg');
+            background-size: cover;
+            /* 设置背景图像和其他样式 */
+        }
+
+        .infoTitle1 {
+            margin-bottom: 30px;
+            margin-left: 2rem;
+        }
+
+        .infoTitle {
+            margin-left: 2rem;
+        }
+
+        .product-map .dot {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: transparent;
+            border: 3px solid rgb(51, 208, 49);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .info-panel {
+            padding-top: 30px;
+            margin-left: 20px;
+            color: white;
+            width: 40%;
+            /* 设置信息面板样式 */
+        }
+
+        #infoTexts {
+            color: white;
+            border: 2px solid white;
+            background-color: rgb(119, 87, 209);
+            margin-left: 2rem;
+            padding: 20px;
+            border-radius: 20px;
+            max-height: 200px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        #infoTexts li {}
+
+        #infoBlocks li {
+            color: white;
+            border: 2px solid white;
+            list-style-type: none;
+            background-color: rgb(64, 39, 163);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+
+        }
+
+        #section7 {
+            /* position: relative; */
+            background-size: cover;
+            color: white;
+            background-image: url('./img/s7-0.jpeg');
+
+        }
+
+        #section7 .overlay {
+            /* position: absolute; */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 255, 0.5);
+            padding-top: 6rem;
+            /* 半透明的藍色 */
+        }
+
+        #section7 h1.main-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        #section7 .item-container {
+            display: flex;
+            /* flex-wrap: wrap; */
+            justify-content: space-around;
+        }
+
+        #section7 .item {
+            /* flex: 1; */
+            text-align: center;
+            margin-bottom: 6rem;
+            width: 15rem;
+            font-size: 1.2rem;
+        }
+
+        #section7 img {
+            width: 7rem;
+            margin-bottom: 2rem;
+        }
+
+
+
+
+        /* RWD */
+        @media (max-width: 768px) {
+            #section7 .item-container {
+                overflow: scroll;
+                scroll-snap-type: x mandatory;
+                display: flex;
+                flex-direction: row;
+            }
+
+            #section7 .item {
+                flex: 0 0 100%;
+                scroll-snap-align: start;
+            }
+        }
+
+        .section8_outer {
+            background-color: rgb(241, 239, 239);
+            padding-top: 2rem;
+            padding-bottom: 3rem;
+        }
+
+        #section8 {
+            text-align: center;
+        }
+
+        #section8 .main-title {
+            margin-bottom: 3rem;
+        }
+
+        #section8 .content-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #section8 .item {
+            width: 45%;
+            padding: 5rem;
+            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+            background-color: #fff;
+        }
+
+        #section8 .small-title {
+            color: black;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+
+        }
+
+        #section8 .link-button {
+            display: block;
+            width: 100%;
+            /* 使所有按鈕等寬 */
+            text-align: center;
+            background-color: blue;
+            color: white;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            /* 上下有邊距，左右沒有，以實現上下排列 */
+            border-radius: 0.3rem;
+            text-decoration: none;
+            line-height: 2;
+            margin-bottom: 1.3rem;
+            font-size: 1.5rem;
+        }
+
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logos img {
+            margin-right: 1rem;
+        }
+
+        .footer-copyright {
+            text-align: right;
+        }
+
+
+
 
 
 
@@ -223,9 +500,9 @@
             position: absolute;
             height: 20px;
             width: 20px;
-            background-color: #00ff00;
+            background-color: #49f349;
             border-radius: 50%;
-            box-shadow: 0 0 10px #00ff00;
+            box-shadow: 0 0 10px #36d936;
             animation: glow 2s ease-in-out infinite;
 
         }
@@ -399,28 +676,94 @@
     </div>
 
     <!-- Section 3 Structure -->
-    <div id="section3" class="container">
-        <h3 class="text-center mb-5" id="section3-title">Upcoming Events</h3> <!-- Replace with your title -->
-        <div class="row" id="eventItems">
-            <!-- Event items will be inserted here -->
+    <div class="section3_outer">
+        <div id="section3" class="container">
+            <h3 class="text-center mb-5" id="section3-title">Upcoming Events</h3> <!-- Replace with your title -->
+            <div class="row" id="eventItems">
+                <!-- Event items will be inserted here -->
+            </div>
         </div>
     </div>
     <!-- Section 4 Structure -->
-    <div id="section4" class="container">
-        <!-- Title will be inserted here -->
-        <div class="row" id="recommendationItems">
-            <!-- Recommendation items will be inserted here -->
+    <div class="section4_outer">
+        <div id="section4" class="container">
+            <!-- Title will be inserted here -->
+            <div class="row" id="recommendationItems">
+                <!-- Recommendation items will be inserted here -->
+            </div>
         </div>
     </div>
 
+
+
     <!-- Section ５ Structure -->
-    <div id="section5" class="container">
-        <!-- 內容會在這裡動態生成 -->
+    <div class="section5_outer">
+        <div id="section5" class="container">
+            <!-- 內容會在這裡動態生成 -->
+        </div>
     </div>
 
 
+    <!-- Section 6 Structure -->
+    <div id="section6">
+        <div class="container">
+            <div class="product-map">
+                <!-- 在这里动态生成小圆点 -->
+            </div>
+            <div class="info-panel">
+                <h1 id="infoTitle1" class="infoTitle1"></h1>
+                <h2 id="infoTitle" class="infoTitle"></h2>
+                <div id="infoBlocks"></div>
+                <div id="infoTexts"></div>
+            </div>
+            <div class="remark">
+                <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+            </div>
+        </div>
+    </div>
 
-    <div class="main">
+    <div id="section7">
+        <div class="overlay">
+            <div class="container">
+                <h1 class="main-title">台灣在地的35年工業網路及通訊專家</h1>
+                <div class="item-container">
+                    <!-- 這裡將動態渲染 items -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="section8_outer">
+
+        <div id="section8">
+            <h1 class="main-title">聯絡我們</h1>
+            <div class="content-container">
+                <!-- 這裡將動態渲染項目 -->
+            </div>
+        </div>
+
+    </div>
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-logos d-flex">
+                <img src="logo1.png" alt="Logo 1" id="footer_logo1">
+                <img src="logo2.png" alt="Logo 2" id="footer_logo2">
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2023 Your Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+    <!-- <div class="main">
 
         </header>
         <div class="area-1-set">
@@ -690,17 +1033,7 @@
                                 <div class="dot show_c" id="dot3"></div>
                             </div>
 
-                            <!-- <div class="row">
-                                <div class="col-12">
-                                    <button id="show_a">按鈕一 顯示A資訊(漸層)</button>
-                                </div>
-                                <div class="col-12">
-                                    <button id="show_b">按鈕二 顯示B資訊(漸層)</button>
-                                </div>
-                                <div class="col-12">
-                                    <button id="show_c">按鈕三 顯示C資訊(漸層)</button>
-                                </div>
-                            </div> -->
+                            
                         </div>
                     </div>
                 </div>
@@ -791,7 +1124,7 @@
 
 
 
-    </div>
+    </div> -->
 
 
 </body>
@@ -803,8 +1136,6 @@
         section1_text_1: "超越極限",
         section1_text_2: "穩定可靠、性能出眾的非網管型交換器",
         section1_img_url1: "https://public.boxcloud.com/api/2.0/internal_files/1147981046707/versions/1249454587507/representations/jpg_paged_2048x2048/content/1.jpg?access_token=1!mnY_CiawO_g5ze5YrYiQjPol8PsAEnDEoNGA1gYkcgiOr4DXF7S1s0g5c7WB68WVsIT76fhzuOx__JeLDjZFQuTwLNZgSGTP3HmHI1iUeqMd1NcaKd54Yw3zRHRqm-JDvlBS-5tPhynZWgMLvshKd43qbfQMbuc0Dvp8jpuh0c_5txEh5TfJaKGfSB4C9OHZIcNwCw5PI-JZvJybnWNLVAOB6vWNBLbuA14mGyMqtVXoWuiXgn92xVGWHA3e-YEWrRqh256NDlSUzMqwUOd97F9M5bnTlk6pABPpQi9xS2PJbbLkfAADuaRnNEDoiXlij-xHE1I-ynv26Ii0vt_4bEJIoR2Oq-d7qaPeyxiW0PwWwFrY_5GlfT8sFCWTOCWbmsmdzkiz_GtBpOXEI7Oyi61-qpYcs2Dh8Vi342gaxivsZoTHjsl0qRy0ThuWysvUA3GJfn7i22hgeB_4mFA5G71dhVroask6QbHBEryC6ONPZNHJJ7gQk1p3RTceIt8pLX7lSoDdgXeo5VlIvit5nCcJHSR8AevUBgw3pupeRVur9XF3E1JWJLqpcHnoAM-SMg..&shared_link=https%3A%2F%2Fapp.box.com%2Fs%2Fnsq2656xtfsfbfywg02sk4lg04f5kaq1&box_client_name=box-content-preview&box_client_version=2.100.0",
-
-
     }
     const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"]
     const section1 = [{
@@ -832,20 +1163,20 @@
             "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
             "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
             "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-            "圖片檔案": "./img/s3-1.png"
+            "圖片檔案": "./img/s3-1.jpg"
         }, {
             "日期": "2023 年 8 月 29 日（Tue） ∣ 9:00-16:30",
             "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
             "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
             "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-            "圖片檔案": "./img/s3-1.png"
+            "圖片檔案": "./img/s3-1.jpg"
 
         }, {
             "日期": "2023 年 9 月 19 日（Tue） ∣ 9:00-16:30",
             "標題": "[🔥熱烈報名中]  工廠最佳翻譯官-邊緣設定連結",
             "說明文字": "Industrial Technology Exploration Day 由 Moxa 專業講師群提供一系列多元實戰課程，帶您實際學習並操作工業通訊所需的技能與產品，主題課程包含邊緣設備連結、無線工業網路佈建、可視化網路管理以及 OT 資安防護等實用內容，不論是各產業領域的現場工程人員或是管理方，皆可透過 Industrial Technology Exploration Day 了解更多工業場域所需具備的網路通訊技能、提升產業競爭力。",
             "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-            "圖片檔案": "./img/s3-1.png"
+            "圖片檔案": "./img/s3-1.jpg"
         }]
 
     }
@@ -864,13 +1195,13 @@
                 "標題2": "Nport 5000系列",
                 "滑鼠點到浮現文字": `提供多埠RS-232/422/485 ，使串列設備可立即連接網路
                 是將讀卡機和支付終端機等設備連接到 IP 乙太網路 LAN 的理想選擇。`,
-                "圖片檔案": "./img/s4-2.jpeg"
+                "圖片檔案": "./img/s4-2.jpg"
             },
             {
                 "標題1": "Modbus TCP 閘道器",
                 "標題2": "Mgate MB3000 系列",
                 "滑鼠點到浮現文字": `這些閘道器可支援多協定間的轉換，更快速輕鬆地進行配置、故障排除和轉換，是您最佳的 Modbus 網路整合選擇。可提供自動裝置路由，簡化配置（專利申請中）`,
-                "圖片檔案": "./img/s4-3.jpeg"
+                "圖片檔案": "./img/s4-3.jpg"
             },
         ]
     }
@@ -878,7 +1209,7 @@
     const section5 = {
         title: "一般商用 vs 工業級網通",
         full_item: {
-            "圖片檔案": "./img/s5-1.png",
+            "圖片檔案": "./img/s5-1.jpg",
             "標題": "工業用、嚴苛環境",
             "文案": [
                 "高溫、震動頻繁、電磁波干擾的惡劣環境",
@@ -889,7 +1220,7 @@
             ]
         },
         half_items: [{
-            "圖片檔案": "./img/s5-2.png",
+            "圖片檔案": "./img/s5-2.jpg",
             "標題": "家用環境",
             "文案": [
                 "一般住家、10人以下的小型辦公室",
@@ -898,7 +1229,7 @@
                 "產品使用年限約1-2年"
             ]
         }, {
-            "圖片檔案": "./img/s5-3.png",
+            "圖片檔案": "./img/s5-3.jpg",
             "標題": "商用環境",
             "文案": [
                 "餐廳、飯店、學校、中大型企業等跨樓層建築",
@@ -941,6 +1272,207 @@
 
     }
 
+    const section6 = {
+        "背景圖案": "",
+        title: "MOXA 產品分類地圖",
+        "備註": "專案產品，請洽詢專人服務	https://www.moxa.com/tw/contact-us/contact-form",
+        items: [
+            {
+                title: "再生能源: 太陽能 / 風力發電",
+                blocks: ["非網管型&網管型交換器 (EDS)", "通用控制器和 I / O(ioLogik)", "ARM 電腦(UC)"],
+                text: ["可在戶外寬溫環境下可靠運作", "提供遠端設備和軟體配置，並提供遠端故障排除功能，可大幅簡化維護流程", "立即可用的軟體解決方案，支援 Modbus 資料擷取、遠端設備管理，以及 Modbus 轉 MQTT 協定轉換"],
+                x_position: "55%",
+                y_position: "60%",
+            }, {
+                title: "再生能源: 能源儲存／變電站自動化／關鍵電力",
+                blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "先進控制器和 I / O(iothinx)", "x86電腦(DA)"],
+                text: ["多協定解決方案，包含 I / O 或協定閘道器，可輕易實現 IT - OT 融合", "使用 ThingsPro 閘道器和伺服器工具，輕鬆從分散式 ESS 站點擷取資料", "利用嵌入式電腦中的 Modbus 協定庫和 I / O 設備的 MXIO 程式庫，簡化軟體開發", "閘道器設備支援寬溫操作，可因應惡劣的戶外環境，而且外形輕巧，可安裝於任何 ESS 機器中"],
+                x_position: "58%",
+                y_position: "61%",
+            }, {
+                title: "軌道運輸／遠端監控",
+                blocks: ["工業無線網路 Wifi AP  ( AWK)", " Vport(CCTV / IP攝影機)", "EDS - G4012 / MPC / TN", "符合 IEC 61375 標準的乙太網路交換器和可編程控制器。"],
+                text: ["Turbo Ring 自我修復技術可在 20 ms 內實現快速故障復原。", "智慧型車廂間乙太網路備援 - 動態環網耦合（DRC）技術可在列車重組車廂時啟用自動配置功能。", "Moxa 自動車廂連接（ACC）功能確保每個 AP 只需配置一次，便可在任何列車配置下建立連接。"],
+                x_position: "52%",
+                y_position: "69%",
+            }, {
+                title: "海事船舶",
+                blocks: ["非網管型&網管型交換器 (EDS)", "MC / MD / IKS"],
+                text: ["配備 NMEA 0183 介面的高效能電腦，讓船舶設備能夠順利通訊", "Turbo Ring 和 Turbo Chain 乙太網路備援技術，可實現網路高可用性", "符合電子海圖（ECDIS） IEC 61174 標準的面板，可精準重現海圖顯示", "通過認證並符合多項海事標準，包括 DNV、LR、ABS、NK、CCS、IEC 60945 和 IACS - E10"],
+                x_position: "75%",
+                y_position: "60%",
+            }, {
+                title: "智慧製造／生產線監控／機器OEM",
+                blocks: ["非網管型&網管型交換器 (EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "協定閘道器(MGate)", "工業無線網路 Wifi AP(AWK)", "具備交換器 / 防火牆的工業安全路由器(EDR)"],
+                text: ["無風扇高 I / O 密度嵌入式電腦，具有預測性維護功能，可長時間進行靈活的資料擷取", "Turbo Ring、Turbo Chain 和 V - ON 備援技術支援毫秒級的網路斷線復連", "具備 VPN 功能的工業防火牆，可阻擋未經授權的存取，以便保護您的重要應用", "多協定閘道器可無縫地連接生產線上的所有設備", "遠端 I / O 支援多種 IT 和 OT 協定，可輕易與 SCADA 和 MES 系統整合"],
+                x_position: "85%",
+                y_position: "66%",
+            }, {
+                title: "工廠／自動化倉儲／無人搬運車",
+                blocks: ["工業無線網路 Wifi AP  ( AWK)", "通用控制器和 I / O(ioLogik)", "串列至串列轉換器(TCC)"],
+                text: ["輕巧的 Wi - Fi 用戶端，可安裝於空間有限的穿梭車 / AGV 中", "AP 之間的漫遊時間僅 150 毫秒，確保所有物體可無縫地移動", "支援多種工業協定的智慧型交換器，讓工程師能夠輕易地將 AMH 系統整合入現有的 SCADA 系統中", "Moxa AP 具有 Wi - Fi 認證標誌，可與他牌無線設備互通"],
+                x_position: "78%",
+                y_position: "40%",
+            }, {
+                title: "智慧交通",
+                blocks: ["非網管型 & 網管型交換器(EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "工業LTE行動通訊閘道器(OnCell)", "協定閘道器(MGate)", "* EDR / ioThinx / MDS"],
+                text: ["可靠的大容量階層式 IP 網路, 可安全地監控都會交通", "先進的即時交通流量管理系統", "高效率影像監視系統", "安全可靠地監控都會交通"],
+                x_position: "82%",
+                y_position: "30%",
+            }, {
+                title: "大樓機房",
+                blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "* ARM 電腦(UC)", "* MDS"],
+                text: ["對於機房環境常見不通風，而產生高溫循環，造成熱當使網路中斷或設備不穩，您可改用Moxa!", "Modbus 串列轉 Modbus TCP 閘道器具主動輪詢功能，可縮短回應時間，以便針對能源管理進行精確分析", "乙太網路交換器可在 20ms 內恢復網路運作，確保設施網路具備出色的可靠性", "掌上型電腦、無線連接，以及立即可用之 Modbus 至雲端連接軟體平台的組合，讓您能輕鬆進行遠端監控", "具備直覺式 IF - THEN - ELSE 控制邏輯的智慧型遠端 I / O，只需點擊滑鼠即可輕鬆進行設施管理"],
+                x_position: "85%",
+                y_position: "20%",
+            }, {
+                title: "太空站",
+                blocks: ["工業無線網路 Wifi AP (AWK)"],
+                text: ["-100 °C 至 100 °C 快速擺盪的溫度範圍", "超強的輻射", "在極端惡劣條件下可靠地傳輸資料", "實現高速的資料傳輸"],
+                x_position: "90%",
+                y_position: "20%",
+            }, {
+                title: "油氣石化",
+                blocks: ["工業無線網路 Wifi AP (AWK)", "非網管型 & 網管型交換器(EDS)", "* ARM 電腦(UC)", "* MC / EDR / MPC"],
+                text: ["陽光下清晰可讀、具 IP66 防護等級、高度互通的運算平台，可有效操控鑽井控制系統", "安全可靠的網路解決方案，可在鑽機室（driller’s cabin）中即時監控近海作業狀況", "支援各種工業協定的工業乙太網路閘道器，以及可將遠端 I / O 無縫整合入 SCADA 系統的 MX - AOPC UA 伺服器"],
+                x_position: "88%",
+                y_position: "21%",
+            }, {
+                title: "IIoT數位轉型",
+                blocks: ["IIoT 閘道器(AIG)", "工業級USB 集線器 / USB轉串列轉換器(UPort)", "通用控制器和 I / O(ioLogik)"],
+                text: ["入門級 IIoT 閘道器可將 Modbus 設備，與 Azure、AWS 以及其他使用 MQTT 協議存取的雲端平台整合在一起，方便收集資料傳輸到雲端。", "這些小型 IIoT 邊緣閘道器配備採用 x86 或 ARM 架構的處理器，可全面支援遠端監控和遙測應用，同時還可在極端溫度環境中提供可靠的無線連接。"],
+                x_position: "76%",
+                y_position: "60%",
+            },
+        ],
+
+    }
+
+    const section7 = {
+        "大標題": "台灣在地的35年工業網路及通訊專家",
+        "背景圖檔路徑": "",
+        items: [
+            {
+                "文案": "100% MIT設計、生產、 製造的優質產品，提供中小型客戶最具競爭力的解決方案",
+                "圖檔路徑": "./img/s7-1.png"
+            },
+            {
+                "文案": "簡單易用，無須技術背景也能輕鬆佈署",
+                "圖檔路徑": "./img/s7-2.png"
+            },
+            {
+                "文案": "5年保固與健全的經銷網路，提供安心售後服務",
+                "圖檔路徑": "./img/s7-3.png"
+            }
+        ]
+    }
+
+    const section8 = {
+        "大標題": "聯絡我們",
+        "項目": [
+            {
+                "小標題": "我是用戶",
+                "小項目": [
+                    {
+                        "文案": "了解更多產品訊息",
+                        "連結": "https://www.moxa.com/tw/support"
+                    },
+                    {
+                        "文案": "專人諮詢服務",
+                        "連結": "https://www.moxa.com/tw/contact-us"
+                    },
+                    {
+                        "文案": "線上購物",
+                        "連結": "https://www.eclife.com.tw/product/brand/MOXA?coid=Megamenu"
+                    }
+                ]
+            },
+            {
+                "小標題": "我是經銷商",
+                "小項目": [
+                    {
+                        "文案": "了解更多產品訊息",
+                        "連結": "https://www.moxa.com/tw/support"
+                    },
+                    {
+                        "文案": "洽代理商－展碁國際",
+                        "連結": "https://forms.office.com/r/XguazD3k2J"
+                    },
+
+                ]
+            }
+        ]
+    }
+    const section9 = { logo1: global_config.header_img_url1, logo2: global_config.header_img_url2 }
+    $(document).ready(function () {
+        $("#footer_logo1").attr("src", section9.logo1)
+        $("#footer_logo2").attr("src", section9.logo2)
+    }
+    )
+
+    $(document).ready(function () {
+        const section8Data = section8["項目"];
+        const contentContainer = $('#section8 .content-container');
+
+        section8Data.forEach((item) => {
+            const itemDiv = $('<div></div>').addClass('item');
+            const smallTitle = $('<h2></h2>').addClass('small-title').text(item['小標題']);
+            itemDiv.append(smallTitle);
+
+            item['小項目'].forEach((subItem) => {
+                const linkButton = $('<a></a>')
+                    .addClass('link-button')
+                    .text(subItem['文案'])
+                    .attr('href', subItem['連結']);
+                itemDiv.append(linkButton);
+            });
+
+            contentContainer.append(itemDiv);
+        });
+    });
+
+
+    $(document).ready(function () {
+        const section7Data = section7.items;
+        const itemContainer = $('#section7 .item-container');
+
+        section7Data.forEach((item) => {
+            const itemDiv = $('<div></div>').addClass('item');
+            const image = $('<img>').attr('src', item['圖檔路徑']);
+            const text = $('<p></p>').text(item['文案']);
+            itemDiv.append(image, text);
+            itemContainer.append(itemDiv);
+        });
+    });
+
+
+
+    $(document).ready(function () {
+        const section6Data = section6.items;
+        $('#infoTitle1').text(section6.title);
+        section6Data.forEach((item, index) => {
+            const dot = $('<div></div>').addClass('dot')
+                .css('left', item.x_position)
+                .css('top', item.y_position)
+                .attr('data-index', index);
+
+            $('.product-map').append(dot);
+        });
+
+        $('.dot').click(function () {
+            const index = $(this).attr('data-index');
+            const item = section6Data[index];
+
+            $('#infoTitle').text(item.title);
+
+            const blocks = item.blocks.map(block => `<li>${block}</li>`).join('');
+            $('#infoBlocks').html(`<ul>${blocks}</ul>`);
+
+            const texts = item.text.map(text => `<li>${text}</li>`).join('');
+            $('#infoTexts').html(`<ul>${texts}</ul>`);
+        });
+    });
+
 
 
     $(document).ready(function () {
@@ -953,15 +1485,18 @@
         // 添加 full_item
         let fullItemHtml = `
     <div class="row full-item-row mb-5">
-      <div class="col-4">
+      <div class="col-6">
         <img src="${full_item['圖片檔案']}" class="img-fluid">
       </div>
-      <div class="col-8">
-        <h4>${full_item['標題']}</h4>
-        <ul>
-          ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
-        </ul>
-        <button id="showMore" class="btn btn-link show-more-btn">↓</button>
+      <div class="col-6">
+        <div class="right-div">
+            <h1>${full_item['標題']}</h1>
+            <div class="divider"></div>
+            <ul>
+            ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
+            </ul>
+            <button id="showMore" class="btn btn-link show-more-btn">瞭解更多 ↓</button>
+         </div>
       </div>
     </div>
   `;
@@ -1001,7 +1536,7 @@
         // “显示更多”按钮点击事件
         $('#showMore').click(function () {
             $('#fullItemSpan').toggle();
-            const arrow = $(this).text() === '↓' ? '↑' : '↓';
+            const arrow = $(this).text() === '瞭解更多 ↓' ? '瞭解更多 ↑' : '瞭解更多 ↓';
             $(this).text(arrow);
         });
 
@@ -1009,7 +1544,7 @@
         let halfItemsHtml = '<div class="row justify-content-between half-items-row">';
         half_items.forEach(item => {
             halfItemsHtml += `
-      <div class="col-5 half-item-col">
+      <div class="col-6 half-item-col">
         <div class="card">
           <img src="${item['圖片檔案']}" class="card-img-top">
           <div class="card-body">
@@ -1064,12 +1599,25 @@
             <div class="card-body">
               <small class="text-muted">${item['日期']}</small>
               <h5 class="card-title">${item['標題']}</h5>
-              <p class="card-text">${item['說明文字']}</p>
-              <a href="${item['連結（圖片/標題）']}" class="btn btn-primary">Learn More</a>
+              <a href="${item['連結（圖片/標題）']}" class="btn btn-primary s3-btn">立刻報名</a>
             </div>
           </div>
         </div>
       `);
+            //  舊版
+            //   const eventItem = $(`
+            //     <div class="col-4">
+            //       <div class="card">
+            //         <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
+            //         <div class="card-body">
+            //           <small class="text-muted">${item['日期']}</small>
+            //           <h5 class="card-title">${item['標題']}</h5>
+            //           <p class="card-text">${item['說明文字']}</p>
+            //           <a href="${item['連結（圖片/標題）']}" class="btn btn-primary">Learn More</a>
+            //         </div>
+            //       </div>
+            //     </div>
+            //   `);
             $('#eventItems').append(eventItem);
         });
     });
@@ -1092,17 +1640,23 @@
     // 第一區產生
     $(document).ready(function () {
         const section1 = [{
-            text_1: "超越極限",
-            text_2: "穩定可靠、性能出眾的非網管型交換器",
-            img_url1: './img/s1-1.jpeg',
+            // text_1: "超越極限",
+            // text_2: "穩定可靠、性能出眾的非網管型交換器",
+            text_1: "",
+            text_2: "",
+            img_url1: './img/banner_1_pc_@2x.jpg',
         }, {
-            text_1: "可靠耐用先驅",
-            text_2: "35年卓越經驗，提供可信賴且安全的聯網設備",
-            img_url1: './img/s1-2.png',
+            text_1: "",
+            text_2: "",
+            // text_1: "可靠耐用先驅",
+            // text_2: "35年卓越經驗，提供可信賴且安全的聯網設備",
+            img_url1: './img/banner_2_pc_@2x.jpg',
         }, {
-            text_1: "超越極限",
-            text_2: "穩定可靠、性能出眾的非網管型交換器",
-            img_url1: './img/s1-1.jpeg',
+            // text_1: "超越極限",
+            // text_2: "穩定可靠、性能出眾的非網管型交換器",
+            text_1: "",
+            text_2: "",
+            img_url1: './img/banner_1_pc_@2x.jpg',
         }];
 
         // Randomly select an initial active slide
