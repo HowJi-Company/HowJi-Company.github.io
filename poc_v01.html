@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- 引入 jQuery 和 Bootstrap 的 JS 檔案 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -19,15 +19,15 @@
     <style>
         @keyframes glow {
             0% {
-                box-shadow: 0 0 10px #00ff00;
+                box-shadow: 0 0 10px #36BBFF;
             }
 
             50% {
-                box-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00;
+                box-shadow: 0 0 20px #36BBFF, 0 0 30px #36BBFF;
             }
 
             100% {
-                box-shadow: 0 0 10px #00ff00;
+                box-shadow: 0 0 10px #36BBFF;
             }
         }
 
@@ -216,14 +216,19 @@
 
         #section5 .full-item-row,
         #section5 .full-item-span {
-            margin-bottom: 20px;
+            /* margin-bottom: 20px; */
             box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
             border-radius: 1rem;
             background-color: #fff;
+            /* text-align: center; */
+        }
 
+        #section5 .full-item-span {
+            text-align: center;
         }
 
         #section5 .half-items-row .card {
+            margin-top: 2rem;
             margin-bottom: 20px;
             box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
             border-radius: 1rem;
@@ -269,6 +274,7 @@
             width: 100px;
             height: 100px;
             object-fit: cover;
+            float: right;
 
         }
 
@@ -278,7 +284,7 @@
 
         #section6 {
             position: relative;
-            height: 800px;
+            height: 1000px;
             background-image: url('./img/s6-1.jpg');
             background-size: cover;
             /* 设置背景图像和其他样式 */
@@ -286,54 +292,104 @@
 
         .infoTitle1 {
             margin-bottom: 30px;
-            margin-left: 2rem;
+            /* margin-left: 2rem; */
+            padding-top: 4rem;
+            color: white;
         }
 
         .infoTitle {
-            margin-left: 2rem;
+            margin-left: 2.3rem;
         }
 
         .product-map .dot {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: transparent;
-            border: 3px solid rgb(51, 208, 49);
+            /* width: 15px;
+            height: 15px; */
+            /* background-color: transparent; */
+            /* border: 3px solid rgb(51, 208, 49); */
             border-radius: 50%;
             cursor: pointer;
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border-radius: 15px;
+            border: 4px solid #36BBFF;
+            background: rgba(255, 255, 255, 0.00);
+            box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
 
         .info-panel {
             padding-top: 30px;
-            margin-left: 20px;
+            margin-left: 2.3rem;
             color: white;
             width: 40%;
             /* 设置信息面板样式 */
+            position: absolute;
+            left: -100%;
+            /* 初始化在視窗外側 */
+            transition: left 0.5s;
+            /* 這樣也可以實現動畫效果 */
+
         }
 
         #infoTexts {
             color: white;
-            border: 2px solid white;
-            background-color: rgb(119, 87, 209);
-            margin-left: 2rem;
-            padding: 20px;
-            border-radius: 20px;
-            max-height: 200px;
+            /* border: 2px solid white; */
+            /* background-color: rgb(119, 87, 209); */
+            margin-left: 2.3rem;
+            /* padding: 20px; */
+            /* border-radius: 20px; */
+            /* max-height: 200px; */
             overflow-x: auto;
             line-height: 1.5;
+            border-radius: 10px;
+            border: 3px solid #1CA8CD;
+            background: #003854;
+            display: flex;
+            width: 502px;
+            height: 306px;
+            padding: 33px 45px 33px 30px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            flex-shrink: 0;
+            margin-top: 3rem;
         }
 
         #infoTexts li {}
 
-        #infoBlocks li {
+        .remark a {
+            margin-left: 2.3rem;
             color: white;
-            border: 2px solid white;
+            text-decoration: none;
+            line-height: 1.5;
+        }
+
+        #infoBlocks {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 18px;
+        }
+
+        #infoBlocks span {
+            color: white;
+            /* border: 2px solid white; */
             list-style-type: none;
-            background-color: rgb(64, 39, 163);
-            padding: 20px;
-            border-radius: 20px;
-            margin-top: 5px;
-            margin-bottom: 5px;
+            /* background-color: rgb(64, 39, 163); */
+            /* padding: 20px; */
+            /* border-radius: 20px; */
+            /* margin-top: 5px;
+            margin-bottom: 5px; */
+            margin-left: 2.3rem;
+            border-radius: 10px;
+            border: 3px solid #1CA8CD;
+            background: #0094DF;
+            display: flex;
+            padding: 12px 30px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
 
         }
 
@@ -341,7 +397,7 @@
             /* position: relative; */
             background-size: cover;
             color: white;
-            background-image: url('./img/s7-0.jpeg');
+            background-image: url('./img/s7-0.png');
 
         }
 
@@ -351,7 +407,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 255, 0.5);
+            /* background-color: rgba(0, 0, 255, 0.5); */
+            /* background: linear-gradient(to right bottom, #0699DC 0%, #19A6D0 100%); */
+            background: linear-gradient(to right bottom, rgba(6, 153, 220, 0.45), rgba(25, 166, 208, 0.45));
+            /* mix-blend-mode: soft-light; */
             padding-top: 6rem;
             /* 半透明的藍色 */
         }
@@ -438,12 +497,14 @@
             width: 100%;
             /* 使所有按鈕等寬 */
             text-align: center;
-            background-color: blue;
+            /* background-color: blue; */
+            border-radius: 7.517px;
+            background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
             color: white;
             padding: 0.5rem;
             margin: 0.5rem 0;
             /* 上下有邊距，左右沒有，以實現上下排列 */
-            border-radius: 0.3rem;
+            /* border-radius: 0.3rem; */
             text-decoration: none;
             line-height: 2;
             margin-bottom: 1.3rem;
@@ -451,8 +512,8 @@
         }
 
         #footer {
-            background-color: #333;
-            color: #fff;
+            background-color: rgb(253, 251, 251);
+            color: rgb(6, 6, 6);
             padding: 1rem;
         }
 
@@ -498,13 +559,19 @@
 
         .dot {
             position: absolute;
-            height: 20px;
-            width: 20px;
-            background-color: #49f349;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #36d936;
+            /* height: 20px; */
+            /* width: 20px; */
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            /* background-color: #49f349; */
+            /* border-radius: 50%; */
+            /* box-shadow: 0 0 10px #36d936; */
             animation: glow 2s ease-in-out infinite;
-
+            border-radius: 15px;
+            border: 4px solid #36BBFF;
+            background: rgba(255, 255, 255, 0.00);
+            box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
 
         #dot1 {
@@ -706,18 +773,19 @@
 
     <!-- Section 6 Structure -->
     <div id="section6">
-        <div class="container">
+        <div class="container relative">
             <div class="product-map">
                 <!-- 在这里动态生成小圆点 -->
             </div>
+            <h1 id="infoTitle1" class="infoTitle1"></h1>
             <div class="info-panel">
-                <h1 id="infoTitle1" class="infoTitle1"></h1>
+                <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
                 <h2 id="infoTitle" class="infoTitle"></h2>
                 <div id="infoBlocks"></div>
                 <div id="infoTexts"></div>
-            </div>
-            <div class="remark">
-                <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+                <div class="remark">
+                    <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+                </div>
             </div>
         </div>
     </div>
@@ -1240,7 +1308,7 @@
             ]
         }],
         full_item_span: {
-            "標題": "嚴苛的應用環境",
+            "標題": "工業級應用環境",
             "內容": [
                 {
                     "圖片檔案": "./img/s5-1-1.png",
@@ -1268,81 +1336,80 @@
                 },
             ]
         }
-
-
     }
-
     const section6 = {
         "背景圖案": "",
         title: "MOXA 產品分類地圖",
         "備註": "專案產品，請洽詢專人服務	https://www.moxa.com/tw/contact-us/contact-form",
         items: [
             {
-                title: "再生能源: 太陽能 / 風力發電",
+                title: "再生能源:風力發電 | 太陽能 | 儲能",
                 blocks: ["非網管型&網管型交換器 (EDS)", "通用控制器和 I / O(ioLogik)", "ARM 電腦(UC)"],
                 text: ["可在戶外寬溫環境下可靠運作", "提供遠端設備和軟體配置，並提供遠端故障排除功能，可大幅簡化維護流程", "立即可用的軟體解決方案，支援 Modbus 資料擷取、遠端設備管理，以及 Modbus 轉 MQTT 協定轉換"],
-                x_position: "55%",
-                y_position: "60%",
+                x_position: "58.5%",
+                y_position: "32%",
             }, {
-                title: "再生能源: 能源儲存／變電站自動化／關鍵電力",
+                title: "電力應用: 變電站自動化| 關鍵電力設備 ",
                 blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "先進控制器和 I / O(iothinx)", "x86電腦(DA)"],
                 text: ["多協定解決方案，包含 I / O 或協定閘道器，可輕易實現 IT - OT 融合", "使用 ThingsPro 閘道器和伺服器工具，輕鬆從分散式 ESS 站點擷取資料", "利用嵌入式電腦中的 Modbus 協定庫和 I / O 設備的 MXIO 程式庫，簡化軟體開發", "閘道器設備支援寬溫操作，可因應惡劣的戶外環境，而且外形輕巧，可安裝於任何 ESS 機器中"],
-                x_position: "58%",
+                x_position: "54%",
                 y_position: "61%",
             }, {
-                title: "軌道運輸／遠端監控",
+                title: "智慧交通: 軌道運輸 | 道路感測監控",
                 blocks: ["工業無線網路 Wifi AP  ( AWK)", " Vport(CCTV / IP攝影機)", "EDS - G4012 / MPC / TN", "符合 IEC 61375 標準的乙太網路交換器和可編程控制器。"],
                 text: ["Turbo Ring 自我修復技術可在 20 ms 內實現快速故障復原。", "智慧型車廂間乙太網路備援 - 動態環網耦合（DRC）技術可在列車重組車廂時啟用自動配置功能。", "Moxa 自動車廂連接（ACC）功能確保每個 AP 只需配置一次，便可在任何列車配置下建立連接。"],
-                x_position: "52%",
-                y_position: "69%",
+                x_position: "78%",
+                y_position: "36%",
             }, {
                 title: "海事船舶",
                 blocks: ["非網管型&網管型交換器 (EDS)", "MC / MD / IKS"],
                 text: ["配備 NMEA 0183 介面的高效能電腦，讓船舶設備能夠順利通訊", "Turbo Ring 和 Turbo Chain 乙太網路備援技術，可實現網路高可用性", "符合電子海圖（ECDIS） IEC 61174 標準的面板，可精準重現海圖顯示", "通過認證並符合多項海事標準，包括 DNV、LR、ABS、NK、CCS、IEC 60945 和 IACS - E10"],
-                x_position: "75%",
-                y_position: "60%",
+                x_position: "65%",
+                y_position: "58%",
             }, {
-                title: "智慧製造／生產線監控／機器OEM",
+                title: "智慧製造 ／生產線監控",
                 blocks: ["非網管型&網管型交換器 (EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "協定閘道器(MGate)", "工業無線網路 Wifi AP(AWK)", "具備交換器 / 防火牆的工業安全路由器(EDR)"],
                 text: ["無風扇高 I / O 密度嵌入式電腦，具有預測性維護功能，可長時間進行靈活的資料擷取", "Turbo Ring、Turbo Chain 和 V - ON 備援技術支援毫秒級的網路斷線復連", "具備 VPN 功能的工業防火牆，可阻擋未經授權的存取，以便保護您的重要應用", "多協定閘道器可無縫地連接生產線上的所有設備", "遠端 I / O 支援多種 IT 和 OT 協定，可輕易與 SCADA 和 MES 系統整合"],
-                x_position: "85%",
-                y_position: "66%",
+                x_position: "76%",
+                y_position: "60%",
             }, {
-                title: "工廠／自動化倉儲／無人搬運車",
+                title: "自動化倉儲／無人搬運車",
                 blocks: ["工業無線網路 Wifi AP  ( AWK)", "通用控制器和 I / O(ioLogik)", "串列至串列轉換器(TCC)"],
                 text: ["輕巧的 Wi - Fi 用戶端，可安裝於空間有限的穿梭車 / AGV 中", "AP 之間的漫遊時間僅 150 毫秒，確保所有物體可無縫地移動", "支援多種工業協定的智慧型交換器，讓工程師能夠輕易地將 AMH 系統整合入現有的 SCADA 系統中", "Moxa AP 具有 Wi - Fi 認證標誌，可與他牌無線設備互通"],
-                x_position: "78%",
-                y_position: "40%",
-            }, {
-                title: "智慧交通",
-                blocks: ["非網管型 & 網管型交換器(EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "工業LTE行動通訊閘道器(OnCell)", "協定閘道器(MGate)", "* EDR / ioThinx / MDS"],
-                text: ["可靠的大容量階層式 IP 網路, 可安全地監控都會交通", "先進的即時交通流量管理系統", "高效率影像監視系統", "安全可靠地監控都會交通"],
-                x_position: "82%",
-                y_position: "30%",
-            }, {
+                x_position: "85%",
+                y_position: "67%",
+            },
+            // {
+            //     title: "大樓機房",
+            //     blocks: ["非網管型 & 網管型交換器(EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "工業LTE行動通訊閘道器(OnCell)", "協定閘道器(MGate)", "* EDR / ioThinx / MDS"],
+            //     text: ["可靠的大容量階層式 IP 網路, 可安全地監控都會交通", "先進的即時交通流量管理系統", "高效率影像監視系統", "安全可靠地監控都會交通"],
+            //     x_position: "82%",
+            //     y_position: "30%",
+            // }, 
+            {
                 title: "大樓機房",
                 blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "* ARM 電腦(UC)", "* MDS"],
                 text: ["對於機房環境常見不通風，而產生高溫循環，造成熱當使網路中斷或設備不穩，您可改用Moxa!", "Modbus 串列轉 Modbus TCP 閘道器具主動輪詢功能，可縮短回應時間，以便針對能源管理進行精確分析", "乙太網路交換器可在 20ms 內恢復網路運作，確保設施網路具備出色的可靠性", "掌上型電腦、無線連接，以及立即可用之 Modbus 至雲端連接軟體平台的組合，讓您能輕鬆進行遠端監控", "具備直覺式 IF - THEN - ELSE 控制邏輯的智慧型遠端 I / O，只需點擊滑鼠即可輕鬆進行設施管理"],
                 x_position: "85%",
-                y_position: "20%",
+                y_position: "54%",
             }, {
                 title: "太空站",
                 blocks: ["工業無線網路 Wifi AP (AWK)"],
                 text: ["-100 °C 至 100 °C 快速擺盪的溫度範圍", "超強的輻射", "在極端惡劣條件下可靠地傳輸資料", "實現高速的資料傳輸"],
                 x_position: "90%",
-                y_position: "20%",
+                y_position: "19%",
             }, {
                 title: "油氣石化",
                 blocks: ["工業無線網路 Wifi AP (AWK)", "非網管型 & 網管型交換器(EDS)", "* ARM 電腦(UC)", "* MC / EDR / MPC"],
                 text: ["陽光下清晰可讀、具 IP66 防護等級、高度互通的運算平台，可有效操控鑽井控制系統", "安全可靠的網路解決方案，可在鑽機室（driller’s cabin）中即時監控近海作業狀況", "支援各種工業協定的工業乙太網路閘道器，以及可將遠端 I / O 無縫整合入 SCADA 系統的 MX - AOPC UA 伺服器"],
-                x_position: "88%",
-                y_position: "21%",
+                x_position: "71%",
+                y_position: "30%",
             }, {
                 title: "IIoT數位轉型",
                 blocks: ["IIoT 閘道器(AIG)", "工業級USB 集線器 / USB轉串列轉換器(UPort)", "通用控制器和 I / O(ioLogik)"],
                 text: ["入門級 IIoT 閘道器可將 Modbus 設備，與 Azure、AWS 以及其他使用 MQTT 協議存取的雲端平台整合在一起，方便收集資料傳輸到雲端。", "這些小型 IIoT 邊緣閘道器配備採用 x86 或 ARM 架構的處理器，可全面支援遠端監控和遙測應用，同時還可在極端溫度環境中提供可靠的無線連接。"],
-                x_position: "76%",
-                y_position: "60%",
+                x_position: "74%",
+                y_position: "46%",
             },
         ],
 
@@ -1462,14 +1529,16 @@
         $('.dot').click(function () {
             const index = $(this).attr('data-index');
             const item = section6Data[index];
-
-            $('#infoTitle').text(item.title);
-
-            const blocks = item.blocks.map(block => `<li>${block}</li>`).join('');
-            $('#infoBlocks').html(`<ul>${blocks}</ul>`);
-
-            const texts = item.text.map(text => `<li>${text}</li>`).join('');
-            $('#infoTexts').html(`<ul>${texts}</ul>`);
+            $('.info-panel').css({ 'left': '-100%' });
+            $('.info-panel').animate({ 'left': '-100%' }, 10);
+            setTimeout(() => {
+                $('#infoTitle').text(item.title);
+                const blocks = item.blocks.map(block => `<span>${block}</span>`).join('');
+                $('#infoBlocks').html(`${blocks}`);
+                const texts = item.text.map(text => `<li>${text}</li>`).join('');
+                $('#infoTexts').html(`<ul>${texts}</ul>`);
+                $('.info-panel').animate({ 'left': '0' }, 500);
+            }, 200)
         });
     });
 
@@ -1484,7 +1553,7 @@
 
         // 添加 full_item
         let fullItemHtml = `
-    <div class="row full-item-row mb-5">
+    <div class="row full-item-row">
       <div class="col-6">
         <img src="${full_item['圖片檔案']}" class="img-fluid">
       </div>
@@ -1504,20 +1573,22 @@
 
         // 添加 full_item_span（最初是隐藏的）
         let fullItemSpanHtml = `
-    <div id="fullItemSpan" class="row full-item-span mb-5" style="display: none;">
-      <div class="col-6">
+    <div id="fullItemSpan" class="row full-item-span justify-content-center" style="display: none;">
         <h4>${full_item_span['標題']}</h4>
         <div id="fullItemSpan_div1"> </div>
-      </div>
-      <div class="col-6">
         <div class="row">
           ${full_item_span['內容'].map(item => `
-            <div class="col-4">
-              <img src="${item['圖片檔案']}" class="img-fluid">
-              <p>${item['文案']}</p>
+            <div class="col-6">
+                <div class='row justify-content-center'>
+                    <div class="col">
+                        <img src="${item['圖片檔案']}" class="img-fluid">
+                    </div>
+                    <div class="col">
+                        <p>${item['文案']}</p>
+                    </div>
+                </div>
             </div>`).join('')}
         </div>
-      </div>
     </div>
   `;
 
@@ -1525,13 +1596,13 @@
         $('.full-item-row').after(fullItemSpanHtml);
 
         const fullItemSpan = section5.full_item_span;
-        const items = fullItemSpan["內容"];
-        const ul = $('<ul></ul>');
-        items.forEach(item => {
-            const li = $('<li></li>').text(item["文案"]);
-            ul.append(li);
-        });
-        $("#fullItemSpan_div1").append(ul);
+        // const items = fullItemSpan["內容"];
+        // const ul = $('<ul></ul>');
+        // items.forEach(item => {
+        //     const li = $('<li></li>').text(item["文案"]);
+        //     ul.append(li);
+        // });
+        // $("#fullItemSpan_div1").append(ul);
 
         // “显示更多”按钮点击事件
         $('#showMore').click(function () {
