@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drag and Drop Blocks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add the Firebase Analytics SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <!-- Add the Firebase Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<style>
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 10px #36BBFF;
+        }
+
+        50% {
+            box-shadow: 0 0 20px #36BBFF, 0 0 30px #36BBFF;
+        }
+
+        100% {
+            box-shadow: 0 0 10px #36BBFF;
+        }
+    }
+
+    .bomb {
+        animation: glow 2s ease-in-out infinite;
+    }
+
+    .block-container {
+        border: 5px solid black;
+        height: 300px;
+    }
+
+    .block.group1 {
+        border: 5px solid #f67088;
+        padding: 10px;
+        margin: 5px;
+        width: 50px;
+        display: inline-block;
+    }
+
+    .block.group2 {
+        border: 5px solid #db8831;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group3 {
+        border: 5px solid #ad9c31;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group4 {
+        border: 5px solid #77aa31;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group5 {
+        border: 5px solid #33b07a;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group6 {
+        border: 5px solid #35aca4;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group7 {
+        border: 5px solid #38a8c5;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group8 {
+        border: 5px solid #6e9af4;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group9 {
+        border: 5px solid #cc79f4;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group10 {
+        border: 5px solid #f565cc;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .trash {
+        border: 5px solid gray;
+        background-color: #f1f1f1;
+    }
+
+    .hide-text {
+        text-align: center;
+        vertical-align: middle;
+        color: transparent;
+        /* background-color: currentColor; */
+    }
+
+    /* 新增的 .hide-text CSS 類 */
+    .hide-text.group1 {
+        background-color: #f67088;
+    }
+
+    .hide-text.group2 {
+        background-color: #db8831;
+    }
+
+    .hide-text.group3 {
+        background-color: #ad9c31;
+    }
+
+    .hide-text.group4 {
+        background-color: #77aa31;
+    }
+
+    .hide-text.group5 {
+        background-color: #33b07a;
+    }
+
+    .hide-text.group6 {
+        background-color: #35aca4;
+    }
+
+    .hide-text.group7 {
+        background-color: #38a8c5;
+    }
+
+    .hide-text.group8 {
+        background-color: #6e9af4;
+    }
+
+    .hide-text.group9 {
+        background-color: #cc79f4;
+    }
+
+    .hide-text.group10 {
+        background-color: #f565cc;
+    }
+</style>
+
+<body>
+
+    <div class="container mt-5">
+        <!-- First input and button -->
+        <input type="text" id="textBox1" placeholder="Enter text for Group 1">
+        <button class="addBlock" data-group="group1">Add Block to Group 1</button>
+
+        <!-- Second input and button -->
+        <input type="text" id="textBox2" placeholder="Enter text for Group 2">
+        <button class="addBlock" data-group="group2">Add Block to Group 2</button>
+
+        <!-- Third input and button -->
+        <input type="text" id="textBox3" placeholder="Enter text for Group 3">
+        <button class="addBlock" data-group="group3">Add Block to Group 3</button>
+
+
+        <div class="row mt-5">
+            <div class="col-8 block-container" id="container0">Container 0</div>
+            <div class="col-4 block-container" id="container6">Container 6</div>
+            <div class="col-2 block-container" id="container1">Container 1</div>
+            <div class="col-2 block-container" id="container2">Container 2</div>
+            <div class="col-2 block-container" id="container3">Container 3</div>
+            <div class="col-2 block-container" id="container4">Container 4</div>
+            <div class="col-2 block-container" id="container5">Container 5</div>
+            <div class="col-2 block-container trash" id="trash">Trash</div>
+
+        </div>
+        <!-- Score display -->
+        <div class="mt-5">
+            <label for="score">Score:</label>
+            <input type="text" id="score" readonly>
+            <button id="calculateScore">Calculate Score</button>
+        </div>
+        <button id="clearBlocks">Clear Blocks</button>
+        <button id="hideText">Hide Text</button>
+        <button id="showText">Show Text</button>
+
+        <button id="hideBomb">Hide bomb</button>
+        <button id="showBomb">Show bomb</button>
+
+
+
+    </div>
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+        let containers = {
+            "container0": [],
+            "container1": [],
+            "container2": [],
+            "container3": [],
+            "container4": [],
+            "container5": [],
+            "container6": []
+        };
+        let uniqueId = 1; // A unique ID for each block
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCLXKg7Ru5p5dtgyRs28-qg8LQaG69yME",
+            databaseURL: "https://friendly-sensor-137111-default-rtdb.firebaseio.com",
+            projectId: "friendly-sensor-137111",
+            storageBucket: "friendly-sensor-137111.appspot.com",
+            appId: "1:824581584416:web:fdd5462dd85230d8caae45",
+            measurementId: "G-2HYJ96RDLV"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        // 獲取資料庫的引用
+        var database = firebase.database();
+        database.ref('drag').on("value", (snapshot) => {
+            const data = snapshot.val()
+            console.log(data)
+            const group = data.client_do.group;
+            const text = data.client_do.text;
+            const container_num = data.client_do.container_num;
+            const is_bomb = data.client_do.is_bomb;
+            containers[`container${container_num}`].push({ text, group: `group${group}`, id: uniqueId, is_bomb });
+            uniqueId++;
+            renderContainers();
+
+        })
+
+
+        function makeDraggable(element) {
+            element.draggable({
+                revert: 'invalid',
+                start: function (event, ui) {
+                    // Raise z-index during drag
+                    $(this).css("z-index", 1000);
+                },
+                stop: function (event, ui) {
+                    // Reset z-index after drag
+                    $(this).css("z-index", "");
+                }
+            });
+        }
+        $(".addBlock").click(function () {
+            const group = $(this).attr("data-group");
+            const textBoxId = `#textBox${group.charAt(group.length - 1)}`;
+            const text = $(textBoxId).val();
+            containers["container0"].push({ text, group, id: uniqueId });
+            uniqueId++;
+            renderContainers();
+        });
+
+        $(".block-container").droppable({
+            accept: ".block",
+            drop: function (event, ui) {
+                const fromContainerID = ui.helper.parent().attr("id");
+                const toContainerID = $(this).attr("id");
+                const blockId = ui.helper.attr("data-id");
+
+                // Find and remove the block from the source container
+                const blockData = containers[fromContainerID].find(block => block.id == blockId);
+                containers[fromContainerID] = containers[fromContainerID].filter(block => block.id != blockId);
+
+                // Add block to the target container
+                containers[toContainerID].push({ ...blockData });
+
+                // Re-render
+                renderContainers();
+            }
+        });
+        $("#trash").droppable({
+            accept: ".block",
+            drop: function (event, ui) {
+                const fromContainerID = ui.helper.parent().attr("id");
+                const blockId = ui.helper.attr("data-id");
+
+                // Remove the block from the source container
+                containers[fromContainerID] = containers[fromContainerID].filter(block => block.id != blockId);
+
+                // Re-render
+                renderContainers();
+            }
+        });
+
+        // Existing code...
+
+        let score = 0; // Initialize the score
+
+        // Function to calculate score
+        function calculateScore() {
+            score = 0;
+            for (const blocks of Object.values(containers)) {
+                const n = blocks.length;
+                score += n * n;
+            }
+            $("#score").val(score);
+        }
+
+        // Existing code...
+
+        // Add click event for Calculate Score button
+        $("#calculateScore").click(function () {
+            calculateScore();
+        });
+
+        // Initial render
+        renderContainers();
+
+        // Initialize score display
+        $("#score").val(score);
+        // Existing code...
+
+        // Add click event for Clear Blocks button
+        $("#clearBlocks").click(function () {
+            // Clear the containers object
+            for (const containerID of Object.keys(containers)) {
+                containers[containerID] = [];
+            }
+
+            // Re-render the containers to remove all blocks
+            renderContainers();
+
+            // Optionally, reset the score
+            $("#score").val(0);
+        });
+
+        // Existing code...
+        // Existing code...
+
+        let showText = true; // Global variable to control text visibility
+        let showBomb = false;
+        // Function to render containers
+        function renderContainers() {
+            for (const [containerID, blocks] of Object.entries(containers)) {
+                const container = $("#" + containerID);
+                container.empty();
+                for (const { text, group, id, is_bomb } of blocks) {
+                    if (is_bomb) {
+                        const block = $(`<div class="bomb block ${group} ${!showBomb ? 'hide-text' : ''}" data-id="${id}">${text}</div>`);
+                        makeDraggable(block);
+                        container.append(block);
+                    } else {
+                        const block = $(`<div class="block ${group} ${!showText ? 'hide-text' : ''}" data-id="${id}">${text}</div>`);
+                        makeDraggable(block);
+                        container.append(block);
+                    }
+
+                }
+            }
+            console.log(containers)
+        }
+
+
+        // Existing code...
+
+        // Add click event for Hide Text button
+        $("#hideText").click(function () {
+            showText = false;
+            renderContainers();
+        });
+
+
+        // Add click event for Show Text button
+        $("#showText").click(function () {
+            showText = true;
+            renderContainers();
+        });
+        // Add click event for Hide Text button
+        $("#hideBomb").click(function () {
+            showBomb = false;
+            renderContainers();
+        });
+
+
+        // Add click event for Show Text button
+        $("#showBomb").click(function () {
+            showBomb = true;
+            renderContainers();
+        });
+
+        // Existing code...
+
+
+        // Initial render
+        renderContainers();
+    });
+
+</script>
+
+</html>

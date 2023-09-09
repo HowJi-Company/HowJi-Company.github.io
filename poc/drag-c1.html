@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drag and Drop Blocks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Add the Firebase Analytics SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <!-- Add the Firebase Realtime Database SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<style>
+    .block-container {
+        border: 1px solid black;
+        height: 200px;
+    }
+
+    .block.group1 {
+        border: 1px solid red;
+        padding: 10px;
+        margin: 5px;
+        width: 50px;
+        display: inline-block;
+    }
+
+    .block.group2 {
+        border: 1px solid green;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .block.group3 {
+        border: 1px solid blue;
+        padding: 10px;
+        width: 50px;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .trash {
+        border: 1px solid gray;
+        background-color: #f1f1f1;
+    }
+
+    .hide-text {
+        text-align: center;
+        vertical-align: middle;
+        color: transparent;
+        /* background-color: currentColor; */
+    }
+
+    .hide-text.group3 {
+        background-color: blue
+    }
+
+    .hide-text.group2 {
+        background-color: green
+    }
+
+    .hide-text.group1 {
+        background-color: red
+    }
+</style>
+
+<body>
+
+    <div class="container mt-5">
+        <label for="group">編號</label>
+        <select name="" id="group">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <div class=""></div>
+        <!-- First input and button -->
+        <input type="text" id="textBox1" placeholder="Enter text for Group 1">
+        <button class="addBlock" data-group="group1">Add Block to Group 1</button>
+        <div class=""></div>
+        <!-- First input and button -->
+        <input type="text" id="textBox2" placeholder="Enter text for Bomb">
+        <button class="addBlockBomb" data-group="group1">Add Block to Bomb</button>
+
+
+    </div>
+
+</body>
+
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCCLXKg7Ru5p5dtgyRs28-qg8LQaG69yME",
+        databaseURL: "https://friendly-sensor-137111-default-rtdb.firebaseio.com",
+        projectId: "friendly-sensor-137111",
+        storageBucket: "friendly-sensor-137111.appspot.com",
+        appId: "1:824581584416:web:fdd5462dd85230d8caae45",
+        measurementId: "G-2HYJ96RDLV"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // 獲取資料庫的引用
+    var database = firebase.database();
+    // database.ref('drag/client_do').set({ group: "1", text: "來" })
+
+    $(".addBlock").click(() => {
+        const text = $("#textBox1").val()
+        const group = $("#group").val()
+        console.log(text)
+        let confirmed = confirm(`確定輸入 ${text} 嗎？`)
+        if (confirmed) {
+            database.ref('drag/client_do').set({ group: group, text: text, container_num: 0, is_bomb: false })
+        }
+    })
+    $(".addBlockBomb").click(() => {
+        const text = $("#textBox2").val()
+        const group = $("#group").val()
+        console.log(text)
+        let confirmed = confirm(`確定輸入 ${text} 作為炸彈嗎？`)
+        if (confirmed) {
+            database.ref('drag/client_do').set({ group: group, text: text, container_num: 6, is_bomb: true })
+        }
+    })
+
+
+</script>
+
+</html>
