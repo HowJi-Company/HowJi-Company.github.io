@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RWD Carousel Example</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        /* Desktop */
+        @media (min-width: 768px) {
+            .carousel-item {
+                display: flex !important;
+            }
+
+            .carousel-item>div {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Carousel content -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div>Item 1</div>
+                    <div>Item 2</div>
+                    <div>Item 3</div>
+                </div>
+                <div class="carousel-item">
+                    <div>Item 4</div>
+                    <div>Item 5</div>
+                    <div>Item 6</div>
+                </div>
+                <div class="carousel-item">
+                    <div>Item 7</div>
+                    <div>Item 8</div>
+                    <div>Item 9</div>
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <!-- <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a> -->
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script>
+        $(document).ready(function () {
+            // Check initial screen size
+            checkScreenSize();
+
+            // Check screen size on window resize
+            $(window).resize(checkScreenSize);
+
+            function checkScreenSize() {
+                const windowWidth = $(window).width();
+                if (windowWidth < 768) {
+                    $('.carousel-item').removeClass('d-flex');
+                } else {
+                    $('.carousel-item').addClass('d-flex');
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
