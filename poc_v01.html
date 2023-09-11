@@ -147,11 +147,9 @@
             text-decoration: none;
         }
 
+        #section8 .item-container,
         #section4 .item-container,
         #section3 .item-container {
-            /* display: flex; */
-            /* flex-wrap: wrap; */
-            /* justify-content: space-around; */
             display: flex;
             overflow: auto;
             /* 使項目可以左右滑動 */
@@ -168,10 +166,17 @@
             margin: 1rem
         }
 
+        #section8 .item {
+            flex: 0 0 calc(50% - 2rem);
+            /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
+            scroll-snap-align: start;
+            margin: 1rem
+        }
+
         /* RWD */
         @media (max-width: 768px) {
-            #section3 .item-container {}
 
+            #section8 .item,
             #section4 .item,
             #section3 .item {
                 /* flex: 0 0 100%;
@@ -290,9 +295,23 @@
         #section5 .col-6 .full-item-row img {
             border-radius: 1rem 0 0 1rem;
         }
+        #section5 .full-item-row .left-div {
+            padding-left: 0;
+        }
 
+        /* RWD */
+        @media (min-width: 768px) {
+            #section5 .full-item-row {
+            height: 24.5vw;
+        }
+        #section5 .full-item-row .left-div{
+            overflow: hidden;
+        }
+        #section5 .full-item-row .right-div{
+            overflow: auto;
+        }
+        }
         #section5 .show-more-btn {
-            position: absolute;
             /* bottom: 1rem; */
             /* right: 0; */
             background: none;
@@ -302,19 +321,40 @@
             background-color: blue;
             margin-bottom: 20px;
             margin-top: 30px;
+            margin: 5%;
+            color: #fff;
+            text-decoration: none;
         }
+        
 
         #section5 .full-item-span .img-fluid {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            float: right;
-
+            width: 100%;
+            /* object-fit: cover; */
+            /* float: right; */
         }
 
         #section5 .half-item-col {
             padding: 0 10px;
         }
+
+
+
+        #section6-rwd{
+            display: none;
+        }
+        @media (max-width: 768px) {
+            #section6{
+            display: none;
+        }
+            #section6-rwd{
+            display: block;
+            position: relative;
+            height: 250vw;
+            background-image: url('./img/s6-2.jpg');
+            background-size: contain;
+        }
+        }
+
 
         #section6 {
             position: relative;
@@ -364,7 +404,7 @@
             /* 初始化在視窗外側 */
             transition: left 0.5s;
             /* 這樣也可以實現動畫效果 */
-            overflow-y: scroll;
+            overflow-y: auto;
             height: 48vw;
 
         }
@@ -459,8 +499,10 @@
 
         #section7 .item-container {
             display: flex;
-            /* flex-wrap: wrap; */
-            justify-content: space-around;
+            overflow: auto;
+            /* 使項目可以左右滑動 */
+            scroll-snap-type: x mandatory;
+            /* 啟用水平滾動捕捉 */
         }
 
         #section7 .item {
@@ -482,7 +524,7 @@
         /* RWD */
         @media (max-width: 768px) {
             #section7 .item-container {
-                overflow: scroll;
+                overflow: auto;
                 scroll-snap-type: x mandatory;
                 display: flex;
                 flex-direction: row;
@@ -826,6 +868,23 @@
             </div>
         </div>
     </div>
+    <div id="section6-rwd">
+        <div class="container relative">
+            <div class="product-map">
+                <!-- 在这里动态生成小圆点 -->
+            </div>
+            <h1 id="infoTitle1" class="infoTitle1"></h1>
+            <div class="info-panel">
+                <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
+                <h2 id="infoTitle" class="infoTitle"></h2>
+                <div id="infoBlocks"></div>
+                <div id="infoTexts"></div>
+                <div class="remark">
+                    <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="section7">
         <div class="overlay">
@@ -843,7 +902,8 @@
 
         <div id="section8">
             <h1 class="main-title">聯絡我們</h1>
-            <div class="content-container">
+            <!-- <div class="content-container"> -->
+            <div class="item-container">
                 <!-- 這裡將動態渲染項目 -->
             </div>
         </div>
@@ -861,376 +921,6 @@
             </div>
         </div>
     </footer>
-
-
-
-
-
-
-
-    <!-- <div class="main">
-
-        </header>
-        <div class="area-1-set">
-            <div class="row">
-                <div class="col">
-                    <div class="container">
-                        <h1> HowJi股份有限公司</h1>
-                        <h3>好機,</h3>
-                        <h3>協助你抓住每一個好機遇</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="area-2-set">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="text-center">最新消息</h1>
-                    </div>
-                </div>
-
-                <div class="row justify-content-center">
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="text-center">重要消息</h1>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="area-3-set">
-            <div class="container">
-                <h1 class="text-center">HowJi 與一般公司的差別</h1>
-                <div class="row">
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="area-4-set">
-            <div class="container">
-                <h1 class="text-center">HowJi 應用</h1>
-                <div class="row">
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="space-1"></div>
-                <div class="row">
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col text-center justify-content-center">
-                        <div class="card card_css_1" style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="area-5-set">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6 ">
-                        <h3> HowJi產品應用</h1>
-
-
-                            <div class="row">
-
-                                <div class="col-12">
-                                    <div id="text_a_div">
-                                        <div class="d-none hide" id="myText_a">
-                                            <p class="p_1">這是文字 a 資訊 </p>
-                                            <div class="container container_show">
-                                                <p class="p_2">Jimmy Coding Ghost </p>
-                                                <p class="p_3">Jimmy aka 拷貝忍者 齊木吉吉米</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-                    </div>
-                    <div class="col-6">
-                        <div class="show_pic">
-
-                            <div class="container_p">
-                                <div class="dot show_a" id="dot1"></div>
-                                <div class="dot show_b" id="dot2"></div>
-                                <div class="dot show_c" id="dot3"></div>
-                            </div>
-
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="area-6-set">
-            <div class="container">
-                <h1>拷貝忍者 寫輪眼の吉吉米 </h1>
-                <div class="row">
-                    <div class="col-md-3 col-10 text-center justify-content-start">
-                        <div class="card " style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-start">
-                        <div class="card " style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-10 text-center justify-content-start">
-                        <div class="card " style="width: 12rem;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="area-7-set">
-            <div class="container">
-                <h1>聯絡我們</h1>
-                <div class="row">
-                    <div class="col-6 border">
-                        <h2 class="text-center">我是用戶</h2>
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary w-100 mb-2">了解更多產品消息</a>
-                                <a href="#" class="btn btn-primary w-100 mb-2">專人服務諮詢</a>
-                                <a href="#" class="btn btn-primary w-100 mb-2">購買通路</a>
-                                <a href="#" class="btn btn-primary w-100 mb-2">售後服務</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 border">
-                        <h2 class="text-center">我是經銷商</h2>
-                        <div class="card card_css_1" style="width: 100%;">
-                            <img src="./img/good_chicken.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk
-                                    of the card's content.</p>
-                                <a href="#" class="btn btn-primary w-100 mb-2">專人諮詢</a>
-                                <a href="#" class="btn btn-primary w-100 mb-2">售後服務</a>
-                                <a href="#" class="btn btn-primary w-100 mb-2">服務窗口</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-    </div> -->
-
 
 </body>
 
@@ -1508,15 +1198,17 @@
         ]
     }
     const section9 = { logo1: global_config.header_img_url1, logo2: global_config.header_img_url2 }
+    //section9
     $(document).ready(function () {
         $("#footer_logo1").attr("src", section9.logo1)
         $("#footer_logo2").attr("src", section9.logo2)
     }
     )
-
+    //section8
     $(document).ready(function () {
         const section8Data = section8["項目"];
-        const contentContainer = $('#section8 .content-container');
+        const contentContainer = $('#section8 .item-container');
+        console.log(contentContainer)
 
         section8Data.forEach((item) => {
             const itemDiv = $('<div></div>').addClass('item');
@@ -1535,7 +1227,7 @@
         });
     });
 
-
+    //section7
     $(document).ready(function () {
         const section7Data = section7.items;
         const itemContainer = $('#section7 .item-container');
@@ -1550,7 +1242,7 @@
     });
 
 
-
+    //section6
     $(document).ready(function () {
         const section6Data = section6.items;
         $('#infoTitle1').text(section6.title);
@@ -1580,7 +1272,7 @@
     });
 
 
-
+    //section5
     $(document).ready(function () {
         // 请确保您的 section5 数据对象在这里或者在其他地方已经定义
         const { title, full_item, half_items, full_item_span } = section5;
@@ -1591,10 +1283,10 @@
         // 添加 full_item
         let fullItemHtml = `
     <div class="row full-item-row">
-      <div class="col-6">
+      <div class="col-12 col-md-6 left-div">
         <img src="${full_item['圖片檔案']}" class="img-fluid">
       </div>
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         <div class="right-div">
             <h1>${full_item['標題']}</h1>
             <div class="divider"></div>
@@ -1615,7 +1307,7 @@
         <div id="fullItemSpan_div1"> </div>
         <div class="row">
           ${full_item_span['內容'].map(item => `
-            <div class="col-6">
+            <div class="col-md-6 col-12">
                 <div class='row justify-content-center'>
                     <div class="col">
                         <img src="${item['圖片檔案']}" class="img-fluid">
@@ -1652,7 +1344,7 @@
         let halfItemsHtml = '<div class="row justify-content-between half-items-row">';
         half_items.forEach(item => {
             halfItemsHtml += `
-      <div class="col-6 half-item-col">
+      <div class="col-12 col-md-6 half-item-col">
         <div class="card">
           <img src="${item['圖片檔案']}" class="card-img-top">
           <div class="card-body">
