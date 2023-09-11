@@ -147,6 +147,40 @@
             text-decoration: none;
         }
 
+        #section4 .item-container,
+        #section3 .item-container {
+            /* display: flex; */
+            /* flex-wrap: wrap; */
+            /* justify-content: space-around; */
+            display: flex;
+            overflow: auto;
+            /* 使項目可以左右滑動 */
+            scroll-snap-type: x mandatory;
+            /* 啟用水平滾動捕捉 */
+
+        }
+
+        #section4 .item,
+        #section3 .item {
+            flex: 0 0 calc(33.333% - 2rem);
+            /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
+            scroll-snap-align: start;
+            margin: 1rem
+        }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            #section3 .item-container {}
+
+            #section4 .item,
+            #section3 .item {
+                /* flex: 0 0 100%;
+                scroll-snap-align: start; */
+                margin: 2rem;
+                flex: 0 0 calc(100% - 2rem);
+            }
+        }
+
         /* Section 4 Specific Styles */
         .section4_outer {
             padding: 2rem 0 1rem 0;
@@ -284,10 +318,11 @@
 
         #section6 {
             position: relative;
-            height: 1000px;
+            height: 69.4vw;
             background-image: url('./img/s6-1.jpg');
-            background-size: cover;
+            background-size: contain;
             /* 设置背景图像和其他样式 */
+
         }
 
         .infoTitle1 {
@@ -322,13 +357,15 @@
             padding-top: 30px;
             margin-left: 2.3rem;
             color: white;
-            width: 40%;
+            width: 45%;
             /* 设置信息面板样式 */
             position: absolute;
             left: -100%;
             /* 初始化在視窗外側 */
             transition: left 0.5s;
             /* 這樣也可以實現動畫效果 */
+            overflow-y: scroll;
+            height: 48vw;
 
         }
 
@@ -346,7 +383,7 @@
             border: 3px solid #1CA8CD;
             background: #003854;
             display: flex;
-            width: 502px;
+            width: 80%;
             height: 306px;
             padding: 33px 45px 33px 30px;
             flex-direction: column;
@@ -746,7 +783,7 @@
     <div class="section3_outer">
         <div id="section3" class="container">
             <h3 class="text-center mb-5" id="section3-title">Upcoming Events</h3> <!-- Replace with your title -->
-            <div class="row" id="eventItems">
+            <div class="item-container" id="eventItems">
                 <!-- Event items will be inserted here -->
             </div>
         </div>
@@ -755,7 +792,7 @@
     <div class="section4_outer">
         <div id="section4" class="container">
             <!-- Title will be inserted here -->
-            <div class="row" id="recommendationItems">
+            <div class="item-container" id="recommendationItems">
                 <!-- Recommendation items will be inserted here -->
             </div>
         </div>
@@ -1640,7 +1677,7 @@
 
         section4.items.forEach((item) => {
             const recItem = $(`
-      <div class="col-4">
+      <div class="item">
         <div class="card hover-card">
           <div class="card-img-wrapper">
             <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題1']}">
@@ -1664,7 +1701,7 @@
         $("#section3-title").text(section3.title)
         items.forEach((item) => {
             const eventItem = $(`
-        <div class="col-4">
+        <div class="item">
           <div class="card">
             <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
             <div class="card-body">
