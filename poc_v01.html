@@ -17,6 +17,11 @@
         integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
         crossorigin="anonymous"></script>
     <style>
+        .navbar-brand img{
+            max-width: 50%;
+        }
+
+
         @keyframes glow {
             0% {
                 box-shadow: 0 0 10px #36BBFF;
@@ -261,7 +266,7 @@
             background-color: #fff;
             /* text-align: center; */
         }
-
+       
         #section5 .full-item-span {
             text-align: center;
         }
@@ -279,7 +284,7 @@
         }
 
         #section5 h3 {
-            padding-top: 48px;
+            padding-top: 1rem;
         }
 
         #section5 .col-6 {
@@ -288,8 +293,7 @@
         }
 
         #section5 .right-div {
-            padding: 2rem;
-            line-height: 2;
+            line-height: 1.3;
         }
 
         #section5 .col-6 .full-item-row img {
@@ -297,19 +301,37 @@
         }
         #section5 .full-item-row .left-div {
             padding-left: 0;
+            padding-right: 0;
         }
 
+        #section5 .img-fluid1{
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem 1rem 0 0;
+        }
         /* RWD */
         @media (min-width: 768px) {
-            #section5 .full-item-row {
-            height: 24.5vw;
+            #section5 .full-item-row{
+            height: 20rem;
         }
         #section5 .full-item-row .left-div{
             overflow: hidden;
+            height: 100%;
         }
         #section5 .full-item-row .right-div{
+            height: 100%;
             overflow: auto;
         }
+        #section5 .img-fluid1{
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem 0  0 1rem;
+        }
+        }
+
+        #section5 #fullItemSpan h4{
+            margin-top: 2rem;
+            margin-bottom: 2rem;
         }
         #section5 .show-more-btn {
             /* bottom: 1rem; */
@@ -327,10 +349,9 @@
         }
         
 
-        #section5 .full-item-span .img-fluid {
+        #section5 .full-item-span .img-fluid1 {
             width: 100%;
-            /* object-fit: cover; */
-            /* float: right; */
+            height: 80%;
         }
 
         #section5 .half-item-col {
@@ -350,8 +371,10 @@
             display: block;
             position: relative;
             height: 250vw;
-            background-image: url('./img/s6-2.jpg');
-            background-size: contain;
+            background-image: url('./img/s6-4.jpg');
+            /* background-image: url('./img/s6-3.png'); */
+            /* background-size: contain; */
+            background-size: 100% auto;
         }
         }
 
@@ -393,7 +416,7 @@
             box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
 
-        .info-panel {
+        #section6 .info-panel {
             padding-top: 30px;
             margin-left: 2.3rem;
             color: white;
@@ -406,10 +429,25 @@
             /* 這樣也可以實現動畫效果 */
             overflow-y: auto;
             height: 48vw;
-
         }
 
-        #infoTexts {
+        #section6-rwd .info-panel {
+            margin-top: 90%;
+            padding-top: 0;
+            margin-left: 2.3rem;
+            color: white;
+            width: 90%;
+            /* 设置信息面板样式 */
+            position: absolute;
+            left: -100%;
+            /* 初始化在視窗外側 */
+            transition: left 0.5s;
+            /* 這樣也可以實現動畫效果 */
+            overflow-y: auto;
+            height: 40%;
+        }
+
+        .infoTexts {
             color: white;
             /* border: 2px solid white; */
             /* background-color: rgb(119, 87, 209); */
@@ -433,7 +471,7 @@
             margin-top: 3rem;
         }
 
-        #infoTexts li {}
+        .infoTexts li {}
 
         .remark a {
             margin-left: 2.3rem;
@@ -442,14 +480,14 @@
             line-height: 1.5;
         }
 
-        #infoBlocks {
+        .infoBlocks {
             display: inline-flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 18px;
         }
 
-        #infoBlocks span {
+        .infoBlocks span {
             color: white;
             /* border: 2px solid white; */
             list-style-type: none;
@@ -609,6 +647,18 @@
         .footer-copyright {
             text-align: right;
         }
+        .footer-logos img {
+  max-width: 40%; /* 確保圖像不超出其容器 */
+  width: auto; /* 讓圖像保持其原始寬高比 */
+  height: auto; /* 高度自動 */
+}
+
+@media (min-width: 768px) { /* 假設在大於 768px 的螢幕寬度下 */
+  .footer-logos img {
+    max-width: 100%; /* 確保圖像不超出其容器 */
+    width: 50%; /* 圖像寬度設為 50% */
+  }
+}
 
 
 
@@ -636,6 +686,10 @@
             /* background-color: #f0f0f0; */
         }
 
+        #section6-rwd .dot{
+            width: 17px;
+            height: 17px;
+        }
         .dot {
             position: absolute;
             /* height: 20px; */
@@ -856,12 +910,12 @@
             <div class="product-map">
                 <!-- 在这里动态生成小圆点 -->
             </div>
-            <h1 id="infoTitle1" class="infoTitle1"></h1>
+            <h1  class="infoTitle1"></h1>
             <div class="info-panel">
                 <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
-                <h2 id="infoTitle" class="infoTitle"></h2>
-                <div id="infoBlocks"></div>
-                <div id="infoTexts"></div>
+                <h2 class="infoTitle"></h2>
+                <div class="infoBlocks"></div>
+                <div class="infoTexts"></div>
                 <div class="remark">
                     <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
                 </div>
@@ -873,12 +927,12 @@
             <div class="product-map">
                 <!-- 在这里动态生成小圆点 -->
             </div>
-            <h1 id="infoTitle1" class="infoTitle1"></h1>
+            <h1  class="infoTitle1"></h1>
             <div class="info-panel">
                 <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
-                <h2 id="infoTitle" class="infoTitle"></h2>
-                <div id="infoBlocks"></div>
-                <div id="infoTexts"></div>
+                <h2  class="infoTitle"></h2>
+                <div class="infoBlocks"></div>
+                <div class="infoTexts"></div>
                 <div class="remark">
                     <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
                 </div>
@@ -911,7 +965,7 @@
     </div>
 
     <footer id="footer">
-        <div class="footer-container">
+        <div class="footer-container d-flex flex-column flex-md-row">
             <div class="footer-logos d-flex">
                 <img src="logo1.png" alt="Logo 1" id="footer_logo1">
                 <img src="logo2.png" alt="Logo 2" id="footer_logo2">
@@ -1073,70 +1127,83 @@
                 title: "再生能源:風力發電 | 太陽能 | 儲能",
                 blocks: ["非網管型&網管型交換器 (EDS)", "通用控制器和 I / O(ioLogik)", "ARM 電腦(UC)"],
                 text: ["可在戶外寬溫環境下可靠運作", "提供遠端設備和軟體配置，並提供遠端故障排除功能，可大幅簡化維護流程", "立即可用的軟體解決方案，支援 Modbus 資料擷取、遠端設備管理，以及 Modbus 轉 MQTT 協定轉換"],
-                x_position: "58.5%",
-                y_position: "32%",
+                x_position: "57.5%",
+                y_position: "31%",
+                x_position_rwd: "27%",
+                y_position_rwd: "20.5%",
             }, {
                 title: "電力應用: 變電站自動化| 關鍵電力設備 ",
                 blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "先進控制器和 I / O(iothinx)", "x86電腦(DA)"],
                 text: ["多協定解決方案，包含 I / O 或協定閘道器，可輕易實現 IT - OT 融合", "使用 ThingsPro 閘道器和伺服器工具，輕鬆從分散式 ESS 站點擷取資料", "利用嵌入式電腦中的 Modbus 協定庫和 I / O 設備的 MXIO 程式庫，簡化軟體開發", "閘道器設備支援寬溫操作，可因應惡劣的戶外環境，而且外形輕巧，可安裝於任何 ESS 機器中"],
                 x_position: "54%",
                 y_position: "61%",
+                x_position_rwd: "20%",
+                y_position_rwd: "31%",
             }, {
                 title: "智慧交通: 軌道運輸 | 道路感測監控",
                 blocks: ["工業無線網路 Wifi AP  ( AWK)", " Vport(CCTV / IP攝影機)", "EDS - G4012 / MPC / TN", "符合 IEC 61375 標準的乙太網路交換器和可編程控制器。"],
                 text: ["Turbo Ring 自我修復技術可在 20 ms 內實現快速故障復原。", "智慧型車廂間乙太網路備援 - 動態環網耦合（DRC）技術可在列車重組車廂時啟用自動配置功能。", "Moxa 自動車廂連接（ACC）功能確保每個 AP 只需配置一次，便可在任何列車配置下建立連接。"],
                 x_position: "78%",
                 y_position: "36%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             }, {
                 title: "海事船舶",
                 blocks: ["非網管型&網管型交換器 (EDS)", "MC / MD / IKS"],
                 text: ["配備 NMEA 0183 介面的高效能電腦，讓船舶設備能夠順利通訊", "Turbo Ring 和 Turbo Chain 乙太網路備援技術，可實現網路高可用性", "符合電子海圖（ECDIS） IEC 61174 標準的面板，可精準重現海圖顯示", "通過認證並符合多項海事標準，包括 DNV、LR、ABS、NK、CCS、IEC 60945 和 IACS - E10"],
                 x_position: "65%",
                 y_position: "58%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             }, {
                 title: "智慧製造 ／生產線監控",
                 blocks: ["非網管型&網管型交換器 (EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "協定閘道器(MGate)", "工業無線網路 Wifi AP(AWK)", "具備交換器 / 防火牆的工業安全路由器(EDR)"],
                 text: ["無風扇高 I / O 密度嵌入式電腦，具有預測性維護功能，可長時間進行靈活的資料擷取", "Turbo Ring、Turbo Chain 和 V - ON 備援技術支援毫秒級的網路斷線復連", "具備 VPN 功能的工業防火牆，可阻擋未經授權的存取，以便保護您的重要應用", "多協定閘道器可無縫地連接生產線上的所有設備", "遠端 I / O 支援多種 IT 和 OT 協定，可輕易與 SCADA 和 MES 系統整合"],
                 x_position: "76%",
                 y_position: "60%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             }, {
                 title: "自動化倉儲／無人搬運車",
                 blocks: ["工業無線網路 Wifi AP  ( AWK)", "通用控制器和 I / O(ioLogik)", "串列至串列轉換器(TCC)"],
                 text: ["輕巧的 Wi - Fi 用戶端，可安裝於空間有限的穿梭車 / AGV 中", "AP 之間的漫遊時間僅 150 毫秒，確保所有物體可無縫地移動", "支援多種工業協定的智慧型交換器，讓工程師能夠輕易地將 AMH 系統整合入現有的 SCADA 系統中", "Moxa AP 具有 Wi - Fi 認證標誌，可與他牌無線設備互通"],
                 x_position: "85%",
                 y_position: "67%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             },
-            // {
-            //     title: "大樓機房",
-            //     blocks: ["非網管型 & 網管型交換器(EDS)", "串列轉乙太網路設備伺服器(NPort 5400)", "工業LTE行動通訊閘道器(OnCell)", "協定閘道器(MGate)", "* EDR / ioThinx / MDS"],
-            //     text: ["可靠的大容量階層式 IP 網路, 可安全地監控都會交通", "先進的即時交通流量管理系統", "高效率影像監視系統", "安全可靠地監控都會交通"],
-            //     x_position: "82%",
-            //     y_position: "30%",
-            // }, 
             {
                 title: "大樓機房",
                 blocks: ["非網管型&網管型交換器 (EDS)", "協定閘道器(MGate)", "* ARM 電腦(UC)", "* MDS"],
                 text: ["對於機房環境常見不通風，而產生高溫循環，造成熱當使網路中斷或設備不穩，您可改用Moxa!", "Modbus 串列轉 Modbus TCP 閘道器具主動輪詢功能，可縮短回應時間，以便針對能源管理進行精確分析", "乙太網路交換器可在 20ms 內恢復網路運作，確保設施網路具備出色的可靠性", "掌上型電腦、無線連接，以及立即可用之 Modbus 至雲端連接軟體平台的組合，讓您能輕鬆進行遠端監控", "具備直覺式 IF - THEN - ELSE 控制邏輯的智慧型遠端 I / O，只需點擊滑鼠即可輕鬆進行設施管理"],
                 x_position: "85%",
                 y_position: "54%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             }, {
                 title: "太空站",
                 blocks: ["工業無線網路 Wifi AP (AWK)"],
                 text: ["-100 °C 至 100 °C 快速擺盪的溫度範圍", "超強的輻射", "在極端惡劣條件下可靠地傳輸資料", "實現高速的資料傳輸"],
-                x_position: "90%",
-                y_position: "19%",
+                x_position: "89%",
+                y_position: "17%",
+                x_position_rwd: "81.5%",
+                y_position_rwd: "13%",
             }, {
                 title: "油氣石化",
                 blocks: ["工業無線網路 Wifi AP (AWK)", "非網管型 & 網管型交換器(EDS)", "* ARM 電腦(UC)", "* MC / EDR / MPC"],
                 text: ["陽光下清晰可讀、具 IP66 防護等級、高度互通的運算平台，可有效操控鑽井控制系統", "安全可靠的網路解決方案，可在鑽機室（driller’s cabin）中即時監控近海作業狀況", "支援各種工業協定的工業乙太網路閘道器，以及可將遠端 I / O 無縫整合入 SCADA 系統的 MX - AOPC UA 伺服器"],
                 x_position: "71%",
                 y_position: "30%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             }, {
                 title: "IIoT數位轉型",
                 blocks: ["IIoT 閘道器(AIG)", "工業級USB 集線器 / USB轉串列轉換器(UPort)", "通用控制器和 I / O(ioLogik)"],
                 text: ["入門級 IIoT 閘道器可將 Modbus 設備，與 Azure、AWS 以及其他使用 MQTT 協議存取的雲端平台整合在一起，方便收集資料傳輸到雲端。", "這些小型 IIoT 邊緣閘道器配備採用 x86 或 ARM 架構的處理器，可全面支援遠端監控和遙測應用，同時還可在極端溫度環境中提供可靠的無線連接。"],
                 x_position: "74%",
                 y_position: "46%",
+                x_position_rwd: "58.5%",
+                y_position_rwd: "32%",
             },
         ],
 
@@ -1241,19 +1308,48 @@
         });
     });
 
+    function linearTransform_x(x) {
+        const a = 1.703;
+  const b = -70.078;
+  return a * x + b;
+}
+function linearTransform_y(x) {
+    const a = 0.536;
+  const b = 3.893;
+  return a * x + b;
+}
+
 
     //section6
     $(document).ready(function () {
         const section6Data = section6.items;
-        $('#infoTitle1').text(section6.title);
+        $('.infoTitle1').text(section6.title);
         section6Data.forEach((item, index) => {
             const dot = $('<div></div>').addClass('dot')
                 .css('left', item.x_position)
                 .css('top', item.y_position)
                 .attr('data-index', index);
 
-            $('.product-map').append(dot);
+            $('#section6 .product-map').append(dot);
         });
+
+        $('.infoTitle1').text(section6.title);
+        section6Data.forEach((item, index) => {
+            // const new_vector=transformVector([ parseFloat(item.x_position.slice(0, -1)), parseFloat(item.y_position.slice(0, -1))])
+            const new_x=linearTransform_x(parseFloat(item.x_position.slice(0, -1)))
+            const new_y=linearTransform_y(parseFloat(item.y_position.slice(0, -1)))
+            console.log(new_x,new_y)
+            const dot = $('<div></div>').addClass('dot')
+                .css('left', new_x+"%")
+                .css('top', new_y+"%")
+                // .css('left', item.x_position_rwd)
+                // .css('top', item.y_position_rwd)
+                .attr('data-index', index);
+
+            $('#section6-rwd .product-map').append(dot);
+        });
+
+
 
         $('.dot').click(function () {
             const index = $(this).attr('data-index');
@@ -1261,11 +1357,11 @@
             $('.info-panel').css({ 'left': '-100%' });
             $('.info-panel').animate({ 'left': '-100%' }, 10);
             setTimeout(() => {
-                $('#infoTitle').text(item.title);
+                $('.infoTitle').text(item.title);
                 const blocks = item.blocks.map(block => `<span>${block}</span>`).join('');
-                $('#infoBlocks').html(`${blocks}`);
+                $('.infoBlocks').html(`${blocks}`);
                 const texts = item.text.map(text => `<li>${text}</li>`).join('');
-                $('#infoTexts').html(`<ul>${texts}</ul>`);
+                $('.infoTexts').html(`<ul>${texts}</ul>`);
                 $('.info-panel').animate({ 'left': '0' }, 500);
             }, 200)
         });
@@ -1284,17 +1380,17 @@
         let fullItemHtml = `
     <div class="row full-item-row">
       <div class="col-12 col-md-6 left-div">
-        <img src="${full_item['圖片檔案']}" class="img-fluid">
+        <img src="${full_item['圖片檔案']}" class="img-fluid1" height="100%">
       </div>
-      <div class="col-12 col-md-6">
-        <div class="right-div">
-            <h1>${full_item['標題']}</h1>
+      <div class="col-12 col-md-6 right-div">
+        
+            <h3>${full_item['標題']}</h3>
             <div class="divider"></div>
             <ul>
             ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
             </ul>
             <button id="showMore" class="btn btn-link show-more-btn">瞭解更多 ↓</button>
-         </div>
+       
       </div>
     </div>
   `;
@@ -1309,11 +1405,11 @@
           ${full_item_span['內容'].map(item => `
             <div class="col-md-6 col-12">
                 <div class='row justify-content-center'>
-                    <div class="col">
+                    <div class="col-4  d-flex align-items-center mb-3">
                         <img src="${item['圖片檔案']}" class="img-fluid">
                     </div>
-                    <div class="col">
-                        <p>${item['文案']}</p>
+                    <div class="col-8 d-flex align-items-center mb-3">
+                        <span>${item['文案']}</span>
                     </div>
                 </div>
             </div>`).join('')}
