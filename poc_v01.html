@@ -23,8 +23,25 @@
             font-family: 'Noto Sans TC', sans-serif;
         }
 
-        .navbar-brand img {
-            max-width: 50%;
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+    max-width: calc(100% - 80px);  /* 預留空間給漢堡菜單 */
+    white-space: nowrap;  /* 避免換行 */
+    overflow: hidden;  /* 超出的部分隱藏 */
+    text-overflow: ellipsis;  /* 超出的部分顯示為 ... */
+}
+
+.navbar-toggler {
+    width: 60px;  /* 或其他適當的寬度 */
+}
+            .navbar-brand a{
+                display: inline;
+            }
+            .navbar-brand img {
+            max-width: 30%;
+        }
+        #navbarNavList{display: none;}
         }
 
         #fullscreen-menu {
@@ -80,9 +97,19 @@
             }
         }
 
-        .carousel-item {
-            /* height: 412px; */
-        }
+        /* 自定義輪播指示器樣式 */
+        #myCarousel .carousel-indicators li {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+#myCarousel .carousel-indicators .active {
+    background-color: #aaa;
+}
+
+
+
 
         .carousel-caption {
             left: 5%;
@@ -138,9 +165,13 @@
 
         /* Section 3 specific styles */
         .section3_outer {
-            background-color: rgb(222, 221, 221);
+            background: #F0F4F7;
             padding-top: 2rem;
             padding-bottom: 1rem;
+        }
+
+        #section3.container{
+            padding: 0 5% 0 5%;
         }
 
         #section3 h3 {
@@ -163,7 +194,7 @@
         #section3 .card img {
             width: 100%;
             height: auto;
-            border-radius: 1rem;
+            border-radius: 1rem 1rem 0 0;
         }
 
         #section3 .card-body {
@@ -188,11 +219,11 @@
             display: block;
             width: 100%;
             text-align: center;
-            background-color: blue;
+            border-radius: 7.517px;
+background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
             color: white;
             padding: 0.5rem;
             margin: 0.5rem 0;
-            border-radius: 0.3rem;
             text-decoration: none;
         }
 
@@ -294,7 +325,7 @@
         }
 
         .section5_outer {
-            background-color: rgb(188, 185, 185);
+            background: #F0F4F7;
         }
 
         .divider {
@@ -340,6 +371,10 @@
 
         #section5 .right-div {
             line-height: 1.3;
+        }
+        #section5 .right-div.span_on {
+            background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
+            color: #FFF;
         }
 
         #section5 .col-6 .full-item-row img {
@@ -392,12 +427,33 @@
             border: none;
             font-size: 24px;
             width: 90%;
-            background-color: blue;
             margin-bottom: 20px;
             margin-top: 30px;
             margin: 5%;
             color: #fff;
             text-decoration: none;
+            border-radius: 7.517px;
+            background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
+        }
+        #section5 .show-more-btn.span_on {
+            /* bottom: 1rem; */
+            /* right: 0; */
+            background: none;
+            border: none;
+            font-size: 24px;
+            width: 90%;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            margin: 5%;
+            color: #0799DC;
+            text-decoration: none;
+            border-radius: 7.517px;
+            background: #FFFFFF;
+        }
+        #section5 .show-more-btn svg{
+            float: right;
+            margin-right: 10px;
+            margin-top: 15px;
         }
 
 
@@ -633,7 +689,7 @@
         }
 
         .section8_outer {
-            background-color: rgb(241, 239, 239);
+            background: #F0F4F7;
             padding-top: 2rem;
             padding-bottom: 3rem;
         }
@@ -893,8 +949,8 @@
         <div class="container">
             <!-- Brand images -->
             <a class="navbar-brand" href="#">
-                <img src="brand1.png" alt="Brand 1" height="30" id="nav-img-1">
-                <img src="brand2.png" alt="Brand 2" height="30" id="nav-img-2">
+                <img src="" alt="Brand 1" height="30" id="nav-img-1">
+                <img src="" alt="Brand 2" height="30" id="nav-img-2">
             </a>
 
             <!-- Toggler for smaller screens -->
@@ -904,10 +960,10 @@
             </button>
 
             <!-- Navigation links -->
-            <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav" id="navbarNavList">
                 </ul>
-            </div> -->
+            </div>
 
 
 
@@ -1049,8 +1105,8 @@
     <footer id="footer">
         <div class="footer-container d-flex flex-column flex-md-row">
             <div class="footer-logos d-flex">
-                <img src="logo1.png" alt="Logo 1" id="footer_logo1">
-                <img src="logo2.png" alt="Logo 2" id="footer_logo2">
+                <img src="" alt="Logo 1" id="footer_logo1">
+                <img src="" alt="Logo 2" id="footer_logo2">
             </div>
             <div class="footer-copyright">
                 <p>&copy; 2023 Your Company. All rights reserved.</p>
@@ -1076,7 +1132,12 @@
             });
         });
     });
+    const imageList = ['./img/s6-1-1.jpg', './img/s6-1-2.jpg', './img/s6-1-3.jpg','./img/s6-1-4.jpg','./img/s6-1-5.jpg','./img/s6-1-6.jpg','./img/s6-1-7.jpg','./img/s6-1-8.jpg','./img/s6-1-9.jpg','./img/s6-1-10.jpg',];
 
+imageList.forEach((image) => {
+  const img = new Image();
+  img.src = `${image}`;
+});
 
     const global_config = {
         header_img_url1: "https://www.weblink.com.tw/wp-content/themes/weblink/img/logo.svg",
@@ -1510,7 +1571,15 @@
             <ul>
             ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
             </ul>
-            <button id="showMore" class="btn btn-link show-more-btn">瞭解更多 ↓</button>
+            <button id="showMore" class="btn btn-link show-more-btn span_off">
+                瞭解更多
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="11" viewBox="0 0 18 11" fill="none" id="span_off_svg">
+                    <path d="M9 0L0 8.49534L2.45391 10.8116L9 4.63262L15.5461 10.8116L18 8.49534L9 0Z" fill="white"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="11" viewBox="0 0 18 11" fill="none" class="hidden" id="span_on_svg">
+                    <path d="M9 10.8116L18 2.3163L15.5461 -3.07555e-06L9 6.17903L2.45391 -4.22011e-06L7.42686e-07 2.3163L9 10.8116Z" fill="#0799DC"/>
+                </svg>
+            </button>
        
       </div>
     </div>
@@ -1553,8 +1622,18 @@
         // “显示更多”按钮点击事件
         $('#showMore').click(function () {
             $('#fullItemSpan').toggle();
-            const arrow = $(this).text() === '瞭解更多 ↓' ? '瞭解更多 ↑' : '瞭解更多 ↓';
-            $(this).text(arrow);
+            if($(this).hasClass("span_off") == true){
+                $(this).removeClass("span_off").addClass("span_on")
+                $("#span_on_svg").removeClass("hidden")
+                $("#span_off_svg").addClass("hidden")
+                $("#section5 .right-div").addClass("span_on")
+            }else{
+                $(this).removeClass("span_on").addClass("span_off")
+                $("#span_off_svg").removeClass("hidden")
+                $("#span_on_svg").addClass("hidden")
+                $("#section5 .right-div").removeClass("span_on")
+            }
+            
         });
 
         // 添加 half_items
@@ -1621,20 +1700,6 @@
           </div>
         </div>
       `);
-            //  舊版
-            //   const eventItem = $(`
-            //     <div class="col-4">
-            //       <div class="card">
-            //         <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
-            //         <div class="card-body">
-            //           <small class="text-muted">${item['日期']}</small>
-            //           <h5 class="card-title">${item['標題']}</h5>
-            //           <p class="card-text">${item['說明文字']}</p>
-            //           <a href="${item['連結（圖片/標題）']}" class="btn btn-primary">Learn More</a>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   `);
             $('#eventItems').append(eventItem);
         });
     });
