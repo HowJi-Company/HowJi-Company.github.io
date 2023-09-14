@@ -21,8 +21,17 @@
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
+            margin-top: 58px;
         }
 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* 其他樣式 */
+            z-index: 1002;
+        }
 
         @media (max-width: 768px) {
             .navbar-brand {
@@ -404,6 +413,53 @@
             border-radius: 1rem 1rem 0 0;
         }
 
+        @media (min-width: 768px) {
+            #section5 .block {
+                padding-top: 1rem
+            }
+
+            #section5 .block0,
+            #section5 .block2 {
+                border-bottom: 1px solid rgb(139, 132, 132);
+            }
+
+            #section5 .block1,
+            #section5 .block3 {
+                border-left: 1px solid rgb(139, 132, 132);
+                border-bottom: 1px solid rgb(139, 132, 132);
+            }
+
+            #section5 .block5 {
+                border-left: 1px solid rgb(139, 132, 132);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #section5 .block {
+                padding-top: 1rem;
+                border-bottom: 1px solid rgb(139, 132, 132);
+            }
+
+            #section5 .block5 {
+                border-bottom: 0px solid rgb(139, 132, 132);
+            }
+
+
+        }
+
+        /* 隱藏滾動條但保留滾動功能 */
+        #section6 {
+            -ms-overflow-style: none;
+            /* IE 和 Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        #section6::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari 和 Opera */
+        }
+
         /* RWD */
         @media (min-width: 768px) {
             #section5 .full-item-row {
@@ -553,7 +609,7 @@
             height: 3.5vw;
             flex-shrink: 0;
             border-radius: 15px;
-            border: 4px solid #36BBFF;
+            border: 2px solid #36BBFF;
             background: rgba(255, 255, 255, 0.00);
             box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
@@ -612,7 +668,8 @@
             background: #003854;
             display: flex;
             width: 80%;
-            height: 306px;
+            /* height: 306px; */
+            max-height: 306px;
             padding: 33px 45px 33px 30px;
             flex-direction: column;
             align-items: flex-start;
@@ -1040,14 +1097,14 @@
         </div>
 
         <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
-        </button>
+        </button> -->
     </div>
 
     <!-- Section 2 Structure -->
@@ -1097,7 +1154,7 @@
                 <div class="infoBlocks"></div>
                 <div class="infoTexts"></div>
                 <div class="remark">
-                    <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+                    <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">專案產品，請洽詢專人服務</a>
                 </div>
             </div>
         </div>
@@ -1114,7 +1171,7 @@
                 <div class="infoBlocks"></div>
                 <div class="infoTexts"></div>
                 <div class="remark">
-                    <a href="https://www.moxa.com/tw/contact-us/contact-form">專案產品，請洽詢專人服務</a>
+                    <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">專案產品，請洽詢專人服務</a>
                 </div>
             </div>
         </div>
@@ -1159,6 +1216,7 @@
 </body>
 
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
         const hamburgerButton = document.getElementById("hamburger-button");
         const fullscreenMenu = document.getElementById("fullscreen-menu");
@@ -1166,11 +1224,15 @@
 
         hamburgerButton.addEventListener("click", function () {
             fullscreenMenu.classList.toggle("hidden");
+            // 使用
+
         });
 
         menuItems.forEach(function (menuItem) {
             menuItem.addEventListener("click", function () {
                 fullscreenMenu.classList.add("hidden");
+                // 解鎖滾動
+
             });
         });
     });
@@ -1188,7 +1250,12 @@
         section1_text_2: "穩定可靠、性能出眾的非網管型交換器",
         section1_img_url1: "https://public.boxcloud.com/api/2.0/internal_files/1147981046707/versions/1249454587507/representations/jpg_paged_2048x2048/content/1.jpg?access_token=1!mnY_CiawO_g5ze5YrYiQjPol8PsAEnDEoNGA1gYkcgiOr4DXF7S1s0g5c7WB68WVsIT76fhzuOx__JeLDjZFQuTwLNZgSGTP3HmHI1iUeqMd1NcaKd54Yw3zRHRqm-JDvlBS-5tPhynZWgMLvshKd43qbfQMbuc0Dvp8jpuh0c_5txEh5TfJaKGfSB4C9OHZIcNwCw5PI-JZvJybnWNLVAOB6vWNBLbuA14mGyMqtVXoWuiXgn92xVGWHA3e-YEWrRqh256NDlSUzMqwUOd97F9M5bnTlk6pABPpQi9xS2PJbbLkfAADuaRnNEDoiXlij-xHE1I-ynv26Ii0vt_4bEJIoR2Oq-d7qaPeyxiW0PwWwFrY_5GlfT8sFCWTOCWbmsmdzkiz_GtBpOXEI7Oyi61-qpYcs2Dh8Vi342gaxivsZoTHjsl0qRy0ThuWysvUA3GJfn7i22hgeB_4mFA5G71dhVroask6QbHBEryC6ONPZNHJJ7gQk1p3RTceIt8pLX7lSoDdgXeo5VlIvit5nCcJHSR8AevUBgw3pupeRVur9XF3E1JWJLqpcHnoAM-SMg..&shared_link=https%3A%2F%2Fapp.box.com%2Fs%2Fnsq2656xtfsfbfywg02sk4lg04f5kaq1&box_client_name=box-content-preview&box_client_version=2.100.0",
     }
-    const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"]
+    const header_list = [{ title: "最新活動", href: "#section3" },
+    { title: "熱門推薦", href: "#section4" },
+    { title: "商用vs工業級", href: "#section5" },
+    { title: "產品應用", href: "#section6" },
+    { title: "Why Moxa", href: "#section7" },
+    { title: "聯絡我們", href: "#section8" }]
     const section1 = [{
         text_1: "超越極限",
         text_2: "穩定可靠、性能出眾的非網管型交換器",
@@ -1457,7 +1524,7 @@
         "背景圖檔路徑": "",
         items: [
             {
-                "文案": "100% MIT設計、生產、 製造的優質產品，提供中小型客戶最具競爭力的解決方案",
+                "文案": "100% MIT設計、生產、 製造，提供中小型客戶最具競爭力的解決方案",
                 "圖檔路徑": "./img/s7-1.png"
             },
             {
@@ -1526,7 +1593,7 @@
             itemDiv.append(smallTitle);
 
             item['小項目'].forEach((subItem) => {
-                const linkButton = $('<a></a>')
+                const linkButton = $('<a target="_blank"></a>')
                     .addClass('link-button')
                     .text(subItem['文案'])
                     .attr('href', subItem['連結']);
@@ -1672,9 +1739,9 @@
         <h4>${full_item_span['標題']}</h4>
         <div id="fullItemSpan_div1"> </div>
         <div class="row">
-          ${full_item_span['內容'].map(item => `
+          ${full_item_span['內容'].map((item, index) => `
             <div class="col-md-6 col-12">
-                <div class='row justify-content-center'>
+                <div class='row justify-content-center block block${index}'>
                     <div class="col-4  d-flex align-items-center mb-3">
                         <img src="${item['圖片檔案']}" class="img-fluid">
                     </div>
@@ -1725,6 +1792,7 @@
           <img src="${item['圖片檔案']}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">${item['標題']}</h5>
+            <div class="divider"></div>
             <ul>
               ${item['文案'].map(text => `<li>${text}</li>`).join('')}
             </ul>
@@ -1775,7 +1843,7 @@
             <div class="card-body">
               <small class="text-muted">${item['日期']}</small>
               <h5 class="card-title">${item['標題']}</h5>
-              <a href="${item['連結（圖片/標題）']}" class="btn btn-primary s3-btn">立刻報名</a>
+              <a href="${item['連結（圖片/標題）']}" target="_blank" class="btn btn-primary s3-btn">立刻報名</a>
             </div>
           </div>
         </div>
@@ -1847,13 +1915,13 @@
     });
     // header nav產生
     $(document).ready(function () {
-        const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"];
+        // const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"];
         const img_arr = ["https://www.weblink.com.tw/wp-content/themes/weblink/img/logo.svg", "https://cdn-cms.azureedge.net/Moxa/media/Global/logo.svg?ext=.svg"]
 
         header_list.forEach((item, index) => {
             const spacingClass = index < header_list.length - 1 ? 'me-3' : '';
             const navItem = $('<li>', { class: `nav-item ${spacingClass}` });
-            const navLink = $('<a>', { class: 'nav-link', text: item, href: '#' });
+            const navLink = $('<a>', { class: 'nav-link', text: item.title, href: item.href });
             navItem.append(navLink);
             $('#navbarNavList').append(navItem);
         });
