@@ -495,6 +495,11 @@
         #section6-rwd {
             display: none;
         }
+        #section6-rwd .dot.picked {
+            background-color: #36BBFF;
+            transition: 1s;
+            
+        }
 
         @media (max-width: 768px) {
             #section6 {
@@ -525,7 +530,7 @@
 
         .infoTitle1 {
             margin-bottom: 30px;
-            /* margin-left: 2rem; */
+            margin-left: 2rem;
             padding-top: 4rem;
             color: white;
         }
@@ -540,15 +545,23 @@
             height: 15px; */
             /* background-color: transparent; */
             /* border: 3px solid rgb(51, 208, 49); */
+            transition: 1s;
             border-radius: 50%;
             cursor: pointer;
-            width: 30px;
-            height: 30px;
+            width: 3.5vw;
+            height: 3.5vw;
             flex-shrink: 0;
             border-radius: 15px;
             border: 4px solid #36BBFF;
             background: rgba(255, 255, 255, 0.00);
             box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
+        }
+        @media(min-width:768px){
+            .product-map .dot {
+                border: 0px solid #36BBFF;
+                width: 2vw;
+                height: 2vw;
+            }
         }
 
         #section6 .info-panel {
@@ -839,17 +852,13 @@
             /* background-color: #f0f0f0; */
         }
 
-        #section6-rwd .dot {
-            width: 17px;
-            height: 17px;
-        }
 
         .dot {
             position: absolute;
             /* height: 20px; */
             /* width: 20px; */
-            width: 30px;
-            height: 30px;
+            width: 1vw;
+            height: 1vw;
             flex-shrink: 0;
             /* background-color: #49f349; */
             /* border-radius: 50%; */
@@ -1092,7 +1101,7 @@
         </div>
     </div>
     <div id="section6-rwd">
-        <div class="container relative">
+        <div class="relative">
             <div class="product-map">
                 <!-- 在这里动态生成小圆点 -->
             </div>
@@ -1316,9 +1325,11 @@
             {
                 title: "再生能源和儲能",
                 blocks: ["乙太網路交換器 ", "通用控制器和 I/O", "*工業級無風扇 ARM 電腦"],
-                text: ["Moxa 設備可在戶外惡劣環境中穩定運作", "支援遠端故障排除功能，簡化維護流程", "支援 Modbus 資料擷取和 MQTT ，整合到SCADA以及雲端應用"],
+                text: ["Moxa 設備可在戶外惡劣環境中穩定運作",
+                    "支援遠端故障排除功能，簡化維護流程",
+                    "支援 Modbus 資料擷取和 MQTT ，整合到SCADA以及雲端應用"],
                 x_position: "58.2%",
-                y_position: "32.7%",
+                y_position: "32.55%",
                 x_position_rwd: "28.6%",
                 y_position_rwd: "21.1%",
                 img: "background-image: url('./img/s6-1-1.jpg');"
@@ -1326,10 +1337,10 @@
                 title: "電力應用：變電站 ",
                 blocks: ["乙太網路交換器", "協定閘道器", "先進控制器和 I/O ", "*工業級無風扇x86 電腦"],
                 text: ["簡單設定的遠端 I / O ，輕鬆收集現場資料",
-"IEC61850 / DNP 3 新舊設備無縫銜接",
-"用於變電站通訊和運算的端對端 PRP / HSR網路備源",],
-                x_position: "53.6%",
-                y_position: "61%",
+                    "IEC61850 / DNP 3 新舊設備無縫銜接",
+                    "用於變電站通訊和運算的端對端 PRP / HSR網路備源",],
+                x_position: "53.4%",
+                y_position: "60.5%",
                 x_position_rwd: "20%",
                 y_position_rwd: "31%",
                 img: "background-image: url('./img/s6-1-2.jpg');"
@@ -1337,10 +1348,10 @@
                 title: "智慧交通和軌道運輸",
                 blocks: ["乙太網路交換機", " 串列轉乙太網路設備伺服器 ", "工業LTE行動通訊閘道器", "工業無線網路WiFi AP/Client", "協定閘道器"],
                 text: ["超過 500 次成功部署於全球領先鐵道公司的各種系統中",
-"符合 IEC 61375、EN 50155 和EN 50121 - 4 ",
-"IRIS認證確保高品質需求",
-"提供高傳輸速率、多元的網路介面",
-"Turbo Ring和Turbo Chain 20 ms網路備援",],
+                    "符合 IEC 61375、EN 50155 和EN 50121 - 4 ",
+                    "IRIS認證確保高品質需求",
+                    "提供高傳輸速率、多元的網路介面",
+                    "Turbo Ring和Turbo Chain 20 ms網路備援",],
                 x_position: "76%",
                 y_position: "34%",
                 x_position_rwd: "58.5%",
@@ -1350,10 +1361,10 @@
                 title: "海事船舶",
                 blocks: ["乙太網路交換機", "*工業級無風扇x86 電腦"],
                 text: ["通過認證並符合DNV、LR、ABS等多項海事標準",
-" 無風扇工業級，可持續承受高溫，高抗震性，確保長時間運作",
-"可靠網路備援技術和網路安全功能，符合 IEC 62443 標準",],
-                x_position: "64.5%",
-                y_position: "56.5%",
+                    " 無風扇工業級，可持續承受高溫，高抗震性，確保長時間運作",
+                    "可靠網路備援技術和網路安全功能，符合 IEC 62443 標準",],
+                x_position: "64.4%",
+                y_position: "56.18%",
                 x_position_rwd: "58.5%",
                 y_position_rwd: "32%",
                 img: "background-image: url('./img/s6-1-4.jpg');"
@@ -1362,11 +1373,11 @@
                 title: "智慧製造",
                 blocks: ["乙太網路交換機", "串列轉乙太網路設備伺服器", "協定閘道器", "工業無線網路 Wifi AP/Client", "*工業安全路由器"],
                 text: ["為全球 70 多個國家的領先製造商提供可靠的工業網路解決方案",
-"支援各式各樣的協定、介面和媒體，可將所有設備連網",
-"支援毫秒級的有線和無線網路備援",
-"縱深防禦方案保護工廠網路和重要設備"],
-                x_position: "76%",
-                y_position: "63.5%",
+                    "支援各式各樣的協定、介面和媒體，可將所有設備連網",
+                    "支援毫秒級的有線和無線網路備援",
+                    "縱深防禦方案保護工廠網路和重要設備"],
+                x_position: "75.9%",
+                y_position: "62.7%",
                 x_position_rwd: "58.5%",
                 y_position_rwd: "32%",
                 img: "background-image: url('./img/s6-1-5.jpg');"
@@ -1375,11 +1386,11 @@
                 title: "自動化倉儲",
                 blocks: ["非網管交換器", "工業無線網路WiFi AP/Client", "通用控制器和 I/O", "串列至串列轉換器"],
                 text: ["輕巧靈活非網管交換器和Wi-Fi 用戶端，可安裝於小型AGV 中",
-"AP 無線備援僅 150 毫秒，確保無縫接軌",
-"支援多種工業協定，將 AMHS輕鬆整合入SCADA ",
-"工業等級設計，抗電磁干擾、震動、高溫等",],
-                x_position: "84%",
-                y_position: "65%",
+                    "AP 無線備援僅 150 毫秒，確保無縫接軌",
+                    "支援多種工業協定，將 AMHS輕鬆整合入SCADA ",
+                    "工業等級設計，抗電磁干擾、震動、高溫等",],
+                x_position: "83.8%",
+                y_position: "64.2%",
                 x_position_rwd: "58.5%",
                 y_position_rwd: "32%",
                 img: "background-image: url('./img/s6-1-6.jpg');"
@@ -1389,13 +1400,13 @@
                 title: "大樓機房",
                 blocks: ["乙太網路交換器", "協定閘道器", "*工業級無風扇 ARM 電腦"],
                 text: ["應對機房封閉環境，可耐高溫操作",
-"支援各式各樣界面、協定和媒體，方便將 HVAC、UPS、火災警報系統等設備全部連網",
-"乙太網路交換器可在 20ms 內恢復網路運作，確保設施網路可靠性",
-"可視化網路管理，快速診斷連線問題，降低時間和成本"],
-                x_position: "88.3%",
-                y_position: "50%",
-                x_position_rwd: "58.5%",
-                y_position_rwd: "32%",
+                    "支援各式各樣界面、協定和媒體，方便將 HVAC、UPS、火災警報系統等設備全部連網",
+                    "乙太網路交換器可在 20ms 內恢復網路運作，確保設施網路可靠性",
+                    "可視化網路管理，快速診斷連線問題，降低時間和成本"],
+                x_position: "88.2%",
+                y_position: "49.5%",
+                x_position_rwd: "58%",
+                y_position_rwd: "30%",
                 img: "background-image: url('./img/s6-1-7.jpg');"
 
             }, {
@@ -1405,8 +1416,8 @@
                     "超強的輻射",
                     "在極端惡劣條件下可靠地傳輸資料",
                     "實現高速的資料傳輸"],
-                x_position: "90.5%",
-                y_position: "17%",
+                x_position: "90.2%",
+                y_position: "16.8%",
                 x_position_rwd: "82.2%",
                 y_position_rwd: "13.4%",
                 img: "background-image: url('./img/s6-1-8.jpg');"
@@ -1419,7 +1430,7 @@
                     "安全可靠的網路，可在鑽機室（driller’s cabin）中即時監控作業狀況",
                     "面板電腦陽光下清晰可讀、具 IP66 防護等級，可有效操控鑽井控制系統",],
                 x_position: "71.5%",
-                y_position: "29%",
+                y_position: "28.4%",
                 x_position_rwd: "58.5%",
                 y_position_rwd: "32%",
                 img: "background-image: url('./img/s6-1-9.jpg');"
@@ -1428,8 +1439,8 @@
                 title: "IIoT數位轉型",
                 blocks: ["IIoT 閘道器", "工業級USB 集線器/ USB轉串列轉換器", "通用控制器和 I/O", "*工業級無風扇 ARM 和 x86 電腦"],
                 text: ["入門級 IIoT 閘道器可將 Modbus 設備，整合到與Azure、AWS 以及MQTT 雲端", "全面支援遠端監控和遙測應用，在極端溫度環境中提供可靠的無線連接。"],
-                x_position: "75%",
-                y_position: "44%",
+                x_position: "74.84%",
+                y_position: "43.63%",
                 x_position_rwd: "58.5%",
                 y_position_rwd: "32%",
                 img: "background-image: url('./img/s6-1-10.jpg');"
@@ -1587,6 +1598,8 @@
             $('.info-panel').css({ 'left': '-100%' });
             $('.info-panel').animate({ 'left': '-100%' }, 10);
             $('#section6').attr("style", item.img)
+            $(".picked").removeClass("picked")
+            $(this).addClass("picked")
             console.log(item.img)
             setTimeout(() => {
                 $('.infoTitle').text(item.title);
