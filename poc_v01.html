@@ -495,10 +495,11 @@
         #section6-rwd {
             display: none;
         }
+
         #section6-rwd .dot.picked {
             background-color: #36BBFF;
             transition: 1s;
-            
+
         }
 
         @media (max-width: 768px) {
@@ -556,7 +557,8 @@
             background: rgba(255, 255, 255, 0.00);
             box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
-        @media(min-width:768px){
+
+        @media(min-width:768px) {
             .product-map .dot {
                 border: 0px solid #36BBFF;
                 width: 2vw;
@@ -1589,14 +1591,26 @@
 
             $('#section6-rwd .product-map').append(dot);
         });
-
-
+        //初始第一個
+        const item = section6Data[0];
+        $('.info-panel').css({ 'left': '-200%' });
+        $('.info-panel').animate({ 'left': '-200%' }, 10);
+        $('#section6').attr("style", item.img)
+        console.log(item.img)
+        setTimeout(() => {
+            $('.infoTitle').text(item.title);
+            const blocks = item.blocks.map(block => `<span>${block}</span>`).join('');
+            $('.infoBlocks').html(`${blocks}`);
+            const texts = item.text.map(text => `<li>${text}</li>`).join('');
+            $('.infoTexts').html(`<ul>${texts}</ul>`);
+            $('.info-panel').animate({ 'left': '0' }, 500);
+        }, 200)
 
         $('.dot').click(function () {
             const index = $(this).attr('data-index');
             const item = section6Data[index];
-            $('.info-panel').css({ 'left': '-100%' });
-            $('.info-panel').animate({ 'left': '-100%' }, 10);
+            $('.info-panel').css({ 'left': '-200%' });
+            $('.info-panel').animate({ 'left': '-200%' }, 10);
             $('#section6').attr("style", item.img)
             $(".picked").removeClass("picked")
             $(this).addClass("picked")
