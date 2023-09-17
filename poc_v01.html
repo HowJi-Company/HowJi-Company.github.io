@@ -21,8 +21,34 @@
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            margin-top: 58px;
+            /* margin-top: 110px; */
+            padding-top: 110px;
         }
+
+        @media (max-width: 768px) {
+            .rwd-show {
+                display: show;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .rwd-show {
+                display: none;
+            }
+        }
+
+        @media (min-width: 768px) {
+
+            #section3,
+            #section4,
+            #section5,
+            #section6,
+            #section7,
+            #section8 {
+                scroll-margin-top: 120px;
+            }
+        }
+
 
         .navbar {
             position: fixed;
@@ -31,6 +57,28 @@
             width: 100%;
             /* 其他樣式 */
             z-index: 1002;
+            height: 110px;
+        }
+
+        .navbar #navbarNav a {
+            color: #202020;
+            text-align: center;
+            font-family: Noto Sans CJK TC;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 23.8px;
+            /* 132.222% */
+        }
+
+        #nav-img-2 {
+            height: 23px;
+            width: 150px;
+        }
+
+        #nav-img-1 {
+            height: 41px;
+            width: 288px;
         }
 
         @media (max-width: 768px) {
@@ -186,18 +234,33 @@
         /* Section 3 specific styles */
         .section3_outer {
             background: #F0F4F7;
-            padding-top: 2rem;
-            padding-bottom: 1rem;
+            padding-top: 67px;
+            padding-bottom: 136px;
+        }
+
+        @media (max-width: 768px) {
+            .section3_outer {
+                background: #F0F4F7;
+                padding-top: 36px;
+                padding-bottom: 57px;
+            }
         }
 
         #section3.container {
             padding: 0 5% 0 5%;
         }
 
-        #section3 h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            margin-top: 1.5rem;
+        #section3-title {
+            color: #000;
+            font-family: Noto Sans CJK TC;
+            font-size: 34px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 56px;
+            /* 164.706% */
+            letter-spacing: 0.17px;
+            margin-top: 0;
+            margin-bottom: 36px;
         }
 
         #section3 .col-4 {
@@ -222,7 +285,12 @@
         }
 
         #section3 .card-body small {
-            font-size: 0.8rem;
+            color: #202020;
+            font-family: Noto Sans CJK TC;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
         }
 
         #section3 .card-body h5 {
@@ -264,7 +332,12 @@
             flex: 0 0 calc(33.333% - 2rem);
             /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
             scroll-snap-align: start;
-            margin: 1rem
+            margin: 1rem;
+            border-radius: 10px;
+        }
+
+        #section4 .item {
+            background-color: #FFF;
         }
 
         #section8 .item {
@@ -290,14 +363,24 @@
 
         /* Section 4 Specific Styles */
         .section4_outer {
-            padding: 2rem 0 1rem 0;
+            padding-top: 67px;
+            padding-bottom: 136px;
+        }
+
+        @media (max-width: 768px) {
+            .section4_outer {
+                background: #F0F4F7;
+                padding-top: 36px;
+                padding-bottom: 57px;
+            }
         }
 
         #section4 .hover-card {
             position: relative;
             border: none;
-            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
-            border-radius: 1rem;
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
+            border-radius: 10px;
+            filter: drop-shadow(2px 4px 10px #C3C3C3);
         }
 
         #section4 .card-img-wrapper {
@@ -317,7 +400,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
-            border-radius: 1rem 1rem 0 0;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-img-top {
+            border-radius: 10px 10px 0 0;
         }
 
         #section4 .img-overlay p {
@@ -335,9 +422,11 @@
         }
 
         #section4 .hover-card:hover .hover-card-body {
-            background-color: teal;
+            /* background-color: teal; */
             color: white;
-            border-radius: 0 0 1rem 1rem;
+            /* border-radius: 0 0 1rem 1rem; */
+            border-radius: 0 0 10px 10px;
+            background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
         }
 
         #section4 .hover-card:hover .hover-card-body .card-title {
@@ -346,6 +435,16 @@
 
         .section5_outer {
             background: #F0F4F7;
+            padding-top: 67px;
+            padding-bottom: 136px;
+        }
+
+        @media (max-width: 768px) {
+            .section5_outer {
+                background: #F0F4F7;
+                padding-top: 36px;
+                padding-bottom: 57px;
+            }
         }
 
         .divider {
@@ -355,12 +454,20 @@
             width: 70%;
         }
 
+        .divider-long {
+            height: 1px;
+            background-color: rgb(8, 7, 7);
+            margin: 10px 0;
+            width: 99%;
+        }
+
         #section5 .full-item-row,
         #section5 .full-item-span {
             /* margin-bottom: 20px; */
-            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
             border-radius: 1rem;
             background-color: #fff;
+            filter: drop-shadow(2px 4px 10px #C3C3C3);
             /* text-align: center; */
         }
 
@@ -371,9 +478,10 @@
         #section5 .half-items-row .card {
             margin-top: 2rem;
             margin-bottom: 20px;
-            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
             border-radius: 1rem;
             background-color: #fff;
+            filter: drop-shadow(2px 4px 10px #C3C3C3);
         }
 
         #section5 .half-items-row img {
@@ -410,6 +518,12 @@
         #section5 .img-fluid1 {
             width: 100%;
             height: 100%;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        #section5 .card-body {
+            width: 100%;
+            height: 213px;
             border-radius: 1rem 1rem 0 0;
         }
 
@@ -588,12 +702,8 @@
 
         }
 
-        .infoTitle1 {
-            margin-bottom: 30px;
-            margin-left: 2rem;
-            padding-top: 4rem;
-            color: white;
-        }
+
+
 
         .infoTitle {
             margin-left: 2.3rem;
@@ -617,13 +727,7 @@
             box-shadow: 0px 0px 0px 7.95975px rgba(54, 187, 255, 0.23), 0px 0px 0px 2.22484px rgba(54, 187, 255, 0.46);
         }
 
-        @media(min-width:768px) {
-            .product-map .dot {
-                border: 0px solid #36BBFF;
-                width: 2vw;
-                height: 2vw;
-            }
-        }
+
 
         #section6 .info-panel {
             padding-top: 30px;
@@ -637,7 +741,7 @@
             transition: left 0.5s;
             /* 這樣也可以實現動畫效果 */
             overflow-y: auto;
-            height: 48vw;
+            height: 54vw;
         }
 
         #section6-rwd .info-panel {
@@ -658,12 +762,7 @@
 
         .infoTexts {
             color: white;
-            /* border: 2px solid white; */
-            /* background-color: rgb(119, 87, 209); */
             margin-left: 2.3rem;
-            /* padding: 20px; */
-            /* border-radius: 20px; */
-            /* max-height: 200px; */
             overflow-x: auto;
             line-height: 1.5;
             border-radius: 10px;
@@ -678,16 +777,29 @@
             align-items: flex-start;
             gap: 15px;
             flex-shrink: 0;
-            margin-top: 3rem;
+            margin-top: 28px;
         }
 
         .infoTexts li {}
 
         .remark a {
             margin-left: 2.3rem;
-            color: white;
+            /* color: white; */
             text-decoration: none;
-            line-height: 1.5;
+            /* line-height: 1.5; */
+            color: #FFF;
+            font-family: Noto Sans CJK TC;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 34px;
+            /* 178.947% */
+            letter-spacing: 0.19px;
+        }
+
+        .remark {
+            margin-top: 10px;
+
         }
 
         .infoBlocks {
@@ -695,17 +807,12 @@
             flex-direction: column;
             align-items: flex-start;
             gap: 18px;
+            margin-top: 23px;
         }
 
         .infoBlocks span {
             color: white;
-            /* border: 2px solid white; */
             list-style-type: none;
-            /* background-color: rgb(64, 39, 163); */
-            /* padding: 20px; */
-            /* border-radius: 20px; */
-            /* margin-top: 5px;
-            margin-bottom: 5px; */
             margin-left: 2.3rem;
             border-radius: 10px;
             border: 3px solid #1CA8CD;
@@ -715,8 +822,58 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+        }
+
+        @media (min-width: 768px) {
+            .infoTitle1 {
+                /* margin-bottom: 30px; */
+                margin-bottom: 0;
+                margin-left: 0;
+                padding-top: 5vw;
+                color: white;
+                font-size: 2.36vw;
+                color: #FFF;
+                font-family: Noto Sans CJK TC;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 3.9vw;
+                /* 164.706% */
+                letter-spacing: 0.17px;
+                margin-left: 8.75vw;
+            }
+
+            .infoTitle {
+                /* margin-bottom: 30px; */
+                margin-bottom: 0;
+                margin-left: 0;
+                padding-top: 2.5vw;
+                color: white;
+                font-size: 1.944vw;
+            }
+
+            #section6 .info-panel {
+                padding-top: 0;
+                margin-left: 8.75vw;
+            }
+
+            .infoBlocks span,
+            .infoTexts,
+            .remark a {
+                margin-left: 0;
+            }
+
+            .product-map .dot {
+                border: 0.27777vw solid #36BBFF;
+                width: 2.083vw;
+                height: 2.083vw;
+            }
+
 
         }
+
+
+
+
 
         #section7 {
             /* position: relative; */
@@ -736,7 +893,8 @@
             /* background: linear-gradient(to right bottom, #0699DC 0%, #19A6D0 100%); */
             background: linear-gradient(to right bottom, rgba(6, 153, 220, 0.7), rgba(25, 166, 208, 0.7));
             /* mix-blend-mode: soft-light; */
-            padding-top: 6rem;
+            padding-top: 70px;
+            padding-bottom: 70px;
             /* 半透明的藍色 */
         }
 
@@ -789,8 +947,8 @@
 
         .section8_outer {
             background: #F0F4F7;
-            padding-top: 2rem;
-            padding-bottom: 3rem;
+            padding-top: 68px;
+            padding-bottom: 68px;
         }
 
         #section8 {
@@ -809,8 +967,9 @@
         #section8 .item {
             width: 45%;
             padding: 5rem;
-            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
             border-radius: 1rem;
+            filter: drop-shadow(2px 4px 10px #C3C3C3);
             background-color: #fff;
         }
 
@@ -877,7 +1036,21 @@
             /* 高度自動 */
         }
 
+        #footer .divider-long {
+            margin-top: 90px;
+            margin-bottom: 47px;
+        }
+
         @media (min-width: 768px) {
+            #footer {
+                height: 222px;
+                padding-top: 87px;
+            }
+
+            .footer-logos {
+                display: flex;
+                margin-left: 77px;
+            }
 
             /* 假設在大於 768px 的螢幕寬度下 */
             .footer-logos img {
@@ -885,8 +1058,26 @@
                 /* 確保圖像不超出其容器 */
                 width: 50%;
                 /* 圖像寬度設為 50% */
+                width: 280.488px;
+                height: 41.138px;
+                flex-shrink: 0;
+
             }
         }
+
+        @media (max-width: 768px) {
+
+            #footer_logo1 {
+                height: 38px;
+                width: 257px;
+            }
+
+            #footer_logo2 {
+                height: 22px;
+                width: 145px;
+            }
+        }
+
 
 
 
@@ -1148,7 +1339,8 @@
 
     <!-- Section 6 Structure -->
     <div id="section6">
-        <div class="container relative">
+        <!-- <div class="container relative"> -->
+        <div class=" relative">
             <div class="product-map">
                 <!-- 在这里动态生成小圆点 -->
             </div>
@@ -1159,7 +1351,7 @@
                 <div class="infoBlocks"></div>
                 <div class="infoTexts"></div>
                 <div class="remark">
-                    <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">專案產品，請洽詢專人服務</a>
+                    <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">備註 : *專案產品，請洽詢專人服務</a>
                 </div>
             </div>
         </div>
@@ -1208,10 +1400,12 @@
 
     <footer id="footer">
         <div class="footer-container d-flex flex-column flex-md-row">
-            <div class="footer-logos d-flex">
+            <div class="rwd-show divider-long"></div>
+            <div class="footer-logos">
                 <img src="" alt="Logo 1" id="footer_logo1">
                 <img src="" alt="Logo 2" id="footer_logo2">
             </div>
+
             <div class="footer-copyright">
                 <p>&copy; 2023 Your Company. All rights reserved.</p>
             </div>
@@ -1846,7 +2040,7 @@
           <div class="card">
             <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
             <div class="card-body">
-              <small class="text-muted">${item['日期']}</small>
+              <small>${item['日期']}</small>
               <h5 class="card-title">${item['標題']}</h5>
               <a href="${item['連結（圖片/標題）']}" target="_blank" class="btn btn-primary s3-btn">立刻報名</a>
             </div>
