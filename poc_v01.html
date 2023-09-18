@@ -26,6 +26,13 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding-top: 19.7vw;
+            }
+        }
+
+
+        @media (max-width: 768px) {
             .rwd-show {
                 display: show;
             }
@@ -79,6 +86,11 @@
         #nav-img-1 {
             height: 41px;
             width: 288px;
+            margin-left: 31px;
+            margin-right: 21px;
+        }
+        #navbarNav {
+            margin-right: 58px;
         }
 
         @media (max-width: 768px) {
@@ -94,8 +106,14 @@
             }
 
             .navbar-toggler {
-                width: 60px;
+                width: 7.46vw;
+                padding: 0;
                 /* 或其他適當的寬度 */
+            }
+
+            .navbar-toggler-icon {
+                width: 3.46vw;
+                margin: auto;
             }
 
             .navbar-brand a {
@@ -108,6 +126,21 @@
 
             #navbarNavList {
                 display: none;
+            }
+
+            #nav-img-1 {
+                width: 43vw;
+                margin-left: 6.4vw;
+                margin-right: 3.2vw;
+            }
+
+            #nav-img-2 {
+                width: 24.64vw;
+                margin-right: 4vw;
+            }
+
+            .navbar {
+                height: 19.7vw;
             }
         }
 
@@ -240,7 +273,7 @@
 
         @media (max-width: 768px) {
             .section3_outer {
-                background: #F0F4F7;
+                background-color: #F0F4F7;
                 padding-top: 36px;
                 padding-bottom: 57px;
             }
@@ -250,7 +283,7 @@
             padding: 0 5% 0 5%;
         }
 
-        #section3-title {
+        .section3-title {
             color: #000;
             font-family: Noto Sans CJK TC;
             font-size: 34px;
@@ -357,8 +390,8 @@
             #section3 .item {
                 /* flex: 0 0 100%;
                 scroll-snap-align: start; */
-                margin: 2rem;
-                flex: 0 0 calc(100% - 2rem);
+                margin: 0 2rem 0 2rem; 
+                flex: 0 0 calc(100% - 5rem);
             }
         }
 
@@ -370,7 +403,7 @@
 
         @media (max-width: 768px) {
             .section4_outer {
-                background: #F0F4F7;
+                background: #fff;
                 padding-top: 36px;
                 padding-bottom: 57px;
             }
@@ -458,6 +491,7 @@
             line-height: normal;
         }
 
+
         #section5 .span_on h3,
         #section5 .span_on ul {
             color: #FFF;
@@ -485,10 +519,20 @@
         }
 
         @media (max-width: 768px) {
+            #section5 ul {
+                font-size: 12px;
+                line-height: 18.501px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
             .section5_outer {
                 background: #F0F4F7;
                 padding-top: 36px;
                 padding-bottom: 57px;
+                padding-left: 45px;
+                padding-right: 45px;
             }
         }
 
@@ -499,6 +543,12 @@
             width: 99%;
             stroke-width: 1px;
             stroke: #D3D3D3;
+        }
+
+        @media (max-width: 768px) {
+            .divider {
+                margin: 10px 0 10px 0;
+            }
         }
 
         .divider-long {
@@ -512,12 +562,17 @@
 
         #section5 .full-item-row,
         #section5 .full-item-span {
-            /* margin-bottom: 20px; */
-            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
             border-radius: 1rem;
             background-color: #fff;
             filter: drop-shadow(2px 4px 10px #C3C3C3);
-            /* text-align: center; */
+        }
+
+        @media (max-width: 768px) {
+
+            #section5 .full-item-row,
+            #section5 .full-item-span {
+                border-radius: 5.739px;
+            }
         }
 
         #section5 .full-item-span {
@@ -527,10 +582,17 @@
         #section5 .half-items-row .card {
             margin-top: 2rem;
             margin-bottom: 20px;
-            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
             border-radius: 1rem;
             background-color: #fff;
             filter: drop-shadow(2px 4px 10px #C3C3C3);
+        }
+
+        @media (max-width: 768px) {
+
+            #section5 .full-item-row,
+            #section5 .full-item-span #section5 .half-items-row .card {
+                border-radius: 5.379px;
+            }
         }
 
         #section5 .half-items-row img {
@@ -567,12 +629,33 @@
             border-radius: 1rem 1rem 0 0;
         }
 
+        @media (max-width: 768px) {
+            #section5 .img-fluid1 {
+                border-radius: 5.379px 5.379px 0 0;
+            }
+        }
+
         #section5 .card-body {
             padding: 28px 45px 28px 45px;
             width: 100%;
             height: 258px;
             border-radius: 1rem 1rem 0 0;
         }
+
+        @media (max-width: 768px) {
+
+            #section5 .right-div,
+            #section5 .card-body {
+                height: 244px;
+                padding: 15px 24px 15px 24px;
+                border-radius: 5.379px 5.379px 5.379px 5.379px;
+            }
+
+            #section5 .right-div {
+                height: 290px;
+            }
+        }
+
 
         /* #section5 .block {
             box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, 0.3);
@@ -661,6 +744,14 @@
             line-height: normal;
         }
 
+        @media (max-width: 768px) {
+
+            #section5 h3,
+            #section5 .card-title {
+                font-size: 20px;
+            }
+        }
+
         #section5 .show-more-btn {
             /* bottom: 1rem; */
             /* right: 0; */
@@ -674,6 +765,12 @@
             text-decoration: none;
             border-radius: 7.517px;
             background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
+        }
+
+        @media (max-width: 768px) {
+            #section5 .show-more-btn {
+                margin-top: 5px;
+            }
         }
 
         #section5 .show-more-btn.span_on {
@@ -725,6 +822,12 @@
         }
 
         #section6-rwd .dot.picked {
+            background-color: #36BBFF;
+            transition: 1s;
+
+        }
+
+        #section6 .dot.picked {
             background-color: #36BBFF;
             transition: 1s;
 
@@ -917,6 +1020,7 @@
             #section6 .info-panel {
                 padding-top: 0;
                 margin-left: 8.75vw;
+                height: 57vw
             }
 
             .infoBlocks span,
@@ -931,7 +1035,71 @@
                 height: 2.083vw;
             }
 
+            .infoBlocks span {
+                color: white;
+                list-style-type: none;
+                margin-left: 0;
+                border-radius: 10px;
+                border: 3px solid #1CA8CD;
+                background: #0094DF;
+                display: flex;
+                padding: 0.83vw 2.083vw;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+            }
 
+            .infoTexts {
+                margin-left: 0;
+                overflow-x: auto;
+                line-height: 1.5;
+                border-radius: 10px;
+                border: 3px solid #1CA8CD;
+                background: #003854;
+                display: flex;
+                width: 80%;
+                /* height: 306px; */
+                max-height: 18vw;
+                /* max-height: 21.25vw; */
+                padding: 2.29vw 3.125vw 2.29vw 2.083vw;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.0415vw;
+                flex-shrink: 0;
+                margin-top: 1.944vw;
+                color: #77CBE6;
+                font-family: Noto Sans CJK TC;
+                font-size: 1.319vw;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 2.361vw;
+                /* 178.947% */
+                letter-spacing: 0.19px;
+            }
+
+            .infoBlocks {
+                display: inline-flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.25vw;
+                margin-top: 1.597vw;
+                font-size: 0.97vw;
+            }
+
+            .remark a {
+                /* margin-left: 2.3rem; */
+                /* color: white; */
+                text-decoration: none;
+                /* line-height: 1.5; */
+                color: #FFF;
+                font-family: Noto Sans CJK TC;
+                font-size: 1.319vw;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 2.361vw;
+                /* 178.947% */
+                letter-spacing: 0.19px;
+            }
         }
 
 
@@ -1331,37 +1499,44 @@
             margin-bottom: 10px;
         }
     </style>
+    <style>
+        @media (max-width: 768px) {
+            .section .common-section-title {
+                color: #000;
+                font-family: Noto Sans CJK TC;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 28px;
+                /* 140% */
+                letter-spacing: 0.1px;
+                margin-bottom: 21px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
+        
             <!-- Brand images -->
-            <a class="navbar-brand" href="">
-                <a href="https://www.weblink.com.tw/" target="_blank">
-                    <img src="" alt="Brand 1" height="30" id="nav-img-1">
-                </a>
-                <a href="https://moxa.com/tw/" target="_blank">
-                    <img src="" alt="Brand 2" height="30" id="nav-img-2">
-                </a>
+            <a href="https://www.weblink.com.tw/" target="_blank">
+                <img src="" alt="Brand 1" height="30" id="nav-img-1">
             </a>
-
+            <a href="https://moxa.com/tw/" target="_blank">
+                <img src="" alt="Brand 2" height="30" id="nav-img-2">
+            </a>
+            </a>
+            <!-- Navigation links -->
+            <span class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav" id="navbarNavList">
+                </ul>
+            </span>
             <!-- Toggler for smaller screens -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" id="hamburger-button"></span>
             </button>
-
-            <!-- Navigation links -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav" id="navbarNavList">
-                </ul>
-            </div>
-
-
-
-
-        </div>
     </nav>
 
 
@@ -1410,8 +1585,9 @@
 
     <!-- Section 3 Structure -->
     <div class="section3_outer">
-        <div id="section3" class="container">
-            <h3 class="text-center mb-5" id="section3-title">Upcoming Events</h3> <!-- Replace with your title -->
+        <div id="section3" class="container section section3">
+            <h3 class="text-center common-section-title" id="section3-title">Upcoming Events</h3>
+            <!-- Replace with your title -->
             <div class="item-container" id="eventItems">
                 <!-- Event items will be inserted here -->
             </div>
@@ -1489,7 +1665,7 @@
     <div class="section8_outer">
 
         <div id="section8">
-            <h1 class="main-title">聯絡我們</h1>
+            <h1 class="main-title common-section-title">聯絡我們</h1>
             <!-- <div class="content-container"> -->
             <div class="item-container container">
                 <!-- 這裡將動態渲染項目 -->
@@ -1501,7 +1677,7 @@
     <footer id="footer">
         <div class="divider container"></div>
         <div class="footer-container d-flex flex-column flex-md-row">
-            <div class="rwd-show divider-long"></div>
+            <!-- <div class="rwd-show divider-long"></div> -->
             <div class="footer-logos">
                 <!-- <img src="" alt="Logo 1" id="footer_logo1">
                 <img src="" alt="Logo 2" id="footer_logo2"> -->
@@ -1943,7 +2119,7 @@
         const section6Data = section6.items;
         $('.infoTitle1').text(section6.title);
         section6Data.forEach((item, index) => {
-            const dot = $('<div></div>').addClass('dot')
+            const dot = $('<div></div>').addClass('dot').addClass(`dot${index}`)
                 .css('left', item.x_position)
                 .css('top', item.y_position)
                 .attr('data-index', index);
@@ -1957,7 +2133,7 @@
             const new_x = linearTransform_x(parseFloat(item.x_position.slice(0, -1)))
             const new_y = linearTransform_y(parseFloat(item.y_position.slice(0, -1)))
             console.log(new_x, new_y)
-            const dot = $('<div></div>').addClass('dot')
+            const dot = $('<div></div>').addClass('dot').addClass(`dot${index}`)
                 .css('left', new_x + "%")
                 .css('top', new_y + "%")
                 // .css('left', item.x_position_rwd)
@@ -1968,6 +2144,7 @@
         });
         //初始第一個
         const item = section6Data[0];
+        $('.dot0').addClass('picked')
         $('.info-panel').css({ 'left': '-200%' });
         $('.info-panel').animate({ 'left': '-200%' }, 10);
         $('#section6').attr("style", item.img)
@@ -2011,7 +2188,7 @@
         const { title, full_item, half_items, full_item_span } = section5;
 
         // 添加区块标题
-        $('#section5').append(`<h3 class="text-center mb-5">${title}</h3>`);
+        $('#section5').append(`<h3 class="text-center mb-5 common-section-title">${title}</h3>`);
 
         // 添加 full_item
         let fullItemHtml = `
@@ -2117,7 +2294,7 @@
     //section4
     $(document).ready(function () {
 
-        $('#section4').prepend(`<h3 class="text-center mb-5">${section4.title}</h3>`);
+        $('#section4').prepend(`<h3 class="text-center mb-5 common-section-title">${section4.title}</h3>`);
 
         section4.items.forEach((item) => {
             const recItem = $(`
