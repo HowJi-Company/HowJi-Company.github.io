@@ -270,7 +270,8 @@
         #section3 .card {
             position: relative;
             border: none;
-            box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3);
+            /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
+            filter: drop-shadow(2px 4px 10px #C3C3C3);
             border-radius: 1rem;
         }
 
@@ -408,9 +409,18 @@
         }
 
         #section4 .img-overlay p {
-            color: white;
             margin: 0;
-            text-align: center;
+            text-align: left;
+            padding: 24px;
+            color: #FFF;
+            text-align: justify;
+            font-family: Helvetica;
+            font-size: 18.9px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 31.5px;
+            /* 166.667% */
+            letter-spacing: 0.525px;
         }
 
         #section4 .hover-card:hover .img-overlay {
@@ -439,6 +449,41 @@
             padding-bottom: 136px;
         }
 
+        #section5 .card-title {
+            color: #202020;
+            font-family: Noto Sans CJK TC;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        #section5 .span_on h3,
+        #section5 .span_on ul {
+            color: #FFF;
+        }
+
+        #section5 .block span {
+            color: #0075B0;
+            font-family: Noto Sans CJK TC;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 34px;
+            /* 154.545% */
+            letter-spacing: 1.1px;
+        }
+
+        #section5 ul {
+            color: #484848;
+            font-family: Noto Sans CJK TC;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 24px;
+            /* 150% */
+        }
+
         @media (max-width: 768px) {
             .section5_outer {
                 background: #F0F4F7;
@@ -449,16 +494,20 @@
 
         .divider {
             height: 1px;
-            background-color: rgb(8, 7, 7);
-            margin: 10px 0;
-            width: 70%;
+            background-color: #D3D3D3;
+            margin: 20px 0 20px 0;
+            width: 99%;
+            stroke-width: 1px;
+            stroke: #D3D3D3;
         }
 
         .divider-long {
             height: 1px;
-            background-color: rgb(8, 7, 7);
+            /* background-color: rgb(8, 7, 7); */
             margin: 10px 0;
             width: 99%;
+            stroke-width: 1px;
+            stroke: #D3D3D3;
         }
 
         #section5 .full-item-row,
@@ -488,10 +537,6 @@
             border-radius: 1rem 1rem 0 0;
         }
 
-        #section5 h3 {
-            padding-top: 1rem;
-        }
-
         #section5 .col-6 {
             position: relative;
             padding: 0;
@@ -499,6 +544,7 @@
 
         #section5 .right-div {
             line-height: 1.3;
+            padding: 28px 45px 28px 45px;
         }
 
         #section5 .right-div.span_on {
@@ -522,8 +568,9 @@
         }
 
         #section5 .card-body {
+            padding: 28px 45px 28px 45px;
             width: 100%;
-            height: 213px;
+            height: 258px;
             border-radius: 1rem 1rem 0 0;
         }
 
@@ -580,7 +627,7 @@
         /* RWD */
         @media (min-width: 768px) {
             #section5 .full-item-row {
-                height: 20rem;
+                height: 350px;
             }
 
             #section5 .full-item-row .left-div {
@@ -605,16 +652,24 @@
             margin-bottom: 2rem;
         }
 
+        #section5 h3 {
+            color: #202020;
+            font-family: Noto Sans CJK TC;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
         #section5 .show-more-btn {
             /* bottom: 1rem; */
             /* right: 0; */
             background: none;
             border: none;
             font-size: 24px;
-            width: 90%;
-            margin-bottom: 20px;
-            margin-top: 30px;
-            margin: 5%;
+            width: 99%;
+            margin-top: 20px;
+            /* margin: ; */
             color: #fff;
             text-decoration: none;
             border-radius: 7.517px;
@@ -778,6 +833,14 @@
             gap: 15px;
             flex-shrink: 0;
             margin-top: 28px;
+            color: #77CBE6;
+            font-family: Noto Sans CJK TC;
+            font-size: 19px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 34px;
+            /* 178.947% */
+            letter-spacing: 0.19px;
         }
 
         .infoTexts li {}
@@ -956,7 +1019,17 @@
         }
 
         #section8 .main-title {
-            margin-bottom: 3rem;
+            /* margin-bottom: 3rem; */
+            color: #000;
+            font-family: Noto Sans CJK TC;
+            font-size: 34px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 56px;
+            /* 164.706% */
+            letter-spacing: 0.17px;
+            margin-top: 0;
+            margin-bottom: 36px;
         }
 
         #section8 .content-container {
@@ -1018,6 +1091,15 @@
 
         .footer-copyright {
             text-align: right;
+            color: #2F3C3F;
+            text-align: center;
+            font-family: Noto Sans JP;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20.4px;
+            /* 170% */
+            margin-top: 20px;
         }
 
         @media (max-width:768px) {
@@ -1062,6 +1144,20 @@
                 height: 41.138px;
                 flex-shrink: 0;
 
+            }
+
+            #footer_logo2 {
+                width: 158px;
+            }
+
+            #footer .divider {
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .footer-copyright {
+                margin-right: 5%;
             }
         }
 
@@ -1241,9 +1337,13 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <!-- Brand images -->
-            <a class="navbar-brand" href="#">
-                <img src="" alt="Brand 1" height="30" id="nav-img-1">
-                <img src="" alt="Brand 2" height="30" id="nav-img-2">
+            <a class="navbar-brand" href="">
+                <a href="https://www.weblink.com.tw/" target="_blank">
+                    <img src="" alt="Brand 1" height="30" id="nav-img-1">
+                </a>
+                <a href="https://moxa.com/tw/" target="_blank">
+                    <img src="" alt="Brand 2" height="30" id="nav-img-2">
+                </a>
             </a>
 
             <!-- Toggler for smaller screens -->
@@ -1399,15 +1499,24 @@
     </div>
 
     <footer id="footer">
+        <div class="divider container"></div>
         <div class="footer-container d-flex flex-column flex-md-row">
             <div class="rwd-show divider-long"></div>
             <div class="footer-logos">
-                <img src="" alt="Logo 1" id="footer_logo1">
-                <img src="" alt="Logo 2" id="footer_logo2">
+                <!-- <img src="" alt="Logo 1" id="footer_logo1">
+                <img src="" alt="Logo 2" id="footer_logo2"> -->
+                <a class="navbar-brand" href="">
+                    <a href="https://www.weblink.com.tw/" target="_blank">
+                        <img src="" alt="Brand 1" height="30" id="footer_logo1">
+                    </a>
+                    <a href="https://moxa.com/tw/" target="_blank">
+                        <img src="" alt="Brand 2" height="30" id="footer_logo2">
+                    </a>
+                </a>
             </div>
 
             <div class="footer-copyright">
-                <p>&copy; 2023 Your Company. All rights reserved.</p>
+                <p> © 2023 Moxa Inc. ALL RIGHTS RESERVED</p>
             </div>
         </div>
     </footer>
@@ -1587,7 +1696,7 @@
     }
     const section6 = {
         "背景圖案": "",
-        title: "MOXA 產品分類地圖",
+        title: "Moxa 產品分類地圖",
         "備註": "專案產品，請洽詢專人服務	https://www.moxa.com/tw/contact-us/contact-form",
         items: [
             {
