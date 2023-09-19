@@ -338,11 +338,13 @@
         #section3 .card img {
             width: 100%;
             height: auto;
-            border-radius: 7.709px 7.709px 0 0;
+            border-radius: 10px 10px 0 0;
         }
+
 
         #section3 .card-body {
             text-align: left;
+            padding: 1rem 26px;
         }
 
         #section3 .card-body small {
@@ -352,6 +354,22 @@
             font-style: normal;
             font-weight: 500;
             line-height: normal;
+        }
+
+        @media (max-width: 768px) {
+            #section3 .card-body small {
+                color: #202020;
+                font-family: Noto Sans CJK TC;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            #section3 .card img {
+                border-radius: 7.709px 7.709px 0 0;
+            }
+
         }
 
         #section3 .card-body h5 {
@@ -374,7 +392,7 @@
             background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
             color: white;
             padding: 0.5rem;
-            margin: 0.5rem 0;
+            margin: 23px 0 12px 0;
             text-decoration: none;
         }
 
@@ -392,6 +410,7 @@
             #section3 .s3-btn {
                 margin: 5px 0;
                 padding: 7px;
+                border-radius: 5.795px;
             }
         }
 
@@ -416,16 +435,51 @@
             border-radius: 10px;
         }
 
+        @media (max-width: 768px) {
+
+            #section7 .item,
+            #section4 .item,
+            #section3 .item {
+                flex: 0 0 calc(33.333% - 2rem);
+                /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
+                scroll-snap-align: start;
+                margin: 1rem;
+                border-radius: 7.709px;
+            }
+
+            #section4 .card-title {
+                color: #202020;
+                font-family: Noto Sans CJK TC;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            #section4 .card-subtitle {
+                color: #484848;
+                font-family: Noto Sans CJK TC;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 18.501px;
+                /* 154.178% */
+            }
+        }
+
         #section4 .item {
             background-color: #FFF;
         }
 
-        #section8 .item {
-            flex: 0 0 calc(50% - 2rem);
-            /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
-            scroll-snap-align: start;
-            margin: 1rem
+        @media (max-width: 768px) {
+            #section8 .item {
+                flex: 0 0 calc(50% - 2rem);
+                /* 在大螢幕上，項目寬度為 33.333% 減去邊距 */
+                scroll-snap-align: start;
+                margin: 21px;
+            }
         }
+
 
         /* RWD */
         @media (max-width: 768px) {
@@ -515,6 +569,28 @@
             }
         }
 
+        @media (min-width: 768px) {
+            #section4 .card-title {
+                color: #202020;
+                font-family: Noto Sans CJK TC;
+                font-size: 28px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            #section4 .sub-title {
+                color: #484848;
+                font-family: Noto Sans CJK TC;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+                /* 150% */
+            }
+
+
+        }
 
         #section4 .hover-card:hover .img-overlay {
             opacity: 1;
@@ -668,6 +744,15 @@
             padding-bottom: 21px;
         }
 
+        @media (min-width: 768px) {
+
+            #section5 .full-item-span {
+                text-align: center;
+                padding-bottom: 31px;
+            }
+        }
+
+
         #section5 .half-items-row .card {
 
             border-radius: 5.379px;
@@ -694,7 +779,7 @@
         }
 
         #section5 .half-items-row img {
-            border-radius: 5.379px 5.379px 0 0;
+            /* border-radius: 5.379px 5.379px 0 0; */
         }
 
         #section5 .col-6 {
@@ -737,7 +822,7 @@
             padding: 28px 45px 28px 45px;
             width: 100%;
             height: 258px;
-            border-radius: 1rem 1rem 0 0;
+            border-radius: 10px 10px 0 0;
         }
 
         @media (max-width: 768px) {
@@ -825,7 +910,7 @@
             #section5 .img-fluid1 {
                 width: 100%;
                 height: 100%;
-                border-radius: 1rem 0 0 1rem;
+                border-radius: 10px 0 0 10px;
             }
 
             #section5 .img-fluid {
@@ -907,6 +992,10 @@
                 /* 140% */
                 letter-spacing: 0.1px;
             }
+
+            #section5 .right-div h3 {
+                font-weight: 500;
+            }
         }
 
         #section5 .show-more-btn {
@@ -946,6 +1035,11 @@
             background: #FFFFFF;
         }
 
+        @media (min-width: 768px) {
+            #section5 .show-more-btn.span_on {
+                margin: 1% 5% 0 5%;
+            }
+        }
 
 
         #section5 .show-more-btn svg {
@@ -1517,7 +1611,7 @@
         .section8_outer {
             background: #F0F4F7;
             padding-top: 68px;
-            padding-bottom: 68px;
+            padding-bottom: 79px;
         }
 
         #section8 {
@@ -1550,11 +1644,11 @@
         }
 
         #section8 .item {
-            width: 45%;
-            padding: 5rem;
+            width: 573px;
+            padding: 40px 65px;
             /* box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.3); */
-            border-radius: 1rem;
-            filter: drop-shadow(2px 4px 10px #C3C3C3);
+            border-radius: 10px;
+            /* filter: drop-shadow(2px 4px 10px #C3C3C3); */
             background-color: #fff;
         }
 
@@ -1563,6 +1657,12 @@
             font-size: 1.8rem;
             margin-bottom: 2rem;
             margin-top: 1rem;
+            color: #202020;
+            font-family: Noto Sans CJK TC;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
         }
 
         #section8 .link-button {
@@ -1574,19 +1674,28 @@
             border-radius: 7.517px;
             background: linear-gradient(337deg, #0094DF 31.98%, #1CA8CD 106.93%);
             color: white;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
+            padding: 16px;
+            margin: 30px 0;
             text-decoration: none;
             line-height: 2;
-            margin-bottom: 1.3rem;
+            /* margin-bottom: 1.3rem; */
             font-size: 1.5rem;
+            color: #FFF;
+            font-family: Noto Sans CJK TC;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.7px;
         }
 
         @media (max-width: 768px) {
             #section8 .link-button {
                 font-size: 20px;
-                padding: 3px;
+                padding: 11px 27px;
                 border-radius: 3.752px;
+                margin-bottom: 25px;
+                margin-top: 0;
             }
 
             #section8 .item {
@@ -1610,6 +1719,7 @@
 
             .section8_outer {
                 background: #F0F4F7;
+                padding-bottom: 69px;
             }
 
             #section8 .item-container {
@@ -1628,6 +1738,18 @@
                 letter-spacing: 0.1px;
             }
         }
+
+        @media (min-width: 768px) {
+            #section8 .item-container {
+                padding: 0 119px;
+            }
+
+            #section8 .item {
+                margin: 0 21px;
+            }
+        }
+
+
 
         #footer {
             background-color: #fff;
@@ -1684,7 +1806,7 @@
         @media (min-width: 768px) {
             #footer {
                 height: 222px;
-                padding-top: 87px;
+                padding-top: 67px;
             }
 
             .footer-logos {
@@ -1701,6 +1823,7 @@
                 width: 280.488px;
                 height: 41.138px;
                 flex-shrink: 0;
+                margin-top: 30px;
 
             }
 
@@ -1712,10 +1835,12 @@
                 width: 90%;
                 margin-left: 5%;
                 margin-right: 5%;
+
             }
 
             .footer-copyright {
                 margin-right: 5%;
+                margin-top: 37px;
             }
         }
 
@@ -1920,6 +2045,37 @@
         @media (min-width: 768px) {
             .rwd-br {
                 display: none;
+            }
+
+            #section4 .common-section-title,
+            #section5 h3,
+            #section3 h3 {
+                color: #000;
+                font-family: Noto Sans CJK TC;
+                font-size: 34px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 56px;
+                /* 164.706% */
+                letter-spacing: 0.17px;
+            }
+
+            #section5 .right-div h3 {
+                color: #202020;
+                font-family: Noto Sans CJK TC;
+                font-size: 28px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            #section5 .right-div.span_on h3 {
+                color: #fff;
+                font-family: Noto Sans CJK TC;
+                font-size: 28px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
             }
         }
     </style>
@@ -2616,7 +2772,7 @@
             ${full_item['文案'].map(text => `<li>${text}</li>`).join('')}
             </ul>
             <button id="showMore" class="btn btn-link show-more-btn span_off">
-                瞭解更多
+                了解更多
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="11" viewBox="0 0 18 11" fill="none" id="span_off_svg">
                     <path d="M9 0L0 8.49534L2.45391 10.8116L9 4.63262L15.5461 10.8116L18 8.49534L9 0Z" fill="white"/>
                 </svg>
