@@ -89,6 +89,7 @@
             margin-left: 31px;
             margin-right: 21px;
         }
+
         #navbarNav {
             margin-right: 58px;
         }
@@ -390,7 +391,7 @@
             #section3 .item {
                 /* flex: 0 0 100%;
                 scroll-snap-align: start; */
-                margin: 0 2rem 0 2rem; 
+                margin: 0 2rem 0 2rem;
                 flex: 0 0 calc(100% - 5rem);
             }
         }
@@ -858,6 +859,11 @@
             background-size: contain;
             /* 设置背景图像和其他样式 */
 
+        }
+
+        .section6_bg {
+            background-image: url('./img/s6-1-1.jpg');
+            background-size: contain;
         }
 
 
@@ -1518,25 +1524,25 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        
-            <!-- Brand images -->
-            <a href="https://www.weblink.com.tw/" target="_blank">
-                <img src="" alt="Brand 1" height="30" id="nav-img-1">
-            </a>
-            <a href="https://moxa.com/tw/" target="_blank">
-                <img src="" alt="Brand 2" height="30" id="nav-img-2">
-            </a>
-            </a>
-            <!-- Navigation links -->
-            <span class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav" id="navbarNavList">
-                </ul>
-            </span>
-            <!-- Toggler for smaller screens -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon" id="hamburger-button"></span>
-            </button>
+
+        <!-- Brand images -->
+        <a href="https://www.weblink.com.tw/" target="_blank">
+            <img src="" alt="Brand 1" height="30" id="nav-img-1">
+        </a>
+        <a href="https://moxa.com/tw/" target="_blank">
+            <img src="" alt="Brand 2" height="30" id="nav-img-2">
+        </a>
+        </a>
+        <!-- Navigation links -->
+        <span class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav" id="navbarNavList">
+            </ul>
+        </span>
+        <!-- Toggler for smaller screens -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" id="hamburger-button"></span>
+        </button>
     </nav>
 
 
@@ -1614,24 +1620,27 @@
 
 
     <!-- Section 6 Structure -->
-    <div id="section6">
-        <!-- <div class="container relative"> -->
-        <div class=" relative">
-            <div class="product-map">
-                <!-- 在这里动态生成小圆点 -->
-            </div>
-            <h1 class="infoTitle1"></h1>
-            <div class="info-panel">
-                <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
-                <h2 class="infoTitle"></h2>
-                <div class="infoBlocks"></div>
-                <div class="infoTexts"></div>
-                <div class="remark">
-                    <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">備註 : *專案產品，請洽詢專人服務</a>
+    <div class="section6_bg">
+        <div id="section6">
+            <!-- <div class="container relative"> -->
+            <div class=" relative">
+                <div class="product-map">
+                    <!-- 在这里动态生成小圆点 -->
+                </div>
+                <h1 class="infoTitle1"></h1>
+                <div class="info-panel">
+                    <!-- <h1 id="infoTitle1" class="infoTitle1"></h1> -->
+                    <h2 class="infoTitle"></h2>
+                    <div class="infoBlocks"></div>
+                    <div class="infoTexts"></div>
+                    <div class="remark">
+                        <a href="https://www.moxa.com/tw/contact-us/contact-form" target="_blank">備註 : *專案產品，請洽詢專人服務</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="section6-rwd">
         <div class="relative">
             <div class="product-map">
