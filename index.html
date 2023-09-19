@@ -110,7 +110,7 @@
             .navbar-toggler {
                 width: 8.46vw;
                 padding: 0;
-                margin-right: 5vw;
+                margin-left: 5vw;
                 /* 或其他適當的寬度 */
             }
 
@@ -139,11 +139,13 @@
 
             #nav-img-2 {
                 width: 24.64vw;
-                margin-right: 4vw;
+                margin-left: 4vw;
             }
 
             .navbar {
                 height: 19.7vw;
+                display: block;
+                padding: 5vw 0 0vw 0;
             }
         }
 
@@ -159,21 +161,31 @@
             z-index: 1001;
         }
 
+        .dt-group {
+            margin-top: 70px;
+        }
+
         #fullscreen-menu .divider {
-            margin: 30px 0 30px 0;
+            margin: 17px 0 17px 58px;
             height: 1px;
-            background-color: rgb(255, 255, 255);
-            width: 90%;
+            background-color: rgba(255, 255, 255, 0.39);
+            width: 69vw;
+
         }
 
         #fullscreen-menu .text {
-            margin: 10px 0 10px 0;
+            margin: 10px 0 10px 58px;
             color: #fff;
         }
 
         #fullscreen-menu .text a {
             text-decoration: none;
-            color: #fff;
+            color: #FFF;
+            font-family: Noto Sans CJK TC;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
         }
 
 
@@ -183,7 +195,13 @@
 
         .menu-item {
             font-size: 24px;
-            margin: 16px;
+            margin: 0;
+            color: #FFF;
+            font-family: Noto Sans CJK TC;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
         }
 
         @keyframes glow {
@@ -1919,20 +1937,21 @@
         </a>
         </a>
         <!-- Navigation links -->
-        <span class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav" id="navbarNavList">
-            </ul>
-        </span>
+
         <!-- Toggler for smaller screens -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" id="hamburger-button"></span>
         </button>
+        <span class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav" id="navbarNavList">
+            </ul>
+        </span>
     </nav>
 
 
     <div id="fullscreen-menu" class="hidden ">
-        <div class="container">
+        <div class="dt-group">
             <div class="divider"></div>
             <span class="text"><a href="#section3" class="menu-item">最新活動</a></span>
             <div class="divider"></div>
