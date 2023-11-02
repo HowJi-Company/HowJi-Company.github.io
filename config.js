@@ -1,11 +1,11 @@
 //config.js 使用說明
 //如果想要更換網頁中的 "文字" 或是 "圖片" 可以從這邊調整
-// 
-
 // 這兩個url 是header的兩個logo的圖案路徑
+const header_img_arr = ["./img/logo1_0.png", "./img/logo2_0.png"]
+// 這兩個url 是footer的兩個logo的圖案路徑
 const global_config = {
-    header_img_url1: "./img/logo1_0.png",
-    header_img_url2: "./img/logo2_0.png",
+    footer_img_url1: "./img/logo1_0.png",
+    footer_img_url2: "./img/logo2_0.png",
 }
 
 // 這是header的導覽列的文字內容 
@@ -359,4 +359,4 @@ const section8 = {
     ]
 }
 //footer 區塊
-const section9 = { logo1: global_config.header_img_url1, logo2: global_config.header_img_url2 }
+const section9 = { logo1: global_config.footer_img_url1, logo2: global_config.footer_img_url2 }

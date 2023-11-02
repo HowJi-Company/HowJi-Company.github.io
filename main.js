@@ -333,7 +333,7 @@ $(document).ready(function () {
 // header nav產生
 $(document).ready(function () {
     // const header_list = ["最新活動", "熱門推薦", "商用vs工業級", "產品應用", "Why Moxa", "聯絡我們"];
-    const img_arr = ["./img/logo1_0.png", "./img/logo2_0.png"]
+    
 
     header_list.forEach((item, index) => {
         const spacingClass = index < header_list.length - 1 ? 'me-3' : '';
@@ -342,6 +342,6 @@ $(document).ready(function () {
         navItem.append(navLink);
         $('#navbarNavList').append(navItem);
     });
-    $("#nav-img-1").attr("src", img_arr[0])
-    $("#nav-img-2").attr("src", img_arr[1])
+    $("#nav-img-1").attr("src", header_img_arr[0])
+    $("#nav-img-2").attr("src", header_img_arr[1])
 });
