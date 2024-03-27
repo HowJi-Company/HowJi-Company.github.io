@@ -289,9 +289,9 @@ $(document).ready(function () {
       <div class="card">
         <img src="${item['圖片檔案']}" class="card-img-top" alt="${item['標題']}">
         <div class="card-body">
+          <small>${item['日期']}</small>
           <h5 class="card-title">${item['標題']}</h5>
-          <small>${item['說明文字']}</small>
-          <a href="${item['連結（圖片/標題）']}" target="_blank" class="btn btn-primary s3-btn">了解詳情</a>
+          <a href="${item['連結（圖片/標題）']}" target="_blank" class="btn btn-primary s3-btn">立刻報名</a>
         </div>
       </div>
     </div>

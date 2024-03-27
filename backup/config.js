@@ -1,48 +1,37 @@
 //config.js 使用說明
 //如果想要更換網頁中的 "文字" 或是 "圖片" 可以從這邊調整
 // 這兩個url 是header的兩個logo的圖案路徑
-const header_img_arr = ["./img/HowJi4.png", "./img/HowJi3.png"]
+const header_img_arr = ["./img/logo1_0.png", "./img/logo2_0.png"]
 // 這兩個url 是footer的兩個logo的圖案路徑
 const global_config = {
-    footer_img_url1: "./img/HowJi4.png",
-    footer_img_url2: "./img/HowJi3.png",
+    footer_img_url1: "./img/logo1_0.png",
+    footer_img_url2: "./img/logo2_0.png",
 }
 
 // 這是header的導覽列的文字內容 
-const header_list = [{ title: "服務介紹", href: "#section3" },
-{ title: "案例展示", href: "#section4" },
-{ title: "技術與創新", href: "#section5" },
-{ title: "客戶評價", href: "#section6" },
-{ title: "關於好吉", href: "#section7" },
+const header_list = [{ title: "最新活動", href: "#section3" },
+{ title: "熱門推薦", href: "#section4" },
+{ title: "商用vs工業級", href: "#section5" },
+{ title: "產品應用", href: "#section6" },
+{ title: "Why Moxa", href: "#section7" },
 { title: "聯絡我們", href: "#section8" }]
-
-const header_list2 = [
-    { title: "服務介紹", href: "#services" }, // 呈現公司提供的各類服務，包括接案、資訊轉型與顧問等
-    { title: "案例展示", href: "#cases" }, // 展示公司成功案例，讓客戶了解 HowJi 的能力和經驗
-    { title: "技術與創新", href: "#technology" }, // 介紹公司在技術上的創新和專長
-    { title: "客戶評價", href: "#testimonials" }, // 展示客戶的正面反饋和評價
-    { title: "關於好吉", href: "#about" }, // 公司背景、願景和團隊介紹
-    { title: "聯絡我們", href: "#contact" } // 提供聯絡方式，方便客戶與公司溝通
-];
-
-
 
 //第一個區塊 輪播圖片 text_1 text_2 目前被棄用 url是圖片路徑 可以調整
 // img_url1 是大尺寸的圖片, img_url1_s 是小尺寸螢幕的圖片 
 const section1 = [{
     text_1: "",
     text_2: "",
-    img_url1: './img/b-1.png',
+    img_url1: './img/banner_1_pc_@2x.jpg',
     img_url1_s: './img/s1-1-s.jpg',
 }, {
     text_1: "",
     text_2: "",
-    img_url1: './img/b-2.png',
+    img_url1: './img/banner_2_pc_@2x.jpg',
     img_url1_s: './img/s1-2-s.jpg',
 }, {
     text_1: "",
     text_2: "",
-    img_url1: './img/b-3.png',
+    img_url1: './img/banner_1_pc_@2x.jpg',
     img_url1_s: './img/s1-1-s.jpg',
 }];
 
@@ -50,32 +39,31 @@ const section1 = [{
 // 圖片檔案  為圖片的檔案路徑 可以調整
 // 連結的路徑也有效 可以條整
 const section3 = {
-    title: "服務介紹",
+    title: "最新活動",
     items: [{
-        "日期": "不適用",
-        "標題": "資訊系統定制開發",
-        "說明文字": "針對企業特定需求，提供從系統規劃到開發實施的全方位定制服務，包括 Web 應用、移動應用和桌面應用等。",
+        "日期": "2023.08.29(Tue) 9:00-16:30",
+        "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
+        "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
         "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-        "圖片檔案": "./img/s3-1.webp"
+        "圖片檔案": "./img/s3-1.jpg"
     }, {
-        "日期": "不適用",
-        "標題": "資訊技術顧問服務",
-        "說明文字": "提供企業資訊化轉型指導，包括技術架構咨詢、系統整合與效能優化等服務，助力企業提升運營效率。",
+        "日期": "2023.09.19(Tue) 9:00-16:30",
+        "標題": "[🔥熱烈報名中]  工廠最佳翻譯官-邊緣設定連結",
+        "說明文字": "Industrial Technology Exploration Day 由 Moxa 專業講師群提供一系列多元實戰課程，帶您實際學習並操作工業通訊所需的技能與產品，主題課程包含邊緣設備連結、無線工業網路佈建、可視化網路管理以及 OT 資安防護等實用內容，不論是各產業領域的現場工程人員或是管理方，皆可透過 Industrial Technology Exploration Day 了解更多工業場域所需具備的網路通訊技能、提升產業競爭力。",
         "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-        "圖片檔案": "./img/s3-2.webp"
+        "圖片檔案": "./img/s3-1.jpg"
     }, {
-        "日期": "不適用",
-        "標題": "雲端與數據解決方案",
-        "說明文字": "提供雲端架構設計與部署、數據分析與大數據處理解決方案，協助企業充分利用雲計算與數據資源。",
+        "日期": "2023.09.19(Tue) 9:00-16:30",
+        "標題": "[🔥熱烈報名中]  工業無線好夥伴-無線網路解決方案",
+        "說明文字": "不論您是第一次部署無線網路，或是已經有相關經驗，都歡迎報名此實戰課程，只需要短短６小時，即可獲得 Moxa 網路部署專家的傾囊相授，從實際場域部署的痛點出發，不只有紙上談兵的理論課程，更是結合大量hands-on實作，目標是在短短的時間裡重點濃縮，將應用端會遇到的實際情況分享給您，讓您在理論、實作、應用中創造三贏，讓無線網路實現您的無限可能！",
         "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
-        "圖片檔案": "./img/s3-3.webp"
+        "圖片檔案": "./img/s3-1.jpg"
     }]
 }
 
-
 //熱門推薦的區塊 
 // 圖片的調整 請改 圖片檔案 的 檔案路徑
-const section41 = {
+const section4 = {
     title: "熱門推薦",
     items: [
         {
@@ -99,34 +87,10 @@ const section41 = {
         },
     ]
 }
-const section4 = {
-    title: "案例展示",
-    items: [
-        {
-            "標題1": "一頁式網站設計",
-            "標題2": "創業公司品牌網站",
-            "滑鼠點到浮現文字": "為一家新創公司設計並開發的一頁式網站，成功傳達品牌形象並提供用戶友好的瀏覽體驗。網站設計清新現代，融入了互動元素和動畫效果，有效吸引目標客戶群。",
-            "圖片檔案": "./img/s4-1.webp"
-        },
-        {
-            "標題1": "行動設備網頁開發",
-            "標題2": "電子商務平台移動端",
-            "滑鼠點到浮現文字": "針對一家電子商務平台開發的移動端網頁，特別優化了在手機和平板等行動設備上的使用體驗。支持觸控導航、快速加載和移動支付，大幅提升了用戶的購物滿意度。",
-            "圖片檔案": "./img/s4-2.webp"
-        },
-        {
-            "標題1": "羽球配對系統",
-            "標題2": "社區羽球愛好者配對平台",
-            "滑鼠點到浮現文字": "為羽球愛好者社區開發的在線配對系統，用戶可以根據技能水平和地理位置找到適合的打球伙伴。系統提供簡便的用戶界面和實時消息通知功能，促進了社區互動和運動參與度。",
-            "圖片檔案": "./img/s4-3.webp"
-        },
-    ]
-}
-
 // 一般商用 vs 工業級網通 區塊 
 // 圖片檔案一樣可以修改
 //full_item_span 這一項中的路徑 是點擊按鈕擴展後的內容
-const section51 = {
+const section5 = {
     title: "一般商用 vs 工業級網通",
     full_item: {
         "圖片檔案": "./img/s5-1.jpg",
@@ -189,76 +153,11 @@ const section51 = {
         ]
     }
 }
-const section5 = {
-    title: "技術與創新",
-    full_item: {
-        "圖片檔案": "./img/s5-1.webp",
-        "標題": "尖端技術探索",
-        "文案": [
-            "採用最新技術建構軟體解決方案",
-            "雲端計算、人工智能、大數據分析",
-            "實現資料驅動決策與自動化流程",
-            "確保高效率運作與最優用戶體驗",
-            "不斷追求創新，引領行業趨勢"
-        ]
-    },
-    half_items: [{
-        "圖片檔案": "./img/s5-2.webp",
-        "標題": "用戶體驗設計",
-        "文案": [
-            "以用戶為中心的設計理念",
-            "提升產品的互動性和易用性",
-            "創造引人入勝的數字體驗",
-            "持續改善，回應用戶反饋",
-            "增強客戶滿意度與忠誠度"
-        ]
-    }, {
-        "圖片檔案": "./img/s5-3.webp",
-        "標題": "資訊安全與隱私保護",
-        "文案": [
-            "在所有項目中優先考慮安全性與隱私",
-            "採用行業領先的安全協議和標準",
-            "保護用戶數據免受未經授權的訪問",
-            "實現可靠的資訊保護策略",
-            "為用戶提供安心的數字環境"
-        ]
-    }],
-    full_item_span: {
-        "標題": "專案實施與部署",
-        "內容": [
-            {
-                "圖片檔案": "./img/s5-1-1.webp",
-                "文案": "敏捷開發與持續交付",
-            },
-            {
-                "圖片檔案": "./img/s5-1-2.webp",
-                "文案": "跨平台應用開發",
-            },
-            {
-                "圖片檔案": "./img/s5-1-3.webp",
-                "文案": "雲基礎架構與微服務架構",
-            },
-            {
-                "圖片檔案": "./img/s5-1-4.webp",
-                "文案": "自動化測試與品質保證",
-            },
-            {
-                "圖片檔案": "./img/s5-1-5.webp",
-                "文案": "持續整合與持續部署(CI/CD)",
-            },
-            {
-                "圖片檔案": "./img/s5-1-6.webp",
-                "文案": "技術支持與維護"
-            },
-        ]
-    }
-}
-
 
 // 產品分類地圖 
 // 此區的調整最為特別 全部以比例去客製化調整 
 // x y position 可以微調點點的位置
-const section61 = {
+const section6 = {
     "背景圖案": "",
     title: "Moxa 產品分類地圖",
     "備註": "備註 : *專案產品，請洽詢專人服務	https://www.moxa.com/tw/contact-us/contact-form",
@@ -390,135 +289,6 @@ const section61 = {
     ],
 
 }
-const section6 = {
-    "背景圖案": "",
-    title: "HowJi 服務與解決方案概覽",
-    "備註": "備註 : *特色服務，請洽詢專人服務 https://www.moxa.com/tw/contact-us/contact-form",
-    items: [
-        {
-            title: "軟體定制與開發",
-            blocks: ["全棧開發", "移動應用", "*雲端解決方案"],
-            text: ["提供端到端軟體解決方案，從前端到後端",
-                "開發跨平台移動應用，提升用戶體驗",
-                "利用雲計算技術，打造可擴展的雲端應用"],
-            x_position: "58.2%",
-            y_position: "32.55%",
-            x_position_rwd: "28.6%",
-            y_position_rwd: "21.1%",
-            img: "background-image: url('./img/s6-1.webp');"
-        }, {
-            title: "資訊技術顧問服務",
-            blocks: ["技術策略", "系統整合", "數據分析與大數據"],
-            text: ["提供企業級技術策略規劃與顧問",
-                "幫助客戶實現系統整合，提升業務運作效率",
-                "利用數據分析與大數據技術，驅動業務增長"],
-            x_position: "53.4%",
-            y_position: "60.5%",
-            x_position_rwd: "20%",
-            y_position_rwd: "31%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "雲端與物聯網解決方案",
-            blocks: ["物聯網平台", "雲端基礎架構", "邊緣計算"],
-            text: ["建構物聯網平台，實現設備連接與管理",
-                "提供雲端基礎架構設計與部署服務",
-                "利用邊緣計算技術，實現數據即時處理"],
-            x_position: "76%",
-            y_position: "34%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "企業資訊安全",
-            blocks: ["網絡安全", "資料保護", "*合規與風險管理"],
-            text: ["網絡安全解決方案，保護企業資料免受威脅",
-                "實施資料保護策略，確保資料安全與隱私",
-                "幫助企業達成合規要求，管理風險"],
-            x_position: "64.4%",
-            y_position: "56.18%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-                        title: "數字轉型與創新",
-            blocks: ["數字化顧問", "業務流程自動化", "*創新技術實驗室"],
-            text: ["助力企業數字化轉型，開啟創新之旅",
-                "透過業務流程自動化提升運營效率",
-                "探索新技術，加速產品和服務創新"],
-            x_position: "71.5%",
-            y_position: "28.4%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "客戶關係管理",
-            blocks: ["CRM 系統定制", "客戶數據分析", "用戶體驗優化"],
-            text: ["定制 CRM 系統，加強客戶關係管理",
-                "利用客戶數據分析深化客戶洞察",
-                "優化用戶體驗，提升客戶滿意度"],
-            x_position: "83.8%",
-            y_position: "64.2%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "產品UI/UX設計",
-            blocks: ["互動設計", "用戶界面設計", "用戶體驗策略"],
-            text: ["專注於創造引人入勝的互動設計",
-                "打造直觀易用的用戶界面",
-                "制定用戶體驗策略，提升產品吸引力"],
-            x_position: "88.2%",
-            y_position: "49.5%",
-            x_position_rwd: "58%",
-            y_position_rwd: "30%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "雲計算與大數據",
-            blocks: ["雲服務開發", "大數據分析", "數據倉庫解決方案"],
-            text: ["開發靈活的雲服務解決方案",
-                "通過大數據分析洞察業務機會",
-                "提供數據倉庫建設和優化服務"],
-            x_position: "90.2%",
-            y_position: "16.8%",
-            x_position_rwd: "82.2%",
-            y_position_rwd: "13.4%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "網絡安全解決方案",
-            blocks: ["網絡侵入檢測", "資料加密技術", "安全策略規劃"],
-            text: ["提供網絡侵入檢測和預防解決方案",
-                "運用先進的資料加密技術保護企業資訊",
-                "制定全面的安全策略規劃，加強防護"],
-            x_position: "71.5%",
-            y_position: "28.4%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        },
-        {
-            title: "技術支持與維護",
-            blocks: ["產品技術支持", "系統維護與更新", "客戶服務管理"],
-            text: ["提供全方位產品技術支持",
-                "確保系統穩定運行，及時進行維護與更新",
-                "專業客戶服務管理，解決使用過程中的任何問題"],
-            x_position: "74.84%",
-            y_position: "43.63%",
-            x_position_rwd: "58.5%",
-            y_position_rwd: "32%",
-            img: "background-image: url('./img/s6-1.webp');"
-        }
-    ],
-}
-
-
-
 
 //產品地圖的圖片檔案
 //此社可以預先載入 提高速度
@@ -531,7 +301,7 @@ imageList.forEach((image) => {
 
 //台灣在地的35年工業網路及通訊專家 區塊 
 //圖片 文案 可自行更換
-const section71 = {
+const section7 = {
     "大標題": "台灣在地的35年工業網路及通訊專家",
     "背景圖檔路徑": "",
     items: [
@@ -550,26 +320,6 @@ const section71 = {
         }
     ]
 }
-const section7 = {
-    "大標題": "HowJi — 軟體創新與顧問的首選夥伴",
-    "背景圖檔路徑": "",
-    items: [
-        {
-            "文案": "專注於客製化軟體解決方案，致力於實現企業數位轉型",
-            "圖檔路徑": "./img/s7-1.webp"
-        },
-        {
-            "文案": "介面友好，專為用戶打造簡單直觀的使用體驗",
-            "圖檔路徑": "./img/s7-2.webp"
-        },
-        {
-            "文案": "提供全面技術支持與維護，確保項目長期穩定運行",
-            "小文案": "客戶成功，就是我們的成功",
-            "圖檔路徑": "./img/s7-3.webp"
-        }
-    ]
-}
-
 
 //聯絡我們區塊  連結可以自行調整
 const section8 = {
@@ -600,7 +350,7 @@ const section8 = {
                     "連結": "https://www.moxa.com/tw/support"
                 },
                 {
-                    "文案": "經銷商加盟",
+                    "文案": "洽代理商－展碁國際",
                     "連結": "https://forms.office.com/r/XguazD3k2J"
                 },
 
