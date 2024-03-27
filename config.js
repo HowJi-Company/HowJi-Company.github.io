@@ -12,7 +12,7 @@ const global_config = {
 const header_list = [{ title: "服務介紹", href: "#section3" },
 { title: "案例展示", href: "#section4" },
 { title: "技術與創新", href: "#section5" },
-{ title: "客戶評價", href: "#section6" },
+{ title: "解決方案", href: "#section6" },
 { title: "關於好吉", href: "#section7" },
 { title: "聯絡我們", href: "#section8" }]
 
@@ -55,19 +55,19 @@ const section3 = {
         "日期": "不適用",
         "標題": "資訊系統定制開發",
         "說明文字": "針對企業特定需求，提供從系統規劃到開發實施的全方位定制服務，包括 Web 應用、移動應用和桌面應用等。",
-        "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+        "連結（圖片/標題）": "./waiting.html",
         "圖片檔案": "./img/s3-1.webp"
     }, {
         "日期": "不適用",
         "標題": "資訊技術顧問服務",
         "說明文字": "提供企業資訊化轉型指導，包括技術架構咨詢、系統整合與效能優化等服務，助力企業提升運營效率。",
-        "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+        "連結（圖片/標題）": "./waiting.html",
         "圖片檔案": "./img/s3-2.webp"
     }, {
         "日期": "不適用",
         "標題": "雲端與數據解決方案",
         "說明文字": "提供雲端架構設計與部署、數據分析與大數據處理解決方案，協助企業充分利用雲計算與數據資源。",
-        "連結（圖片/標題）": "https://www.moxa.com/tw/promo/Event/2023/Industrial-Technology-Exploration-Day/index.html",
+        "連結（圖片/標題）": "./waiting.html",
         "圖片檔案": "./img/s3-3.webp"
     }]
 }
@@ -261,7 +261,7 @@ const section5 = {
 const section61 = {
     "背景圖案": "",
     title: "Moxa 產品分類地圖",
-    "備註": "備註 : *專案產品，請洽詢專人服務	https://www.moxa.com/tw/contact-us/contact-form",
+    "備註": "備註 : *專案產品，請洽詢專人服務	./waiting.html",
     items: [
         {
             title: "再生能源和儲能",
@@ -393,7 +393,7 @@ const section61 = {
 const section6 = {
     "背景圖案": "",
     title: "HowJi 服務與解決方案概覽",
-    "備註": "備註 : *特色服務，請洽詢專人服務 https://www.moxa.com/tw/contact-us/contact-form",
+    "備註": "備註 : *特色服務，請洽詢專人服務 ./waiting.html",
     items: [
         {
             title: "軟體定制與開發",
@@ -580,15 +580,15 @@ const section8 = {
             "小項目": [
                 {
                     "文案": "了解更多產品訊息",
-                    "連結": "https://www.moxa.com/tw/support"
+                    "連結": "./waiting.html"
                 },
                 {
                     "文案": "專人諮詢服務",
-                    "連結": "https://www.moxa.com/tw/contact-us"
+                    "連結": "./waiting.html"
                 },
                 {
                     "文案": "線上採購",
-                    "連結": "https://www.eclife.com.tw/product/brand/MOXA?coid=Megamenu"
+                    "連結": "./waiting.html"
                 }
             ]
         },
@@ -597,11 +597,11 @@ const section8 = {
             "小項目": [
                 {
                     "文案": "了解更多產品訊息",
-                    "連結": "https://www.moxa.com/tw/support"
+                    "連結": "./waiting.html"
                 },
                 {
                     "文案": "經銷商加盟",
-                    "連結": "https://forms.office.com/r/XguazD3k2J"
+                    "連結": "./waiting.html"
                 },
 
             ]
