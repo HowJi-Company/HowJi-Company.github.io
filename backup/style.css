@@ -54,42 +54,32 @@ body {
 
 /* Video 和 Canvas 共用定位 */
 .input_video,
-.bg_canvas,
-.mask_canvas,
 .output_canvas {
   position: absolute;
   top: 0;
   left: 0;
   object-fit: cover;
   display: block;
-  width: 100%;
-  height: 100%;
+  /* 透過 JS 設定畫布大小，不用 CSS 強制撐滿 */
 }
 
-/* Video 層級 - 隱藏原始視頻 */
+/* Video 層級 */
 .input_video {
   z-index: 1;
+  width: 100%;
+  height: 100%;
   min-height: 70vh;
-  visibility: hidden; /* 隱藏原始視頻，只顯示處理後的結果 */
+  /* transform: scaleX(-1); 鏡像翻轉 */
 }
 
-/* 背景 Canvas 層級 */
-.bg_canvas {
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* 分割蒙版 Canvas (調試用) */
-.mask_canvas {
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-/* 輸出合成 Canvas 層級 */
+/* Canvas 層級 */
 .output_canvas {
-  z-index: 4;
+  z-index: 2;
+  /* 由 JS 動態設定 .width/.height，註解掉這兩行避免衝突 */
+  /* width: 100%; */
+  /* height: 100%; */
   pointer-events: none;
+  /* transform: scaleX(-1); 鏡像翻轉 */
 }
 
 /* 檢測區域樣式 */
@@ -100,7 +90,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 5;
+  z-index: 3;
 }
 
 .circle-guide {
@@ -399,70 +389,6 @@ body {
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-/* 背景控制面板樣式 */
-.bg-controls {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 15px;
-  margin: 10px 0;
-  backdrop-filter: blur(10px);
-}
-
-.bg-controls h3 {
-  margin-bottom: 15px;
-  color: #ffeb3b;
-  font-size: 1.2em;
-}
-
-.control-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 5px 0;
-}
-
-.control-group label {
-  font-weight: bold;
-  color: #fff;
-  flex: 1;
-  margin-right: 10px;
-}
-
-.control-group input,
-.control-group select {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 5px 10px;
-  color: white;
-  font-size: 14px;
-  min-width: 120px;
-}
-
-.control-group input[type="checkbox"] {
-  transform: scale(1.2);
-  margin: 0;
-  min-width: auto;
-}
-
-.control-group input[type="range"] {
-  flex: 1;
-  margin-right: 10px;
-  min-width: 100px;
-}
-
-.control-group select option {
-  background: #1e3c72;
-  color: white;
-}
-
-#intensityValue {
-  color: #4caf50;
-  font-weight: bold;
-  min-width: 50px;
 }
 
 /* 信息面板樣式 */
