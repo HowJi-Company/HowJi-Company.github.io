@@ -52,6 +52,41 @@
         font-size: 12px;
       }
 
+      /* 人臉檢測調試面板固定高度 */
+      .debug-panel.face-detection {
+        height: 200px;
+        overflow-y: auto;
+      }
+
+      .debug-panel.face-detection h4 {
+        margin: 0 0 10px 0;
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 5px 0;
+        border-radius: 5px;
+      }
+
+      /* 美化滾動條 */
+      .debug-panel.face-detection::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
       .debug-row {
         display: flex;
         justify-content: space-between;
@@ -111,7 +146,7 @@
       </div>
 
       <!-- 人臉檢測調試 -->
-      <div class="debug-panel">
+      <div class="debug-panel face-detection">
         <h4>👤 人臉檢測詳情</h4>
         <div id="faceDetails">等待檢測結果...</div>
       </div>
@@ -206,7 +241,7 @@
         <h3>🎨 背景特效控制</h3>
         <div class="control-group">
           <label for="enableSegmentation">啟用去背效果:</label>
-          <input type="checkbox" id="enableSegmentation" checked />
+          <input type="checkbox" id="enableSegmentation" />
         </div>
         <div class="control-group">
           <label for="backgroundSelect">選擇背景:</label>
@@ -324,9 +359,9 @@
           try {
             const bbox = face.boundingBox;
 
-            // 計算人臉中心點
-            const faceCenterX = (bbox.xMin + bbox.width / 2) * canvasWidth;
-            const faceCenterY = (bbox.yMin + bbox.height / 2) * canvasHeight;
+            // 計算人臉中心點（使用正確的 xCenter, yCenter 格式）
+            const faceCenterX = bbox.xCenter * canvasWidth;
+            const faceCenterY = bbox.yCenter * canvasHeight;
 
             // 計算距離檢測區域中心的距離
             const centerX = window.DETECTION_AREA.centerX * canvasWidth;
@@ -342,6 +377,12 @@
 
             const isInArea = distance <= radius;
 
+            // 計算邊界框左上角座標（用於顯示）
+            const boxX = (bbox.xCenter - bbox.width / 2) * canvasWidth;
+            const boxY = (bbox.yCenter - bbox.height / 2) * canvasHeight;
+            const boxW = bbox.width * canvasWidth;
+            const boxH = bbox.height * canvasHeight;
+
             html += `
                         <div class="face-info ${
                           isInArea ? "in-area" : "out-area"
@@ -349,27 +390,58 @@
                             <strong>人臉 ${index + 1}</strong> ${
               isInArea ? "✅ 在區域內" : "❌ 不在區域內"
             }
-                            <br>原始邊界框: (${bbox.xMin.toFixed(
+                            <br>原始中心點: (${bbox.xCenter.toFixed(
                               3
-                            )}, ${bbox.yMin.toFixed(3)}) ${bbox.width.toFixed(
+                            )}, ${bbox.yCenter.toFixed(
               3
-            )}×${bbox.height.toFixed(3)}
-                            <br>像素坐標: (${(bbox.xMin * canvasWidth).toFixed(
-                              1
-                            )}, ${(bbox.yMin * canvasHeight).toFixed(1)}) ${(
-              bbox.width * canvasWidth
-            ).toFixed(1)}×${(bbox.height * canvasHeight).toFixed(1)}
+            )}) ${bbox.width.toFixed(3)}×${bbox.height.toFixed(3)}
+                            <br>邊界框像素: (${boxX.toFixed(1)}, ${boxY.toFixed(
+              1
+            )}) ${boxW.toFixed(1)}×${boxH.toFixed(1)}
                             <br>人臉中心: (${faceCenterX.toFixed(
                               1
                             )}, ${faceCenterY.toFixed(1)})
                             <br>距離中心: ${distance.toFixed(
                               1
                             )}px (半徑: ${radius.toFixed(1)}px)
-                            <br>信心度: ${
-                              face.score && face.score[0]
-                                ? (face.score[0] * 100).toFixed(1)
-                                : "N/A"
-                            }%
+                            <br>信心度: ${(() => {
+                              // 嘗試多種信心度格式
+
+                              // MediaPipe Face Detection 的實際格式：V[0].ga
+                              if (
+                                face.V &&
+                                Array.isArray(face.V) &&
+                                face.V.length > 0 &&
+                                face.V[0] &&
+                                face.V[0].ga !== undefined
+                              ) {
+                                return (face.V[0].ga * 100).toFixed(1) + "%";
+                              }
+
+                              // 其他可能的格式
+                              if (face.score) {
+                                if (
+                                  Array.isArray(face.score) &&
+                                  face.score.length > 0 &&
+                                  face.score[0] !== undefined
+                                ) {
+                                  return (face.score[0] * 100).toFixed(1) + "%";
+                                } else if (typeof face.score === "number") {
+                                  return (face.score * 100).toFixed(1) + "%";
+                                }
+                              }
+                              if (face.detectionConfidence !== undefined) {
+                                return (
+                                  (face.detectionConfidence * 100).toFixed(1) +
+                                  "%"
+                                );
+                              }
+                              if (face.confidence !== undefined) {
+                                return (face.confidence * 100).toFixed(1) + "%";
+                              }
+
+                              return "N/A";
+                            })()}
                         </div>
                     `;
           } catch (error) {
