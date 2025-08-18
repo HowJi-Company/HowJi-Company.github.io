@@ -1227,6 +1227,14 @@ export async function capturePhoto() {
   }
 }
 
+// 全域進度回調函數
+let recordingProgressCallback = null;
+
+// 設定錄製進度回調
+export function setRecordingProgressCallback(callback) {
+  recordingProgressCallback = callback;
+}
+
 // 生成靜止人物 + 動態影片背景的 8 秒影片
 async function generateVideoWithStaticPerson(
   staticPersonDataURL,
@@ -1403,18 +1411,24 @@ async function generateVideoWithStaticPerson(
 
           frame++;
 
+          // 更新進度到 UI
+          const currentTime = frame / FPS;
+          if (recordingProgressCallback) {
+            recordingProgressCallback.updateProgress(
+              currentTime,
+              DURATION_SECONDS
+            );
+          }
+
           // 繼續下一幀或結束錄製
           if (frame < totalFrames) {
             setTimeout(drawFrame, 1000 / FPS); // 50ms for 20fps
           } else {
+            if (recordingProgressCallback) {
+              recordingProgressCallback.setStatus("錄製完成，正在生成檔案...");
+            }
             recorder.stop();
             console.log("所有幀錄製完成");
-          }
-
-          // 進度報告
-          if (frame % 20 === 0) {
-            const progress = ((frame / totalFrames) * 100).toFixed(1);
-            console.log(`錄製進度: ${progress}% (${frame}/${totalFrames})`);
           }
         }
 
