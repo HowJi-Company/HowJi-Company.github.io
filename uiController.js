@@ -31,7 +31,7 @@ const maskCanvas = document.getElementById("maskCanvas");
 const outCanvas = document.getElementById("outputCanvas");
 const bgVideoEl = document.getElementById("bgVideo");
 const bgGifEl = document.getElementById("bgGif");
-const bgMoonVideoEl = document.getElementById("bgVideo"); // 月相影片背景
+const bgMoonVideoEl = document.getElementById("bgMoonVideo"); // 月相影片背景
 
 const statusText = document.getElementById("statusText");
 const faceCountEl = document.getElementById("faceCount");
@@ -101,13 +101,36 @@ function bindUI() {
   startBtn.addEventListener("click", async () => {
     if (isRunning()) return;
     startBtn.disabled = true;
+    startBtn.textContent = "啟動中...";
+
     try {
       await start();
       stopBtn.disabled = false;
       switchBtn.disabled = false;
+      startBtn.textContent = "開始";
     } catch (e) {
       console.error(e);
       startBtn.disabled = false;
+      startBtn.textContent = "開始";
+
+      // 針對不同錯誤給出友善提示
+      let errorMessage = "啟動失敗";
+      if (
+        e.name === "NotAllowedError" ||
+        e.message.includes("Permission denied")
+      ) {
+        errorMessage =
+          "相機權限被拒絕，請在瀏覽器設定中允許相機使用權限，然後重新整理頁面";
+      } else if (e.name === "NotFoundError") {
+        errorMessage = "找不到相機設備";
+      } else if (e.name === "NotSupportedError") {
+        errorMessage = "瀏覽器不支援相機功能";
+      } else if (e.message.includes("MediaPipe")) {
+        errorMessage = "AI 模型載入失敗，請檢查網路連線";
+      }
+
+      alert(errorMessage);
+      handleStatus(errorMessage);
     }
   });
 
@@ -239,10 +262,41 @@ function bindUI() {
       gifGenerationSettings.style.display = showSettings ? "flex" : "none";
     }
 
-    // 如果選擇月相影片，確保影片開始播放
+    // 如果選擇月相影片，延遲載入並播放
     if (isMoonVideoMode && bgMoonVideoEl) {
-      bgMoonVideoEl.play().catch((e) => console.warn("月相影片播放失敗:", e));
       console.log("🌙 切換到月相影片背景模式");
+      handleStatus("載入月相影片中...");
+
+      // 延遲載入影片
+      if (!bgMoonVideoEl.src && bgMoonVideoEl.children.length > 0) {
+        bgMoonVideoEl.load();
+      }
+
+      // 等待載入完成後播放
+      const tryPlay = () => {
+        bgMoonVideoEl
+          .play()
+          .then(() => {
+            handleStatus("月相影片載入完成");
+            setTimeout(() => handleStatus("檢測中"), 2000);
+          })
+          .catch((e) => {
+            console.warn("月相影片播放失敗:", e);
+            handleStatus("月相影片播放失敗，請手動點擊播放");
+          });
+      };
+
+      if (bgMoonVideoEl.readyState >= 3) {
+        tryPlay();
+      } else {
+        bgMoonVideoEl.addEventListener("canplay", tryPlay, { once: true });
+        // 載入超時處理
+        setTimeout(() => {
+          if (bgMoonVideoEl.readyState < 3) {
+            handleStatus("影片載入較慢，請耐心等待或切換其他背景");
+          }
+        }, 5000);
+      }
     }
   });
 
@@ -340,6 +394,49 @@ function checkSupport() {
   return true;
 }
 
+// 檢測是否為手機設備
+function isMobileDevice() {
+  return (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || window.innerWidth <= 900
+  );
+}
+
+// 手機版優化提示
+function showMobileOptimizationTip() {
+  if (isMobileDevice()) {
+    const tip = document.createElement("div");
+    tip.style.cssText = `
+      position: fixed;
+      top: 60px;
+      left: 10px;
+      right: 10px;
+      background: rgba(255, 193, 7, 0.9);
+      color: #000;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1000;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    `;
+    tip.innerHTML = `
+      📱 <strong>手機版提示</strong><br>
+      為了更好的體驗，建議選擇「波紋」或「頻率條」背景
+      <button onclick="this.parentElement.remove()" style="margin-left: 8px; padding: 4px 8px; border: none; background: #000; color: #fff; border-radius: 4px; cursor: pointer;">知道了</button>
+    `;
+    document.body.appendChild(tip);
+
+    // 3秒後自動消失
+    setTimeout(() => {
+      if (tip.parentElement) {
+        tip.remove();
+      }
+    }, 8000);
+  }
+}
+
 // 自動選用「月亮 WebM + Alpha」或後備 MP4
 function setupMoonBackgroundVideo() {
   if (!bgVideoEl) return;
@@ -427,8 +524,10 @@ window.addEventListener("load", () => {
     setGifQuality(Number(gifQualitySelect.value));
   }
 
-  // ⭐ 自動載入「月亮 WebM + Alpha」或後備 MP4
-  setupMoonBackgroundVideo();
+  // 注意：不再自動載入月相影片，改為按需載入以提升手機版效能
+
+  // 顯示手機版優化提示
+  setTimeout(showMobileOptimizationTip, 1000);
 
   // 綁好事件
   bindUI();

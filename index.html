@@ -171,6 +171,39 @@
         box-shadow: 0 0 24px 6px rgba(255, 255, 160, 0.35);
       }
 
+      /* 載入提示 */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(11, 16, 32, 0.9);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(4px);
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 235, 59, 0.3);
+        border-top: 3px solid var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 16px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
       /* 行動裝置 RWD */
       .menu-btn {
         display: none;
@@ -237,7 +270,7 @@
   </head>
   <body>
     <header>
-      <h1>MediaPipe Tasks 人像去背（ImageSegmenter）</h1>
+      <h1>MediaPipe ver:1.0</h1>
       <div class="header-actions">
         <button id="menuButton" class="menu-btn" aria-label="切換側欄">
           ☰
@@ -406,14 +439,22 @@
 
         <!-- 影片背景來源 (月相) -->
         <video
-          id="bgVideo"
+          id="bgMoonVideo"
           class="bg_video"
           style="display: none"
           muted
           loop
           crossorigin="anonymous"
+          preload="none"
           alt="影片背景"
         >
+          <!-- 手機版使用較小的影片 -->
+          <source
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Moon_Phase_and_Libration%2C_2025_South_Up_%28SVS5416_-_phases_2025_plain_s_2160p30%29.webm/480p-Moon_Phase_and_Libration%2C_2025_South_Up_%28SVS5416_-_phases_2025_plain_s_2160p30%29.webm"
+            type="video/webm"
+            media="(max-width: 900px)"
+          />
+          <!-- 桌面版使用高解析度影片 -->
           <source
             src="https://upload.wikimedia.org/wikipedia/commons/2/25/Moon_Phase_and_Libration%2C_2025_South_Up_%28SVS5416_-_phases_2025_plain_s_2160p30%29.webm"
             type="video/webm"
