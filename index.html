@@ -270,7 +270,7 @@
   </head>
   <body>
     <header>
-      <h1>MediaPipe ver:1.1</h1>
+      <h1>MediaPipe ver:1.2 (mp4)</h1>
       <div class="header-actions">
         <button id="menuButton" class="menu-btn" aria-label="切換側欄">
           ☰
@@ -372,15 +372,34 @@
           </div>
           <div class="row" id="gifOutputOptions" style="display: none">
             <label
-              ><input type="checkbox" id="generateGif" checked /> 生成動畫影片
-              (WebM)</label
+              ><input type="checkbox" id="generateGif" checked />
+              生成動畫影片</label
             >
           </div>
           <div class="row" id="gifGenerationSettings" style="display: none">
             <span class="hint"
-              >錄製 3 秒高畫質動畫 (20fps, GIF 播放3次) 為 WebM 影片，可轉換為
-              GIF</span
+              >錄製 3 秒高畫質動畫 (20fps, GIF 播放3次) 為影片檔案</span
             >
+          </div>
+
+          <!-- 月相影片格式選擇 -->
+          <div class="row" id="moonVideoOptions" style="display: none">
+            <label>影片格式:</label>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <label style="display: flex; align-items: center; gap: 4px">
+                <input type="radio" name="videoFormat" value="mp4" checked />
+                MP4 (推薦)
+              </label>
+              <label style="display: flex; align-items: center; gap: 4px">
+                <input type="radio" name="videoFormat" value="webm" />
+                WebM
+              </label>
+            </div>
+          </div>
+          <div class="row" id="moonVideoSettings" style="display: none">
+            <span class="hint">
+              MP4：相容性佳，檔案較大｜WebM：檔案較小，部分裝置不支援
+            </span>
           </div>
           <div class="row">
             <label>特效強度</label>

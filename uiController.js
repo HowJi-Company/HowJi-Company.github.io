@@ -23,6 +23,7 @@ import {
   setShouldGenerateGif,
   setGifQuality,
   setRecordingProgressCallback,
+  setVideoOutputFormat,
 } from "./segmentationCore.js";
 
 // 取得 DOM
@@ -62,6 +63,8 @@ const generateGifCheckbox = document.getElementById("generateGif");
 const gifOutputOptions = document.getElementById("gifOutputOptions");
 const gifQualitySelect = document.getElementById("gifQuality");
 const gifGenerationSettings = document.getElementById("gifGenerationSettings");
+const moonVideoOptions = document.getElementById("moonVideoOptions");
+const moonVideoSettings = document.getElementById("moonVideoSettings");
 const menuBtn = document.getElementById("menuButton");
 const scrimEl = document.getElementById("scrim");
 
@@ -166,6 +169,10 @@ function bindUI() {
     const bgType = backgroundSelect.value;
     let progressDialog = null;
     if (bgType === "moon_video" && bgMoonVideoEl) {
+      // 設定影片輸出格式
+      const selectedFormat = getSelectedVideoFormat();
+      setVideoOutputFormat(selectedFormat);
+
       progressDialog = createRecordingProgressDialog();
       // 設置進度回調
       setRecordingProgressCallback(progressDialog);
@@ -262,10 +269,11 @@ function bindUI() {
     const bgType = e.target.value;
     setBackgroundType(bgType);
 
-    // 顯示/隱藏 GIF 相關選項
+    // 顯示/隱藏相關選項
     const isGifMode = bgType === "gif";
     const isMoonVideoMode = bgType === "moon_video";
 
+    // GIF 相關選項
     if (gifBlendOptions) {
       gifBlendOptions.style.display = isGifMode ? "flex" : "none";
     }
@@ -276,6 +284,14 @@ function bindUI() {
       const showSettings =
         isGifMode && generateGifCheckbox && generateGifCheckbox.checked;
       gifGenerationSettings.style.display = showSettings ? "flex" : "none";
+    }
+
+    // 月相影片格式選項
+    if (moonVideoOptions) {
+      moonVideoOptions.style.display = isMoonVideoMode ? "flex" : "none";
+    }
+    if (moonVideoSettings) {
+      moonVideoSettings.style.display = isMoonVideoMode ? "flex" : "none";
     }
 
     // 如果選擇月相影片，延遲載入並播放
@@ -368,6 +384,16 @@ function bindUI() {
   if (menuBtn) menuBtn.addEventListener("click", togglePanel);
   if (scrimEl) scrimEl.addEventListener("click", togglePanel);
 
+  // 影片格式選擇
+  document.querySelectorAll('input[name="videoFormat"]').forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        setVideoOutputFormat(e.target.value);
+        console.log(`📹 切換影片格式: ${e.target.value.toUpperCase()}`);
+      }
+    });
+  });
+
   // 視窗縮放
   window.addEventListener("resize", onResize);
 }
@@ -388,6 +414,17 @@ function isMobileDevice() {
       navigator.userAgent
     ) || window.innerWidth <= 900
   );
+}
+
+// 獲取選中的影片格式
+function getSelectedVideoFormat() {
+  const radioButtons = document.querySelectorAll('input[name="videoFormat"]');
+  for (const radio of radioButtons) {
+    if (radio.checked) {
+      return radio.value;
+    }
+  }
+  return "mp4"; // 預設 MP4
 }
 
 // 手機版優化提示
@@ -945,6 +982,9 @@ window.addEventListener("load", () => {
   if (gifQualitySelect) {
     setGifQuality(Number(gifQualitySelect.value));
   }
+
+  // 設定預設影片格式為 MP4
+  setVideoOutputFormat("mp4");
 
   // 注意：不再自動載入月相影片，改為按需載入以提升手機版效能
 

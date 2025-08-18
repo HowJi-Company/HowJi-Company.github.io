@@ -1229,10 +1229,16 @@ export async function capturePhoto() {
 
 // 全域進度回調函數
 let recordingProgressCallback = null;
+let videoOutputFormat = "mp4"; // 預設 MP4
 
 // 設定錄製進度回調
 export function setRecordingProgressCallback(callback) {
   recordingProgressCallback = callback;
+}
+
+// 設定影片輸出格式
+export function setVideoOutputFormat(format) {
+  videoOutputFormat = format;
 }
 
 // 生成靜止人物 + 動態影片背景的 8 秒影片
@@ -1295,10 +1301,40 @@ async function generateVideoWithStaticPerson(
 
         // 設定 MediaRecorder
         const stream = recordCanvas.captureStream(FPS);
-        const recorder = new MediaRecorder(stream, {
-          mimeType: "video/webm; codecs=vp8",
-          videoBitsPerSecond: 3000000, // 3 Mbps 高畫質
-        });
+
+        // 根據選擇的格式設定 MediaRecorder
+        let recorderOptions;
+        if (videoOutputFormat === "mp4") {
+          // MP4 設定
+          if (MediaRecorder.isTypeSupported("video/mp4; codecs=h264")) {
+            recorderOptions = {
+              mimeType: "video/mp4; codecs=h264",
+              videoBitsPerSecond: 3000000, // 3 Mbps
+            };
+          } else if (MediaRecorder.isTypeSupported("video/mp4")) {
+            recorderOptions = {
+              mimeType: "video/mp4",
+              videoBitsPerSecond: 3000000,
+            };
+          } else {
+            // 降級到 WebM
+            console.warn("瀏覽器不支援 MP4，降級到 WebM");
+            recorderOptions = {
+              mimeType: "video/webm; codecs=vp8",
+              videoBitsPerSecond: 3000000,
+            };
+            videoOutputFormat = "webm"; // 更新格式標識
+          }
+        } else {
+          // WebM 設定
+          recorderOptions = {
+            mimeType: "video/webm; codecs=vp8",
+            videoBitsPerSecond: 3000000,
+          };
+        }
+
+        const recorder = new MediaRecorder(stream, recorderOptions);
+        console.log(`📹 使用格式: ${recorderOptions.mimeType}`);
 
         const chunks = [];
         recorder.ondataavailable = (event) => {
@@ -1309,7 +1345,13 @@ async function generateVideoWithStaticPerson(
 
         recorder.onstop = () => {
           console.log("錄製完成，正在生成影片檔案...");
-          const blob = new Blob(chunks, { type: "video/webm" });
+
+          // 根據實際使用的格式設定 MIME type 和副檔名
+          const mimeType =
+            videoOutputFormat === "mp4" ? "video/mp4" : "video/webm";
+          const extension = videoOutputFormat === "mp4" ? "mp4" : "webm";
+
+          const blob = new Blob(chunks, { type: mimeType });
 
           // 下載影片檔案
           const timestamp = new Date()
@@ -1317,17 +1359,18 @@ async function generateVideoWithStaticPerson(
             .replace(/[:]/g, "-")
             .split(".")[0];
           const videoLink = document.createElement("a");
-          videoLink.download = `月亮節AR_月相影片_${timestamp}.webm`;
+          videoLink.download = `月亮節AR_月相影片_${timestamp}.${extension}`;
           videoLink.href = URL.createObjectURL(blob);
           document.body.appendChild(videoLink);
           videoLink.click();
           document.body.removeChild(videoLink);
 
-          console.log("🎬 影片生成並下載完成！");
+          console.log(`🎬 ${extension.toUpperCase()} 影片生成並下載完成！`);
           resolve({
             png: staticPersonDataURL,
             video: URL.createObjectURL(blob),
             duration: DURATION_SECONDS,
+            format: extension,
           });
         };
 
