@@ -68,13 +68,8 @@ const moonVideoSettings = document.getElementById("moonVideoSettings");
 const menuBtn = document.getElementById("menuButton");
 const scrimEl = document.getElementById("scrim");
 
-// ===== Moon WebM + Alpha 測試來源（含透明）與後備 =====
-// WebM (VP9 + Alpha)：月亮主題（Wikimedia，CORS 友善）
-// Safari 或不支援 VP9 → 退回一般 MP4（無透明；使用 MDN cc0 示範）
-const MOON_WEBM_ALPHA =
-  "https://upload.wikimedia.org/wikipedia/commons/2/25/Moon_Phase_and_Libration%2C_2025_South_Up_%28SVS5416_-_phases_2025_plain_s_2160p30%29.webm";
-const FALLBACK_MP4 =
-  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+// ===== 本地月相影片 =====
+// 使用專案根目錄的 m30.webm 作為月相背景
 
 // 狀態與統計回呼
 function handleStatus(t) {
@@ -482,7 +477,7 @@ function showVideoLoadingDialog(videoElement) {
   `;
 
   const isMobile = isMobileDevice();
-  const videoSize = isMobile ? "約 50MB" : "約 200MB";
+  const videoSize = "約 10MB"; // m30.webm 預估大小
 
   overlay.innerHTML = `
     <div style="text-align: center; color: #e6edf3; max-width: 400px; padding: 0 20px;">
@@ -896,49 +891,7 @@ function showVideoProgressDialog() {
   };
 }
 
-// 自動選用「月亮 WebM + Alpha」或後備 MP4
-function setupMoonBackgroundVideo() {
-  if (!bgVideoEl) return;
-
-  // 盡量避免跨域污染 canvas
-  bgVideoEl.crossOrigin = "anonymous";
-
-  // iOS/Safari 對 WebM 支援差，先偵測 VP9
-  const testVid = document.createElement("video");
-  const canVP9 = testVid.canPlayType('video/webm; codecs="vp9"') !== "";
-
-  // 設定來源
-  bgVideoEl.src = canVP9 ? MOON_WEBM_ALPHA : FALLBACK_MP4;
-
-  // 確保自動播放條件
-  bgVideoEl.muted = true;
-  bgVideoEl.loop = true;
-  bgVideoEl.playsInline = true;
-
-  // 切到 video 背景模式
-  backgroundSelect.value = "video";
-  setBackgroundType("video");
-
-  // 載入與播放
-  const tryPlay = () => bgVideoEl.play().catch(() => {});
-  bgVideoEl.addEventListener("canplay", tryPlay, { once: true });
-  bgVideoEl.addEventListener("error", (e) => {
-    console.warn("[bgVideo] 播放錯誤，改用後備 MP4", e);
-    if (bgVideoEl.src !== FALLBACK_MP4) {
-      bgVideoEl.src = FALLBACK_MP4;
-      bgVideoEl.load();
-      tryPlay();
-    }
-  });
-
-  // 立刻嘗試
-  try {
-    bgVideoEl.load();
-    tryPlay();
-  } catch (e) {
-    console.warn("[bgVideo] 初始播放失敗：", e);
-  }
-}
+// 本地月相影片不需要複雜的設定，直接使用 HTML 中的 m30.webm
 
 // 初始化入口
 window.addEventListener("load", () => {
