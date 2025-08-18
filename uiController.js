@@ -265,38 +265,9 @@ function bindUI() {
     // 如果選擇月相影片，延遲載入並播放
     if (isMoonVideoMode && bgMoonVideoEl) {
       console.log("🌙 切換到月相影片背景模式");
-      handleStatus("載入月相影片中...");
 
-      // 延遲載入影片
-      if (!bgMoonVideoEl.src && bgMoonVideoEl.children.length > 0) {
-        bgMoonVideoEl.load();
-      }
-
-      // 等待載入完成後播放
-      const tryPlay = () => {
-        bgMoonVideoEl
-          .play()
-          .then(() => {
-            handleStatus("月相影片載入完成");
-            setTimeout(() => handleStatus("檢測中"), 2000);
-          })
-          .catch((e) => {
-            console.warn("月相影片播放失敗:", e);
-            handleStatus("月相影片播放失敗，請手動點擊播放");
-          });
-      };
-
-      if (bgMoonVideoEl.readyState >= 3) {
-        tryPlay();
-      } else {
-        bgMoonVideoEl.addEventListener("canplay", tryPlay, { once: true });
-        // 載入超時處理
-        setTimeout(() => {
-          if (bgMoonVideoEl.readyState < 3) {
-            handleStatus("影片載入較慢，請耐心等待或切換其他背景");
-          }
-        }, 5000);
-      }
+      // 顯示載入提示對話框
+      showVideoLoadingDialog(bgMoonVideoEl);
     }
   });
 
@@ -435,6 +406,186 @@ function showMobileOptimizationTip() {
       }
     }, 8000);
   }
+}
+
+// 顯示影片載入對話框
+function showVideoLoadingDialog(videoElement) {
+  // 創建載入對話框
+  const overlay = document.createElement("div");
+  overlay.id = "videoLoadingOverlay";
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(11, 16, 32, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(8px);
+  `;
+
+  const isMobile = isMobileDevice();
+  const videoSize = isMobile ? "約 50MB" : "約 200MB";
+
+  overlay.innerHTML = `
+    <div style="text-align: center; color: #e6edf3; max-width: 400px; padding: 0 20px;">
+      <div style="width: 60px; height: 60px; border: 4px solid rgba(255, 235, 59, 0.3); border-top: 4px solid #ffeb3b; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px;"></div>
+      
+      <h3 style="margin: 0 0 16px; color: #ffeb3b; font-size: 20px;">🌙 載入月相影片</h3>
+      
+      <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.5;">
+        正在下載高畫質月相動畫<br>
+        檔案大小：${videoSize}
+      </p>
+      
+      <div id="loadingProgress" style="margin: 16px 0; font-size: 14px; color: #9fb0c0;">
+        準備下載中...
+      </div>
+      
+      <div style="margin-top: 20px;">
+        <button id="cancelVideoLoad" style="
+          padding: 8px 16px; 
+          border: 1px solid #ffeb3b; 
+          background: transparent; 
+          color: #ffeb3b; 
+          border-radius: 6px; 
+          cursor: pointer;
+          font-size: 14px;
+        ">取消並選擇其他背景</button>
+      </div>
+      
+      ${
+        isMobile
+          ? `
+        <div style="margin-top: 16px; padding: 12px; background: rgba(255, 193, 7, 0.15); border-radius: 6px; font-size: 13px; color: #ffc107;">
+          ⚠️ 手機版提醒：此影片較大，建議在 WiFi 環境下使用
+        </div>
+      `
+          : ""
+      }
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // 進度更新函數
+  let progressInterval;
+  let loadingStartTime = Date.now();
+  const progressEl = overlay.querySelector("#loadingProgress");
+
+  function updateProgress() {
+    const elapsed = Math.floor((Date.now() - loadingStartTime) / 1000);
+    const readyState = videoElement.readyState;
+
+    let progressText = "";
+    if (readyState === 0) {
+      progressText = `下載中... (${elapsed}s)`;
+    } else if (readyState === 1) {
+      progressText = `下載中，已獲取基本信息... (${elapsed}s)`;
+    } else if (readyState === 2) {
+      progressText = `下載中，可開始播放... (${elapsed}s)`;
+    } else if (readyState === 3) {
+      progressText = `下載進行中，可流暢播放... (${elapsed}s)`;
+    } else if (readyState === 4) {
+      progressText = `下載完成！ (${elapsed}s)`;
+    }
+
+    progressEl.textContent = progressText;
+  }
+
+  progressInterval = setInterval(updateProgress, 500);
+
+  // 取消按鈕
+  overlay.querySelector("#cancelVideoLoad").addEventListener("click", () => {
+    clearInterval(progressInterval);
+    overlay.remove();
+
+    // 切換回預設背景
+    backgroundSelect.value = "waves";
+    setBackgroundType("waves");
+    handleStatus("已取消影片載入，切換到波紋背景");
+
+    // 停止影片載入
+    videoElement.src = "";
+    videoElement.load();
+  });
+
+  // 開始載入影片
+  handleStatus("開始載入月相影片...");
+
+  if (!videoElement.src && videoElement.children.length > 0) {
+    videoElement.load();
+  }
+
+  // 監聽載入事件
+  const onCanPlay = () => {
+    clearInterval(progressInterval);
+    progressEl.textContent = "載入完成，開始播放...";
+
+    videoElement
+      .play()
+      .then(() => {
+        setTimeout(() => {
+          overlay.remove();
+          handleStatus("月相影片載入完成");
+          setTimeout(() => handleStatus("檢測中"), 2000);
+        }, 1000);
+      })
+      .catch((e) => {
+        console.warn("月相影片播放失敗:", e);
+        overlay.remove();
+        handleStatus("月相影片播放失敗，請手動點擊播放");
+      });
+  };
+
+  const onError = () => {
+    clearInterval(progressInterval);
+    overlay.remove();
+    handleStatus("月相影片載入失敗");
+
+    // 切換回預設背景
+    backgroundSelect.value = "waves";
+    setBackgroundType("waves");
+  };
+
+  // 超時處理
+  const timeoutHandler = setTimeout(() => {
+    if (videoElement.readyState < 3) {
+      progressEl.innerHTML = `
+        載入時間較長，可能因為網路較慢<br>
+        <small style="color: #9fb0c0;">建議取消並選擇其他背景</small>
+      `;
+    }
+  }, 10000);
+
+  videoElement.addEventListener("canplay", onCanPlay, { once: true });
+  videoElement.addEventListener("error", onError, { once: true });
+
+  // 清理函數
+  const cleanup = () => {
+    clearInterval(progressInterval);
+    clearTimeout(timeoutHandler);
+    videoElement.removeEventListener("canplay", onCanPlay);
+    videoElement.removeEventListener("error", onError);
+  };
+
+  // 確保對話框被移除時清理資源
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.removedNodes.forEach((node) => {
+        if (node === overlay) {
+          cleanup();
+          observer.disconnect();
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, { childList: true });
 }
 
 // 自動選用「月亮 WebM + Alpha」或後備 MP4
