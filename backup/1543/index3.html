@@ -318,14 +318,10 @@
               <option value="frequency">頻率條</option>
               <option value="video" selected>影片（MP4/WebM）</option>
               <option value="gif">GIF 動畫融合</option>
-              <option value="moon_video">月相影片 🌙</option>
             </select>
           </div>
           <div class="row">
-            <span class="hint"
-              >背景來源：MP4 影片 / GIF 動畫（1.gif）/
-              月相影片（8秒動態錄製）</span
-            >
+            <span class="hint">背景來源：MP4 影片 / GIF 動畫（1.gif）</span>
           </div>
           <div class="row" id="gifBlendOptions" style="display: none">
             <label>GIF 融合模式:</label>
@@ -403,23 +399,6 @@
           src="./1.gif"
           alt="GIF 背景"
         />
-
-        <!-- 影片背景來源 (月相) -->
-        <video
-          id="bgVideo"
-          class="bg_video"
-          style="display: none"
-          muted
-          loop
-          crossorigin="anonymous"
-          alt="影片背景"
-        >
-          <source
-            src="https://upload.wikimedia.org/wikipedia/commons/2/25/Moon_Phase_and_Libration%2C_2025_South_Up_%28SVS5416_-_phases_2025_plain_s_2160p30%29.webm"
-            type="video/webm"
-          />
-          您的瀏覽器不支援影片播放
-        </video>
 
         <canvas class="bg_canvas" id="bgCanvas"></canvas>
         <canvas class="mask_canvas" id="maskCanvas"></canvas>

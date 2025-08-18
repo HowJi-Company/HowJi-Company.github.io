@@ -347,7 +347,11 @@
               <option value="original">原始</option>
               <option value="waves">波紋</option>
               <option value="frequency">頻率條</option>
+              <option value="video" selected>影片（MP4/WebM）</option>
             </select>
+          </div>
+          <div class="row">
+            <span class="hint">背景來源：內建 MP4（已寫死，可直接使用）</span>
           </div>
           <div class="row">
             <label>特效強度</label>
@@ -382,6 +386,17 @@
 
       <section class="stage">
         <video class="input_video" id="video" playsinline></video>
+        <!-- 使用者自備背景影片（隱藏，僅用於 drawImage） -->
+        <video
+          id="bgVideo"
+          class="bg_video"
+          playsinline
+          muted
+          loop
+          preload="auto"
+          style="display: none"
+          src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+        ></video>
         <canvas class="bg_canvas" id="bgCanvas"></canvas>
         <canvas class="mask_canvas" id="maskCanvas"></canvas>
         <canvas class="output_canvas" id="outputCanvas"></canvas>

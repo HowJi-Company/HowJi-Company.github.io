@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>月亮節 AR 調試頁面</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- 配置文件 -->
+    <script src="config.js"></script>
+    <!-- MediaPipe -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .debug-banner {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        color: white;
+        text-align: center;
+        padding: 8px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        border-radius: 10px;
+      }
+
+      .debug-panel {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 10px;
+        backdrop-filter: blur(10px);
+        font-family: monospace;
+        font-size: 12px;
+      }
+
+      /* 人臉檢測調試面板固定高度 */
+      .debug-panel.face-detection {
+        height: 200px;
+        overflow-y: auto;
+      }
+
+      .debug-panel.face-detection h4 {
+        margin: 0 0 10px 0;
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 5px 0;
+        border-radius: 5px;
+      }
+
+      /* 美化滾動條 */
+      .debug-panel.face-detection::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+      }
+
+      .debug-panel.face-detection::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .debug-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        padding: 2px 0;
+      }
+
+      .debug-label {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
+
+      .debug-value {
+        color: #4caf50;
+      }
+
+      .face-info {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      .in-area {
+        background: rgba(76, 175, 80, 0.2);
+      }
+
+      .out-area {
+        background: rgba(244, 67, 54, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 調試標誌 -->
+      <div class="debug-banner">🐛 調試模式 - 詳細檢測信息</div>
+
+      <!-- 檢測區域調試 -->
+      <div class="debug-panel">
+        <h4>🎯 檢測區域信息</h4>
+        <div class="debug-row">
+          <span class="debug-label">Canvas 尺寸:</span>
+          <span class="debug-value" id="canvasSize">等待中...</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">檢測中心:</span>
+          <span class="debug-value" id="detectionCenter">等待中...</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">檢測半徑:</span>
+          <span class="debug-value" id="detectionRadius">等待中...</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">視頻尺寸:</span>
+          <span class="debug-value" id="videoSize">等待中...</span>
+        </div>
+      </div>
+
+      <!-- 人臉檢測調試 -->
+      <div class="debug-panel face-detection">
+        <h4>👤 人臉檢測詳情</h4>
+        <div id="faceDetails">等待檢測結果...</div>
+      </div>
+
+      <!-- 頂部標題 -->
+      <header class="header">
+        <h1>🌙 月亮節 AR 調試</h1>
+        <p>檢查檢測邏輯和坐標系統</p>
+      </header>
+
+      <!-- 主要相機區域 -->
+      <div class="camera-container">
+        <!-- 視頻元素 -->
+        <video class="input_video" autoplay muted playsinline></video>
+
+        <!-- 背景圖層 Canvas -->
+        <canvas class="bg_canvas"></canvas>
+
+        <!-- 分割蒙版 Canvas (調試用) -->
+        <canvas class="mask_canvas" style="display: none"></canvas>
+
+        <!-- 輸出合成 Canvas -->
+        <canvas class="output_canvas"></canvas>
+
+        <!-- 檢測區域圓形框 -->
+        <div class="detection-area">
+          <div class="circle-guide">
+            <div class="circle-inner"></div>
+            <p class="guide-text">CSS 引導圓圈</p>
+          </div>
+        </div>
+
+        <!-- 月亮特效層 -->
+        <div class="moon-effect" id="moonEffect">
+          <div class="moon"></div>
+          <div class="stars">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+          </div>
+          <div class="sparkles">
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+          </div>
+        </div>
+
+        <!-- 背景圖片 (隱藏) -->
+        <img
+          id="backgroundImage1"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGY0YzViO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzBkMzA0YTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGExNDM1O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNiZykiLz4KPC9zdmc+"
+          style="display: none"
+          alt="背景1"
+        />
+        <img
+          id="backgroundImage2"
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmciIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTIzM2E7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwMDAwMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjYmcpIi8+Cjwvc3ZnPg=="
+          style="display: none"
+          alt="背景2"
+        />
+      </div>
+
+      <!-- 狀態顯示 -->
+      <div class="status-panel">
+        <div class="status-item">
+          <span class="label">檢測狀態:</span>
+          <span class="value" id="detectionStatus">初始化中...</span>
+        </div>
+        <div class="status-item">
+          <span class="label">檢測到的人臉:</span>
+          <span class="value" id="faceCount">0</span>
+        </div>
+        <div class="status-item">
+          <span class="label">區域內人臉:</span>
+          <span class="value" id="facesInArea">0</span>
+        </div>
+      </div>
+
+      <!-- 控制按鈕 -->
+      <div class="controls">
+        <button id="startButton" class="btn btn-primary">開始檢測</button>
+        <button id="stopButton" class="btn btn-secondary" disabled>
+          停止檢測
+        </button>
+        <button id="switchCamera" class="btn btn-secondary">切換鏡頭</button>
+      </div>
+
+      <!-- 背景和特效控制 -->
+      <div class="bg-controls">
+        <h3>🎨 背景特效控制</h3>
+        <div class="control-group">
+          <label for="enableSegmentation">啟用去背效果:</label>
+          <input type="checkbox" id="enableSegmentation" />
+        </div>
+        <div class="control-group">
+          <label for="backgroundSelect">選擇背景:</label>
+          <select id="backgroundSelect">
+            <option value="original">原始背景</option>
+            <option value="gradient1">深藍漸層</option>
+            <option value="gradient2">星空漸層</option>
+            <option value="waves">波紋效果</option>
+            <option value="frequency">頻率效果</option>
+            <option value="gif">GIF 背景</option>
+            <option value="video">影片背景 (月相)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="effectIntensity">特效強度:</label>
+          <input
+            type="range"
+            id="effectIntensity"
+            min="0"
+            max="100"
+            value="50"
+          />
+          <span id="intensityValue">50%</span>
+        </div>
+        <div class="control-group">
+          <label for="showMask">顯示分割蒙版 (調試):</label>
+          <input type="checkbox" id="showMask" />
+        </div>
+      </div>
+
+      <!-- 調試說明 -->
+      <div class="info-panel">
+        <h3>🐛 調試說明</h3>
+        <ul>
+          <li><strong>CSS 引導圓圈</strong>：視覺引導，不參與檢測邏輯</li>
+          <li><strong>Canvas 檢測圓圈</strong>：真正的檢測區域（虛線圓圈）</li>
+          <li><strong>人臉邊框</strong>：白色=檢測到，黃色=在區域內</li>
+          <li><strong>人臉中心點</strong>：用星星⭐標記，檢測判斷基於此點</li>
+          <li>查看上方詳細信息診斷坐標問題</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // 調試模式配置
+      function initDebugMode() {
+        // 停用 LIFF
+        CONFIG.LIFF.ENABLED = false;
+
+        // 啟用詳細除錯
+        CONFIG.DEBUG.VERBOSE_LOGGING = true;
+        CONFIG.DEBUG.SHOW_DETECTION_AREA = true;
+        CONFIG.DEBUG.SHOW_FACE_BOXES = true;
+      }
+
+      // 更新調試信息
+      function updateDebugInfo() {
+        const videoElement = document.querySelector(".input_video");
+        const canvasElement = document.querySelector(".output_canvas");
+
+        if (videoElement && canvasElement) {
+          // Canvas 尺寸
+          document.getElementById(
+            "canvasSize"
+          ).textContent = `${canvasElement.width} × ${canvasElement.height}`;
+
+          // 視頻尺寸
+          document.getElementById(
+            "videoSize"
+          ).textContent = `${videoElement.videoWidth} × ${videoElement.videoHeight}`;
+
+          // 檢測區域信息
+          if (window.DETECTION_AREA) {
+            const centerX = window.DETECTION_AREA.centerX * canvasElement.width;
+            const centerY =
+              window.DETECTION_AREA.centerY * canvasElement.height;
+            const radius =
+              window.DETECTION_AREA.radius *
+              Math.min(canvasElement.width, canvasElement.height);
+
+            document.getElementById(
+              "detectionCenter"
+            ).textContent = `(${centerX.toFixed(1)}, ${centerY.toFixed(1)})`;
+
+            document.getElementById(
+              "detectionRadius"
+            ).textContent = `${radius.toFixed(1)}px`;
+          }
+        }
+      }
+
+      // 更新人臉詳情
+      function updateFaceDetails(faces, facesInArea) {
+        const container = document.getElementById("faceDetails");
+
+        if (!faces || faces.length === 0) {
+          container.innerHTML = "<div>未檢測到人臉</div>";
+          return;
+        }
+
+        const canvasElement = document.querySelector(".output_canvas");
+        if (!canvasElement || !canvasElement.width || !canvasElement.height) {
+          container.innerHTML = "<div>等待 Canvas 初始化...</div>";
+          return;
+        }
+
+        const canvasWidth = canvasElement.width;
+        const canvasHeight = canvasElement.height;
+
+        if (!window.DETECTION_AREA) {
+          container.innerHTML = "<div>檢測區域未初始化...</div>";
+          return;
+        }
+
+        let html = "";
+        faces.forEach((face, index) => {
+          try {
+            const bbox = face.boundingBox;
+
+            // 計算人臉中心點（使用正確的 xCenter, yCenter 格式）
+            const faceCenterX = bbox.xCenter * canvasWidth;
+            const faceCenterY = bbox.yCenter * canvasHeight;
+
+            // 計算距離檢測區域中心的距離
+            const centerX = window.DETECTION_AREA.centerX * canvasWidth;
+            const centerY = window.DETECTION_AREA.centerY * canvasHeight;
+            const radius =
+              window.DETECTION_AREA.radius *
+              Math.min(canvasWidth, canvasHeight);
+
+            const distance = Math.sqrt(
+              Math.pow(faceCenterX - centerX, 2) +
+                Math.pow(faceCenterY - centerY, 2)
+            );
+
+            const isInArea = distance <= radius;
+
+            // 計算邊界框左上角座標（用於顯示）
+            const boxX = (bbox.xCenter - bbox.width / 2) * canvasWidth;
+            const boxY = (bbox.yCenter - bbox.height / 2) * canvasHeight;
+            const boxW = bbox.width * canvasWidth;
+            const boxH = bbox.height * canvasHeight;
+
+            html += `
+                        <div class="face-info ${
+                          isInArea ? "in-area" : "out-area"
+                        }">
+                            <strong>人臉 ${index + 1}</strong> ${
+              isInArea ? "✅ 在區域內" : "❌ 不在區域內"
+            }
+                            <br>原始中心點: (${bbox.xCenter.toFixed(
+                              3
+                            )}, ${bbox.yCenter.toFixed(
+              3
+            )}) ${bbox.width.toFixed(3)}×${bbox.height.toFixed(3)}
+                            <br>邊界框像素: (${boxX.toFixed(1)}, ${boxY.toFixed(
+              1
+            )}) ${boxW.toFixed(1)}×${boxH.toFixed(1)}
+                            <br>人臉中心: (${faceCenterX.toFixed(
+                              1
+                            )}, ${faceCenterY.toFixed(1)})
+                            <br>距離中心: ${distance.toFixed(
+                              1
+                            )}px (半徑: ${radius.toFixed(1)}px)
+                            <br>信心度: ${(() => {
+                              // 嘗試多種信心度格式
+
+                              // MediaPipe Face Detection 的實際格式：V[0].ga
+                              if (
+                                face.V &&
+                                Array.isArray(face.V) &&
+                                face.V.length > 0 &&
+                                face.V[0] &&
+                                face.V[0].ga !== undefined
+                              ) {
+                                return (face.V[0].ga * 100).toFixed(1) + "%";
+                              }
+
+                              // 其他可能的格式
+                              if (face.score) {
+                                if (
+                                  Array.isArray(face.score) &&
+                                  face.score.length > 0 &&
+                                  face.score[0] !== undefined
+                                ) {
+                                  return (face.score[0] * 100).toFixed(1) + "%";
+                                } else if (typeof face.score === "number") {
+                                  return (face.score * 100).toFixed(1) + "%";
+                                }
+                              }
+                              if (face.detectionConfidence !== undefined) {
+                                return (
+                                  (face.detectionConfidence * 100).toFixed(1) +
+                                  "%"
+                                );
+                              }
+                              if (face.confidence !== undefined) {
+                                return (face.confidence * 100).toFixed(1) + "%";
+                              }
+
+                              return "N/A";
+                            })()}
+                        </div>
+                    `;
+          } catch (error) {
+            html += `
+                        <div class="face-info out-area">
+                            <strong>人臉 ${index + 1}</strong> ❌ 處理錯誤
+                            <br>錯誤: ${error.message}
+                        </div>
+                    `;
+          }
+        });
+
+        container.innerHTML = html;
+      }
+
+      // 調試變數
+      let debugInfoTimer;
+      let lastFaces = [];
+      let lastFacesInArea = [];
+
+      // 在載入時初始化調試模式
+      document.addEventListener("DOMContentLoaded", () => {
+        initDebugMode();
+
+        // 啟動調試信息更新
+        startDebugInfoUpdates();
+      });
+
+      // 啟動調試信息更新
+      function startDebugInfoUpdates() {
+        if (debugInfoTimer) {
+          clearInterval(debugInfoTimer);
+        }
+
+        debugInfoTimer = setInterval(() => {
+          updateDebugInfo();
+          // 只在有新的檢測結果時更新人臉詳情
+          if (
+            lastFaces.length > 0 ||
+            document
+              .getElementById("faceDetails")
+              .innerHTML.includes("未檢測到人臉")
+          ) {
+            updateFaceDetails(lastFaces, lastFacesInArea);
+          }
+        }, 1000);
+      }
+
+      // 停止調試信息更新
+      function stopDebugInfoUpdates() {
+        if (debugInfoTimer) {
+          clearInterval(debugInfoTimer);
+          debugInfoTimer = null;
+        }
+      }
+
+      // 更新檢測結果（由主腳本調用）
+      window.updateDebugResults = function (faces, facesInArea) {
+        lastFaces = faces || [];
+        lastFacesInArea = facesInArea || [];
+        updateFaceDetails(lastFaces, lastFacesInArea);
+      };
+
+      // 清除檢測結果
+      window.clearDebugResults = function () {
+        lastFaces = [];
+        lastFacesInArea = [];
+        document.getElementById("faceDetails").innerHTML = "等待檢測結果...";
+      };
+
+      // 監聽檢測狀態變化
+      const originalStartButton = document.getElementById("startButton");
+      const originalStopButton = document.getElementById("stopButton");
+
+      if (originalStartButton) {
+        originalStartButton.addEventListener("click", () => {
+          setTimeout(() => {
+            clearDebugResults();
+            startDebugInfoUpdates();
+          }, 100);
+        });
+      }
+
+      if (originalStopButton) {
+        originalStopButton.addEventListener("click", () => {
+          setTimeout(() => {
+            stopDebugInfoUpdates();
+            clearDebugResults();
+          }, 100);
+        });
+      }
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
