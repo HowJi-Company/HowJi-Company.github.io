@@ -86,8 +86,127 @@ CONFIG.BACKGROUND = CONFIG.BACKGROUND || {
   INTENSITY:
     (CONFIG.BACKGROUND_EFFECTS && CONFIG.BACKGROUND_EFFECTS.EFFECT_INTENSITY) ??
     0.5,
-  GIF_BLEND_MODE: "overlay", // GIF 融合模式
+  GIF_BLEND_MODE: "overlay", // 仍保留欄位以向後相容（但會無效）
 };
+
+// ---- Recording storage & share helper (統一管理) ----
+
+// 儲存最後一次錄製的 Blob / filename / objectURL（由 core 管理）
+let lastRecordedBlob = null;
+let lastRecordedFilename = null;
+let lastRecordedObjectUrl = null;
+
+function _revokeLastObjectUrl() {
+  try {
+    if (lastRecordedObjectUrl) {
+      URL.revokeObjectURL(lastRecordedObjectUrl);
+      lastRecordedObjectUrl = null;
+    }
+  } catch (e) {
+    console.warn("revoke failed", e);
+  }
+}
+
+/**
+ * 儲存 Blob 並建立 objectURL（由 core 呼叫）
+ * 回傳建立的 objectURL（或 null）
+ */
+export function storeRecordingBlob(blob, filename) {
+  if (!blob) return null;
+  // 清理舊的 objectURL
+  _revokeLastObjectUrl();
+  lastRecordedBlob = blob;
+  lastRecordedFilename = filename || `moonAR_${Date.now()}.webm`;
+  try {
+    lastRecordedObjectUrl = URL.createObjectURL(blob);
+  } catch (e) {
+    console.warn("createObjectURL failed", e);
+    lastRecordedObjectUrl = null;
+  }
+  return lastRecordedObjectUrl;
+}
+
+/** UI 用：是否有錄影檔可用 */
+export function hasRecordingAvailable() {
+  return !!lastRecordedBlob;
+}
+
+/** UI 用：取得 core 管理的 objectURL（不要在外面再 createObjectURL） */
+export function getLastRecordingUrl() {
+  return lastRecordedObjectUrl || null;
+}
+
+/** UI 用：清除最後一次錄影的暫存（core 會 revoke） */
+export function clearLastRecording() {
+  _revokeLastObjectUrl();
+  lastRecordedBlob = null;
+  lastRecordedFilename = null;
+}
+
+/** 取得最後錄影檔名 */
+export function getLastRecordingFilename() {
+  return lastRecordedFilename;
+}
+
+// 上傳 stub（請替換成你自己的後端或雲端上傳實作）
+// 回傳公開可存取的 url 字串
+export async function uploadBlobToServerAndGetUrl(blob, filename) {
+  // 範例：呼叫 /api/upload (form-data: file)
+  const fd = new FormData();
+  fd.append("file", blob, filename);
+  const res = await fetch("/api/upload", { method: "POST", body: fd });
+  if (!res.ok) throw new Error("upload failed");
+  const j = await res.json();
+  if (!j?.url) throw new Error("upload response missing url");
+  return j.url;
+}
+
+// 實際分享函式：必須在「使用者手勢」中呼叫（例如按鈕 onclick）
+// 這個函式會嘗試：1) Web Share API 分享檔案；2) 上傳並分享 URL；3) 拋錯由 UI 處理
+export async function shareLastRecording() {
+  if (!lastRecordedBlob) throw new Error("no recording available");
+  const filename = lastRecordedFilename || `moonAR_${Date.now()}.mp4`;
+  const file = new File([lastRecordedBlob], filename, {
+    type: lastRecordedBlob.type || "video/mp4",
+  });
+
+  // 優先嘗試檔案分享（Level 2）
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "月亮節 AR 影片",
+        text: "分享給你",
+      });
+      return { ok: true, method: "webshare" };
+    }
+  } catch (err) {
+    console.warn("Web Share file error:", err);
+    // 繼續嘗試上傳分享 URL
+  }
+
+  // 若檔案分享不支援或失敗 -> 嘗試上傳並分享 URL
+  try {
+    const url = await uploadBlobToServerAndGetUrl(lastRecordedBlob, filename);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "月亮節 AR 影片",
+          text: "看這個影片：",
+          url,
+        });
+        return { ok: true, method: "url-share", url };
+      } catch (err) {
+        console.warn("Web Share URL error:", err);
+      }
+    }
+    // 若不能直接呼叫 navigator.share，回傳 url 給 UI 顯示複製
+    return { ok: true, method: "uploaded", url };
+  } catch (err) {
+    console.warn("upload failed:", err);
+    throw err; // 由呼叫端（UI）處理 fallback（例如下載）
+  }
+}
 
 // -----------------------------------------------------------------------------
 // 狀態、DOM 參照、回呼
@@ -266,7 +385,7 @@ export function initCore(els, callbacks = {}) {
   maskCanvas = els.maskCanvas;
   outCanvas = els.outCanvas;
   bgVideoEl = els.bgVideoEl || null;
-  bgGifEl = els.bgGifEl || null;
+  bgGifEl = els.bgGifEl || null; // 雖保留變數，但 GIF 流程已移除
   bgMoonVideoEl = els.bgMoonVideoEl || null;
 
   bgCtx = bgCanvas.getContext("2d");
@@ -504,36 +623,9 @@ function renderBackgroundTo(ctx, w, h) {
     }
     return;
   }
-  if (bgType === "gif" && bgGifEl) {
-    // GIF 背景融合模式
-    try {
-      // 以 cover 方式鋪滿 GIF
-      const gw = bgGifEl.naturalWidth || bgGifEl.width || 1;
-      const gh = bgGifEl.naturalHeight || bgGifEl.height || 1;
-      if (bgGifEl.complete && gw > 1 && gh > 1) {
-        const scale = Math.max(w / gw, h / gh);
-        const dw = Math.round(gw * scale);
-        const dh = Math.round(gh * scale);
-        const ox = Math.round((w - dw) / 2);
-        const oy = Math.round((h - dh) / 2);
-
-        // 設定融合模式
-        const blendMode = CONFIG.BACKGROUND.GIF_BLEND_MODE || "overlay";
-        ctx.globalCompositeOperation = blendMode;
-        ctx.globalAlpha = Math.min(1, 0.3 + intensity * 0.7);
-        ctx.drawImage(bgGifEl, 0, 0, gw, gh, ox, oy, dw, dh);
-        ctx.globalAlpha = 1;
-        ctx.globalCompositeOperation = "source-over";
-      }
-    } catch (e) {
-      console.warn("GIF 渲染錯誤:", e);
-    }
-    return;
-  }
+  // 月相影片背景
   if (bgType === "moon_video" && bgMoonVideoEl) {
-    // 月相影片背景
     try {
-      // 確保影片已載入並開始播放
       if (bgMoonVideoEl.readyState >= 2 && !bgMoonVideoEl.paused) {
         const vw = bgMoonVideoEl.videoWidth || bgMoonVideoEl.width || 1;
         const vh = bgMoonVideoEl.videoHeight || bgMoonVideoEl.height || 1;
@@ -549,7 +641,6 @@ function renderBackgroundTo(ctx, w, h) {
           ctx.globalAlpha = 1;
         }
       } else if (bgMoonVideoEl.paused) {
-        // 如果影片暫停，嘗試播放
         bgMoonVideoEl.play().catch((e) => console.warn("月相影片播放失敗:", e));
       }
     } catch (e) {
@@ -865,102 +956,15 @@ export function setTemporalAlpha(v01) {
 export function setThreshold(v01) {
   CONFIG.SMOOTHING.THRESHOLD = Math.max(0, Math.min(1, Number(v01) || 0));
 }
+
+// 為了向後相容，保留 GIF 相關 setter（no-op），你之後可以完全移除
 export function setGifBlendMode(mode) {
+  // no-op: GIF 功能已移除於 core
   CONFIG.BACKGROUND.GIF_BLEND_MODE = mode;
 }
-
-// 全域變數控制 GIF 生成
-let shouldGenerateGif = true;
-let gifQuality = 20;
-
 export function setShouldGenerateGif(value) {
-  shouldGenerateGif = !!value;
-}
-
-export function setGifQuality(quality) {
-  gifQuality = Number(quality) || 20;
-}
-
-// 移除了 extractGifFrames 函數，因為我們改用更簡單的方法
-
-// 簡化的 GIF 生成函數
-async function generateBlendedGif(
-  photoDataUrl,
-  gifFrames,
-  blendMode,
-  intensity
-) {
-  return new Promise((resolve, reject) => {
-    if (!window.GIF) {
-      reject(new Error("GIF.js 庫未載入"));
-      return;
-    }
-
-    try {
-      const gif = new GIF({
-        workers: 0,
-        quality: 20, // 固定品質
-        width: 300, // 固定小尺寸
-        height: 300,
-        repeat: 0,
-      });
-
-      const photoImg = new Image();
-      photoImg.onload = () => {
-        console.log("照片載入成功，製作超簡單 GIF...");
-
-        // 只做 3 幀，最簡單的動畫
-        for (let i = 0; i < 3; i++) {
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          canvas.width = 300; // 固定小尺寸
-          canvas.height = 300;
-
-          // 1. 先畫照片
-          ctx.drawImage(photoImg, 0, 0, 300, 300);
-
-          // 2. 再疊上 GIF（簡單的透明度變化）
-          if (bgGifEl && bgGifEl.complete) {
-            const alpha = 0.3 + (0.4 * i) / 2; // 透明度從 0.3 到 0.7
-            ctx.globalAlpha = alpha;
-            ctx.globalCompositeOperation = "overlay";
-            ctx.drawImage(bgGifEl, 0, 0, 300, 300);
-            ctx.globalAlpha = 1;
-            ctx.globalCompositeOperation = "source-over";
-          }
-
-          console.log(`添加第 ${i + 1} 幀`);
-          gif.addFrame(canvas, { delay: 500 }); // 慢一點，500ms 每幀
-        }
-
-        console.log("已添加 3 幀，開始渲染...");
-
-        // 簡單的事件處理
-        gif.on("finished", function (blob) {
-          console.log("超簡單 GIF 完成！檔案大小：", blob.size, "bytes");
-          resolve(blob);
-        });
-
-        gif.on("progress", function (p) {
-          console.log(`GIF 進度: ${Math.round(p * 100)}%`);
-        });
-
-        // 開始渲染
-        console.log("開始渲染超簡單 GIF...");
-        gif.render();
-      };
-
-      photoImg.onerror = () => {
-        console.error("無法載入照片");
-        reject(new Error("無法載入照片"));
-      };
-
-      photoImg.src = photoDataUrl;
-    } catch (error) {
-      console.error("GIF 生成過程中發生錯誤：", error);
-      reject(error);
-    }
-  });
+  // no-op
+  return;
 }
 
 // 便利：提供目前是否在跑
@@ -969,7 +973,7 @@ export function isRunning() {
 }
 
 // -----------------------------------------------------------------------------
-// 拍照功能
+// 拍照功能（不包含 GIF 流程）
 // -----------------------------------------------------------------------------
 export async function capturePhoto() {
   if (!outCanvas || !running) {
@@ -995,7 +999,7 @@ export async function capturePhoto() {
       // 月相影片模式：靜止人物 + 動態影片背景 → 8秒影片
       console.log("🌙 月相影片模式：生成 8 秒動態影片...");
 
-      // 1. 先繪製當前畫面作為靜止人物
+      // 1. 先繪製當前畫面作為靜止人物 (outCanvas 已包含前景與背景)
       captureCtx.drawImage(outCanvas, 0, 0, W, H);
 
       // 2. 生成靜止人物的 PNG 作為基礎
@@ -1003,39 +1007,9 @@ export async function capturePhoto() {
 
       // 3. 開始錄製 8 秒動態影片
       return await generateVideoWithStaticPerson(staticPersonDataURL, W, H);
-    } else if (bgType === "gif" && bgGifEl) {
-      // GIF 融合模式：先畫人物，再用融合模式疊加 GIF
-
-      // 1. 先繪製主要內容（包含去背效果的人物）
-      captureCtx.drawImage(outCanvas, 0, 0, W, H);
-
-      // 2. 使用融合模式疊加 GIF
-      const gw = bgGifEl.naturalWidth || bgGifEl.width || 1;
-      const gh = bgGifEl.naturalHeight || bgGifEl.height || 1;
-      if (bgGifEl.complete && gw > 1 && gh > 1) {
-        const scale = Math.max(W / gw, H / gh);
-        const dw = Math.round(gw * scale);
-        const dh = Math.round(gh * scale);
-        const ox = Math.round((W - dw) / 2);
-        const oy = Math.round((H - dh) / 2);
-
-        // 設定融合模式和強度
-        const blendMode = CONFIG.BACKGROUND.GIF_BLEND_MODE || "overlay";
-        const intensity = CONFIG.BACKGROUND.INTENSITY || 0.5;
-
-        captureCtx.globalCompositeOperation = blendMode;
-        captureCtx.globalAlpha = Math.min(1, 0.4 + intensity * 0.6);
-        captureCtx.drawImage(bgGifEl, 0, 0, gw, gh, ox, oy, dw, dh);
-        captureCtx.globalAlpha = 1;
-        captureCtx.globalCompositeOperation = "source-over";
-      }
     } else {
       // 一般模式：先背景後人物
-
-      // 先繪製背景
       captureCtx.drawImage(bgCanvas, 0, 0, W, H);
-
-      // 再繪製主要內容（包含去背效果的人物）
       captureCtx.drawImage(outCanvas, 0, 0, W, H);
     }
 
@@ -1048,10 +1022,7 @@ export async function capturePhoto() {
 
     // 總是先下載 PNG 版本
     const pngLink = document.createElement("a");
-    const pngFilename =
-      bgType === "gif"
-        ? `月亮節AR_GIF融合_${timestamp}.png`
-        : `月亮節AR拍照_${timestamp}.png`;
+    const pngFilename = `月亮節AR拍照_${timestamp}.png`;
     pngLink.download = pngFilename;
     pngLink.href = dataURL;
     document.body.appendChild(pngLink);
@@ -1059,166 +1030,6 @@ export async function capturePhoto() {
     document.body.removeChild(pngLink);
 
     console.log(`📸 PNG 拍照成功！`);
-
-    // 如果是 GIF 模式且啟用 GIF 生成，則錄製為 WebM 影片
-    if (bgType === "gif" && shouldGenerateGif) {
-      console.log("🎬 使用 Canvas 錄製為 WebM 影片...");
-
-      try {
-        // 檢查瀏覽器支援
-        if (!window.MediaRecorder) {
-          console.warn("瀏覽器不支援 MediaRecorder，回到圖片模式");
-          return { png: dataURL };
-        }
-
-        const blendMode = CONFIG.BACKGROUND.GIF_BLEND_MODE || "overlay";
-        const intensity = CONFIG.BACKGROUND.INTENSITY || 0.5;
-
-        // 創建動畫錄製用的 Canvas
-        const animCanvas = document.createElement("canvas");
-        const animCtx = animCanvas.getContext("2d");
-        animCanvas.width = Math.min(400, W); // 限制尺寸提高效能
-        animCanvas.height = Math.min(400, H);
-
-        console.log(
-          `動畫 Canvas 尺寸: ${animCanvas.width}x${animCanvas.height}`
-        );
-
-        // 先檢測 GIF 的實際播放時間
-        console.log("檢測 GIF 信息...");
-        console.log(
-          "GIF 尺寸:",
-          bgGifEl.naturalWidth,
-          "x",
-          bgGifEl.naturalHeight
-        );
-        console.log("GIF src:", bgGifEl.src);
-
-        // 載入照片
-        const photoImg = new Image();
-        photoImg.onload = async () => {
-          console.log("照片載入完成，開始錄製動畫...");
-
-          // 設定錄製參數
-          const stream = animCanvas.captureStream(20); // 20 FPS
-          const recorder = new MediaRecorder(stream, {
-            mimeType: "video/webm; codecs=vp8", // 使用較相容的 VP8
-            videoBitsPerSecond: 2000000, // 2 Mbps (提高位元率配合更高幀率)
-          });
-
-          const chunks = [];
-          recorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-              chunks.push(event.data);
-            }
-          };
-
-          recorder.onstop = () => {
-            console.log("錄製完成，處理影片檔案...");
-            const blob = new Blob(chunks, { type: "video/webm" });
-
-            // 下載 WebM 影片
-            const videoUrl = URL.createObjectURL(blob);
-            const videoLink = document.createElement("a");
-            videoLink.download = `月亮節AR_動畫_${timestamp}.webm`;
-            videoLink.href = videoUrl;
-            document.body.appendChild(videoLink);
-            videoLink.click();
-            document.body.removeChild(videoLink);
-
-            // 清理記憶體
-            setTimeout(() => URL.revokeObjectURL(videoUrl), 1000);
-
-            console.log("🎬 WebM 影片生成成功！檔案大小：", blob.size, "bytes");
-            console.log("💡 提示：你可以用線上工具將 WebM 轉換為 GIF");
-          };
-
-          // 開始錄製
-          recorder.start();
-          console.log("開始錄製，持續 3 秒...");
-
-          // 繪製動畫幀
-          let frame = 0;
-          const totalFrames = 60; // 3秒 * 20fps = 60幀
-
-          const drawFrame = () => {
-            // 清除畫布
-            animCtx.clearRect(0, 0, animCanvas.width, animCanvas.height);
-
-            // 繪製照片
-            animCtx.drawImage(
-              photoImg,
-              0,
-              0,
-              animCanvas.width,
-              animCanvas.height
-            );
-
-            // 繪製 GIF 背景（簡單透明度循環，3 次）
-            if (bgGifEl && bgGifEl.complete) {
-              const progress = frame / totalFrames; // 0 到 1
-
-              // 3 秒內循環 3 次，每次 1 秒
-              const gifCycleProgress = (progress * 3) % 1; // 0 到 1，重複 3 次
-
-              // 簡單的淡入淡出效果，模擬 GIF 循環
-              let alpha;
-              if (gifCycleProgress < 0.5) {
-                // 前半段：淡入
-                alpha = 0.3 + (gifCycleProgress / 0.5) * 0.5; // 0.3 到 0.8
-              } else {
-                // 後半段：淡出
-                alpha = 0.8 - ((gifCycleProgress - 0.5) / 0.5) * 0.5; // 0.8 到 0.3
-              }
-
-              animCtx.globalCompositeOperation = blendMode;
-              animCtx.globalAlpha = alpha * intensity;
-              animCtx.drawImage(
-                bgGifEl,
-                0,
-                0,
-                animCanvas.width,
-                animCanvas.height
-              );
-              animCtx.globalAlpha = 1;
-              animCtx.globalCompositeOperation = "source-over";
-
-              // 調試信息
-              const currentCycle = Math.floor(progress * 3) + 1;
-              if (frame % 20 === 0) {
-                console.log(
-                  `GIF 第 ${currentCycle} 次循環，透明度: ${alpha.toFixed(2)}`
-                );
-              }
-            }
-
-            frame++;
-
-            if (frame < totalFrames) {
-              setTimeout(drawFrame, 50); // 50ms = 20fps
-            } else {
-              // 動畫完成，停止錄製
-              console.log("動畫繪製完成，停止錄製...");
-              recorder.stop();
-            }
-          };
-
-          // 開始繪製動畫
-          drawFrame();
-        };
-
-        photoImg.onerror = () => {
-          console.error("無法載入照片用於動畫");
-        };
-
-        photoImg.src = dataURL;
-
-        return { png: dataURL, video: "generating" };
-      } catch (error) {
-        console.error("WebM 錄製失敗：", error);
-        console.log("回到 PNG 模式");
-      }
-    }
 
     return { png: dataURL };
   } catch (error) {
@@ -1293,7 +1104,7 @@ async function generateVideoWithStaticPerson(
         const totalFrames = DURATION_SECONDS * FPS;
 
         // 確保月相影片開始播放
-        if (bgMoonVideoEl.paused) {
+        if (bgMoonVideoEl && bgMoonVideoEl.paused) {
           await bgMoonVideoEl
             .play()
             .catch((e) => console.warn("影片播放失敗:", e));
@@ -1305,7 +1116,7 @@ async function generateVideoWithStaticPerson(
         // 根據選擇的格式設定 MediaRecorder
         let recorderOptions;
         if (videoOutputFormat === "mp4") {
-          // MP4 設定
+          // MP4 設定 (瀏覽器支援性有限)
           if (MediaRecorder.isTypeSupported("video/mp4; codecs=h264")) {
             recorderOptions = {
               mimeType: "video/mp4; codecs=h264",
@@ -1344,33 +1155,39 @@ async function generateVideoWithStaticPerson(
         };
 
         recorder.onstop = () => {
-          console.log("錄製完成，正在生成影片檔案...");
-
-          // 根據實際使用的格式設定 MIME type 和副檔名
           const mimeType =
             videoOutputFormat === "mp4" ? "video/mp4" : "video/webm";
           const extension = videoOutputFormat === "mp4" ? "mp4" : "webm";
-
           const blob = new Blob(chunks, { type: mimeType });
 
-          // 下載影片檔案
           const timestamp = new Date()
             .toISOString()
             .replace(/[:]/g, "-")
             .split(".")[0];
-          const videoLink = document.createElement("a");
-          videoLink.download = `月亮節AR_月相影片_${timestamp}.${extension}`;
-          videoLink.href = URL.createObjectURL(blob);
-          document.body.appendChild(videoLink);
-          videoLink.click();
-          document.body.removeChild(videoLink);
+          const filename = `月亮節AR_月相影片_${timestamp}.${extension}`;
 
-          console.log(`🎬 ${extension.toUpperCase()} 影片生成並下載完成！`);
+          // 儲存 blob & filename（由 core 管理 objectURL）
+          const storedUrl = storeRecordingBlob(blob, filename);
+
+          // 觸發回呼通知 UI：可在 UI 顯示「分享」按鈕與「下載」按鈕
+          if (typeof onStatus === "function") {
+            onStatus("影片已生成，可按 分享 或 下載");
+          }
+          if (typeof onStats === "function") {
+            // optional: 傳回 video blob info 給 UI
+            onStats({
+              lastVideoUrl: storedUrl,
+              lastVideoFilename: filename,
+            });
+          }
+
+          // resolve 並回傳由 core 管理的 URL
           resolve({
             png: staticPersonDataURL,
-            video: URL.createObjectURL(blob),
+            video: storedUrl,
             duration: DURATION_SECONDS,
             format: extension,
+            saved: true,
           });
         };
 
@@ -1465,7 +1282,7 @@ async function generateVideoWithStaticPerson(
 
           // 繼續下一幀或結束錄製
           if (frame < totalFrames) {
-            setTimeout(drawFrame, 1000 / FPS); // 50ms for 20fps
+            setTimeout(drawFrame, 1000 / FPS);
           } else {
             if (recordingProgressCallback) {
               recordingProgressCallback.setStatus("錄製完成，正在生成檔案...");
@@ -1488,5 +1305,32 @@ async function generateVideoWithStaticPerson(
   } catch (error) {
     console.error("影片生成錯誤:", error);
     return { png: staticPersonDataURL, error: error.message };
+  }
+}
+
+// 嘗試使用 Web Share API 分享 Blob（若支援檔案分享）
+// 這是內部工具函式（UI 應使用 shareLastRecording）
+async function tryShareBlob(
+  blob,
+  filename,
+  title = "月亮節 AR 影片",
+  text = ""
+) {
+  try {
+    const file = new File([blob], filename, { type: blob.type || "video/mp4" });
+
+    if (navigator.share && navigator.canShare) {
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title, text });
+        return { ok: true, method: "webshare" };
+      }
+      return { ok: false, reason: "canShare-false" };
+    }
+
+    // 若沒有 canShare（或只支援 url/text），視為不支援檔案分享
+    return { ok: false, reason: "no-file-share-support" };
+  } catch (err) {
+    console.warn("tryShareBlob error", err);
+    return { ok: false, reason: "error", error: err };
   }
 }
